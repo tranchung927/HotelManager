@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<GridPane fx:id="grid" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="grid-pane" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vn.edu.aptech.hotelmanager.controllers.RoomController">
+    <MFXButton minHeight="44.0"
+               minWidth="90.0"
+               onAction="#onClickedTapMe"
+               styleClass="outline-button" text="Please tap me!!!!"
+               GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+</GridPane>
