@@ -6,9 +6,10 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane xmlns="http://javafx.com/javafx"
-          xmlns:fx="http://javafx.com/fxml"
+<GridPane xmlns="http://javafx.com/javafx/20.0.0"
+          xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="vn.edu.aptech.hotelmanager.controllers.CustomerController"
-          maxHeight="-Infinity" maxWidth="-Infinity" styleClass="grid-pane">
+          styleClass="grid-pane"
+          maxHeight="-Infinity" maxWidth="-Infinity">
 
 </GridPane>

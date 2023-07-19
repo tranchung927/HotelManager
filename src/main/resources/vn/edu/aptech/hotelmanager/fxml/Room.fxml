@@ -5,7 +5,12 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane fx:id="grid" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="grid-pane" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vn.edu.aptech.hotelmanager.controllers.RoomController">
+<GridPane xmlns="http://javafx.com/javafx/20.0.0"
+          xmlns:fx="http://javafx.com/fxml/1"
+          fx:id="grid"
+          fx:controller="vn.edu.aptech.hotelmanager.controllers.RoomController"
+          styleClass="grid-pane"
+          maxHeight="-Infinity" maxWidth="-Infinity">
     <MFXButton minHeight="44.0"
                minWidth="90.0"
                onAction="#onClickedTapMe"
