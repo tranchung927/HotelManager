@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<GridPane xmlns="http://javafx.com/javafx/20.0.0"
-          xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="vn.edu.aptech.hotelmanager.controllers.CustomerController"
-          styleClass="grid-pane"
-          maxHeight="-Infinity" maxWidth="-Infinity">
-
-</GridPane>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity"
+            styleClass="grid-pane"
+            xmlns="http://javafx.com/javafx/20.0.0"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="vn.edu.aptech.hotelmanager.controllers.CustomerController">
+    <MFXButton alignment="CENTER" prefHeight="65.0" prefWidth="230.0" text="Button" />
+</AnchorPane>

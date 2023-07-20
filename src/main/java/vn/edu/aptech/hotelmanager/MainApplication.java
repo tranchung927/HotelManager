@@ -11,6 +11,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import vn.edu.aptech.hotelmanager.controllers.MainController;
+import vn.edu.aptech.hotelmanager.controllers.SplashController;
 
 import java.io.IOException;
 
@@ -18,16 +19,17 @@ public class MainApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         CSSFX.start();
-        FXMLLoader loader = new FXMLLoader(HMResourcesLoader.loadURL("fxml/Main.fxml"));
-        loader.setControllerFactory(c -> new MainController(stage));
-        Parent root = loader.load();
-        Scene scene = new Scene(root);
-        MFXThemeManager.addOn(scene, Themes.DEFAULT, Themes.LEGACY);
-        scene.setFill(Color.TRANSPARENT);
-        stage.initStyle(StageStyle.TRANSPARENT);
-        stage.setScene(scene);
-        stage.setTitle("Hotel FX");
-        stage.show();
+//        FXMLLoader loader = new FXMLLoader(HMResourcesLoader.loadURL("fxml/Main.fxml"));
+//        loader.setControllerFactory(c -> new MainController(stage));
+//        Parent root = loader.load();
+//        Scene scene = new Scene(root);
+//        MFXThemeManager.addOn(scene, Themes.DEFAULT, Themes.LEGACY);
+//        scene.setFill(Color.TRANSPARENT);
+//        stage.initStyle(StageStyle.TRANSPARENT);
+//        stage.setScene(scene);
+//        stage.setTitle("Hotel FX");
+//        stage.show();
+        openSplash(stage);
     }
 
     public static void main(String[] args) {
@@ -37,5 +39,15 @@ public class MainApplication extends Application {
 //        } catch (SQLException throwable) {
 //            throwable.printStackTrace();
 //        }
+    }
+    private static void openSplash(Stage stage) throws IOException {
+        FXMLLoader loader = new FXMLLoader(HMResourcesLoader.loadURL("fxml/Splash.fxml"));
+        loader.setControllerFactory(c -> new SplashController(stage));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        MFXThemeManager.addOn(scene, Themes.DEFAULT, Themes.LEGACY);
+        stage.setScene(scene);
+        stage.setTitle("Splash");
+        stage.show();
     }
 }
