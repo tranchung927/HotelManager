@@ -10,18 +10,50 @@ import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import vn.edu.aptech.hotelmanager.controllers.LoginController;
 import vn.edu.aptech.hotelmanager.controllers.MainController;
 
 import java.io.IOException;
 
+
+
 public class MainApplication extends Application {
+
+    private double x = 0;
+    private double y = 0;
     @Override
     public void start(Stage stage) throws IOException {
         CSSFX.start();
-        FXMLLoader loader = new FXMLLoader(HMResourcesLoader.loadURL("fxml/Main.fxml"));
-        loader.setControllerFactory(c -> new MainController(stage));
+        FXMLLoader loader = new FXMLLoader(HMResourcesLoader.loadURL("fxml/Login.fxml"));
+        loader.setControllerFactory(c -> new LoginController(stage));
         Parent root = loader.load();
+
+
+
+
+
+
+
         Scene scene = new Scene(root);
+/**************************************************
+ * Root
+ **************************************************/
+        root.setOnMousePressed(mouseEvent -> {
+            x = mouseEvent.getSceneX();
+            y = mouseEvent.getSceneY();
+        });
+        root.setOnMouseDragged(mouseEvent -> {
+            stage.setX(mouseEvent.getScreenX()- x);
+            stage.setY(mouseEvent.getScreenY()-y);
+
+            stage.setOpacity(0.4);
+        });
+
+        root.setOnMouseReleased(mouseEvent -> {
+            stage.setOpacity(1);
+        });
+
+
         MFXThemeManager.addOn(scene, Themes.DEFAULT, Themes.LEGACY);
         scene.setFill(Color.TRANSPARENT);
         stage.initStyle(StageStyle.TRANSPARENT);
