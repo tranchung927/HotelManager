@@ -1,0 +1,195 @@
+@import '../fonts/Fonts.css';
+@import 'Colors.css';
+
+
+.rootPane {
+    -fx-background-color: white;
+    /*-fx-background-radius: 10;*/
+    -fx-border-color: #7e7070;
+    -fx-border-radius: 10;
+}
+
+.tab-pane {
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-border-color: #7e7070;
+    -fx-border-radius: 10;
+
+}
+
+.tab-pane:selected {
+    -fx-background-color: #FAFCFB;
+    -fx-background-radius: 0;
+    -fx-border-width: 3 0 0 0;
+    -fx-border-color: linear-gradient(to bottom right, #6f1f85, #9231b5);
+}
+
+.tab-pane:focused {
+    -fx-background-color: tranparent;
+
+}
+
+.tab-pane .tab-header {
+    -fx-background-color: #FAFCFB;
+    -fx-border-radius: 10;
+}
+
+.tab-pane .text {
+    -fx-font-family: 'Visby Round CF Heavy';
+    -fx-font-size: 14px;
+    -fx-text-fill: #c42424;
+}
+
+.white-bg {
+    -fx-background-color: white;
+    -fx-border-radius: 10;
+    -fx-border-color: #7e7070;
+
+}
+
+.label {
+    -fx-font-family: 'Visby Round CF Heavy';
+    -fx-font-size: 14;
+    -fx-text-fill: #282525;
+
+
+}
+
+/**************************************************
+ * Text fields
+**************************************************/
+.text-field {
+    -fx-background-color: #ffff;
+    -fx-background-radius: 8px;
+    -fx-border-color: linear-gradient(to right, #444857, #537e90);
+    /*-fx-border-radius: 8px;*/
+    -fx-border-width: 0 0 0.8px 0;
+    -fx-font-size: 13px;
+    -fx-font-family: 'Visby Round CF Heavy';
+}
+
+.text-field:focused {
+    -fx-border-color: linear-gradient(to bottom right, #2f3f89, #9231b5);
+    -fx-border-width: 0 0 1.8px 0;
+}
+
+/**************************************************
+ * Combo-Box
+**************************************************/
+.combo-box {
+    -fx-background-color: #ffff;
+    -fx-background-radius: 5px;
+    -fx-border-color: linear-gradient(to right, #444857, #537e90);
+    -fx-border-radius: 5px;
+    -fx-border-width: 0.8px;
+    -fx-font-family: 'Visby Round CF Heavy';
+    -fx-font-size: 13px;
+
+
+}
+
+.combo-box:focused {
+    -fx-border-color: linear-gradient(to bottom right, #2f3f89, #9231b5);
+    -fx-border-width: 1.2px;
+}
+
+/**************************************************
+ * Button
+**************************************************/
+
+.add-btn {
+    -fx-background-color: #a16eab;
+    -fx-background-radius: 5px;
+    -fx-cursor: hand;
+    -fx-text-fill: #ffff;
+    -fx-font-family: 'Visby Round CF Heavy';
+    -fx-font-size: 14px;
+
+
+}
+
+.add-btn:hover {
+    -fx-background-color: linear-gradient(to bottom right, #8a8ea8, #62187e);
+
+}
+
+.update-btn {
+    -fx-background-color: #2551a8;
+    -fx-background-radius: 5px;
+    -fx-cursor: hand;
+    -fx-text-fill: #ffff;
+    -fx-font-family: 'Visby Round CF Heavy';
+    -fx-font-size: 14px;
+
+
+}
+
+.update-btn:hover {
+    -fx-background-color: linear-gradient(to bottom right, #8a8ea8, #1f21a4);
+
+}
+
+.delete-btn {
+    -fx-background-color: #bd2235;
+    -fx-background-radius: 5px;
+    -fx-cursor: hand;
+    -fx-text-fill: #ffff;
+    -fx-font-family: 'Visby Round CF Heavy';
+    -fx-font-size: 14px;
+
+
+}
+
+.delete-btn:hover {
+    -fx-background-color: linear-gradient(to bottom right, #8a8ea8, #b71616);
+
+}
+
+.clear-btn {
+    -fx-background-color: #27a614;
+    -fx-background-radius: 5px;
+    -fx-cursor: hand;
+    -fx-text-fill: #ffff;
+    -fx-font-family: 'Visby Round CF Heavy';
+    -fx-font-size: 14px;
+
+
+}
+
+.clear-btn:hover {
+    -fx-background-color: linear-gradient(to bottom right, #8a8ea8, #2c940d);
+
+}
+
+/**************************************************
+ * Table View
+**************************************************/
+.table-view {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-border-color: linear-gradient(to bottom right, #2f3f89, #9231b5);
+    -fx-background-radius:1 8px;
+    -fx-border-radius: 5px ;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+
+}
+
+.table-view .column-header-background {
+    -fx-background-color: linear-gradient(to bottom right, #2f3f89, #9231b5);
+    -fx-background-insets: 0 0 0 0;
+
+}
+
+.table-view .column-header, filter {
+    -fx-background-color: transparent;
+    -fx-size: 50px;
+
+}
+.table-view .column-header, label {
+    -fx-text-fill: #ffff;
+    /*-fx-text-alignment: center;*/
+    /*-fx-alignment: center;*/
+
+}
+

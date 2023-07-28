@@ -1,8 +1,8 @@
-package vn.edu.aptech.hotelmanager.repo.entity;
+package vn.edu.aptech.hotelmanager.controllers;
 
 import vn.edu.aptech.hotelmanager.common.entity.IEntity;
 
-public class RoomEntity implements IEntity {
+public class Room  {
 
     private int roomId;
     private String roomName;
@@ -12,10 +12,10 @@ public class RoomEntity implements IEntity {
     private String status;
     private int numberOfBed;
 
-    public RoomEntity() {
+    public Room() {
     }
 
-    public RoomEntity(int roomId, String roomName, String roomType, String bedType, double price, String status, int numberOfBed) {
+    public Room(int roomId, String roomName, String roomType, String bedType, double price, String status, int numberOfBed) {
         this.roomId = roomId;
         this.roomName = roomName;
         this.roomType = roomType;
@@ -96,4 +96,3 @@ public class RoomEntity implements IEntity {
 
 
 }
-

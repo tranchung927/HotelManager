@@ -10,50 +10,42 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" styleClass="rootPane" stylesheets="@../css/Login.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vn.edu.aptech.hotelmanager.controllers.LoginController">
-   <children>
-      <AnchorPane prefHeight="500.0" prefWidth="300.0" styleClass="rootPane-left" stylesheets="@../css/Login.css">
-         <children>
+    <children>
+        <AnchorPane prefHeight="500.0" prefWidth="300.0" styleClass="rootPane-left" stylesheets="@../css/Login.css">
+            <children>
 
-            <Label layoutX="51.0" layoutY="298.0" styleClass="label-left" stylesheets="@../css/Login.css" text="Hotel Management" />
-            <MFXFontIcon description="fas-hotel" layoutX="149.0" layoutY="203.0" scaleX="8.0" scaleY="8.0" wrappingWidth="16.625">
-               <color>
-                  <Color red="0.8552631735801697" green="0.7602339386940002" blue="0.7602339386940002" />
-               </color></MFXFontIcon>
+                <Label layoutX="51.0" layoutY="298.0" styleClass="label-left" stylesheets="@../css/Login.css" text="Hotel Management" />
+                <MFXFontIcon description="fas-hotel" layoutX="149.0" layoutY="203.0" scaleX="8.0" scaleY="8.0" wrappingWidth="16.625">
+                    <color>
+                        <Color red="0.8552631735801697" green="0.7602339386940002" blue="0.7602339386940002" />
+                    </color>
+                </MFXFontIcon>
 
-         </children></AnchorPane>
-      <AnchorPane layoutX="300.0" layoutY="-1.0" prefHeight="500.0" prefWidth="300.0">
-         <children>
+            </children>
+        </AnchorPane>
+        <AnchorPane layoutX="300.0" layoutY="-1.0" prefHeight="500.0" prefWidth="300.0">
+            <children>
 
-            <Label layoutX="105.0" layoutY="170.0" styleClass="label-right" stylesheets="@../css/Login.css" text="Sign In">
-               <font>
-                  <Font name="Times New Roman Bold" size="30.0" />
-               </font>
-            </Label>
-            <MFXTextField fx:id="username" floatingText="User Name :" layoutX="54.0" layoutY="240.0" prefHeight="20.0" prefWidth="200.0" styleClass="mfx-text-field" stylesheets="@../css/Login.css" />
-            <MFXPasswordField fx:id="password" floatingText="Password :" layoutX="54.0" layoutY="304.0" prefHeight="40.0" prefWidth="200.0" styleClass="mfx-password-field" stylesheets="@../css/Login.css" />
-            <MFXButton fx:id="custom" buttonType="RAISED" layoutX="117.0" layoutY="375.0" prefHeight="34.0" prefWidth="74.0" styleClass="mfx-button" stylesheets="@../css/Login.css" text="Login" />
-            <MFXFontIcon description="fas-user-tie" layoutX="143.0" layoutY="123.0" scaleX="5.0" scaleY="5.0">
-               <color>
-                  <Color red="0.5131579041481018" green="0.09265350550413132" blue="0.3449561297893524" />
-               </color></MFXFontIcon>
-            <MFXButton fx:id="closeButton" layoutX="266.0" layoutY="11.0" minHeight="20.0" minWidth="20.0" onAction="#exit" prefHeight="20.0" prefWidth="20.0" styleClass="buttonIcon" stylesheets="@../css/Login.css" text=" ">
-               <graphic>
-                   <MFXFontIcon fx:id="closeIcon" description="fas-circle" scaleX="0.8" scaleY="0.8" size="15.0" styleClass="close-icon" />
-               </graphic>
-            </MFXButton>
-            <MFXButton fx:id="minimizeButton" layoutX="244.0" layoutY="11.0" minHeight="20.0" minWidth="20.0" prefHeight="20.0" prefWidth="20.0" styleClass="buttonIcon" stylesheets="@../css/Login.css" text=" ">
-               <graphic>
-                   <MFXFontIcon fx:id="minimizeIcon" description="fas-circle" scaleX="0.8" scaleY="0.8" size="15.0" styleClass="minimize-icon" />
-               </graphic>
-            </MFXButton>
-            <MFXButton fx:id="maximizeIButton" layoutX="224.0" layoutY="11.0" minHeight="20.0" minWidth="20.0" prefHeight="20.0" prefWidth="20.0" styleClass="buttonIcon" stylesheets="@../css/Login.css" text=" ">
-               <graphic>
-                   <MFXFontIcon fx:id="alwaysOnTopIcon" description="fas-circle" scaleX="0.8" scaleY="0.8" size="15.0" styleClass="always-on-top-icon" />
-               </graphic>
-            </MFXButton>
+                <Label layoutX="105.0" layoutY="170.0" styleClass="label-right" stylesheets="@../css/Login.css" text="Sign In">
+                    <font>
+                        <Font name="Times New Roman Bold" size="30.0" />
+                    </font>
+                </Label>
+                <MFXTextField fx:id="username" floatingText="User Name :" layoutX="54.0" layoutY="240.0" prefHeight="20.0" prefWidth="200.0" styleClass="mfx-text-field" stylesheets="@../css/Login.css" />
+                <MFXPasswordField fx:id="password" floatingText="Password :" layoutX="54.0" layoutY="304.0" prefHeight="40.0" prefWidth="200.0" styleClass="mfx-password-field" stylesheets="@../css/Login.css" />
+                <MFXButton fx:id="custom" buttonType="RAISED" layoutX="117.0" layoutY="375.0" onAction="#login" prefHeight="34.0" prefWidth="74.0" styleClass="mfx-button" stylesheets="@../css/Login.css" text="Login" />
+                <MFXFontIcon description="fas-user-tie" layoutX="143.0" layoutY="123.0" scaleX="5.0" scaleY="5.0">
+                    <color>
+                        <Color red="0.5131579041481018" green="0.09265350550413132" blue="0.3449561297893524" />
+                    </color>
+                </MFXFontIcon>
 
-            
+                <MFXFontIcon fx:id="alwaysOnTopIcon" description="fas-circle" layoutX="233.0" layoutY="20.0" size="15.0" styleClass="always-on-top-icon" />
+                <MFXFontIcon fx:id="minimizeIcon" description="fas-circle" layoutX="257.0" layoutY="20.0" size="15.0" styleClass="minimize-icon" />
+                <MFXFontIcon fx:id="closeIcon" description="fas-circle" layoutX="279.0" layoutY="20.0" size="15.0" styleClass="close-icon" />
 
-         </children></AnchorPane>
-   </children>
+
+            </children>
+        </AnchorPane>
+    </children>
 </AnchorPane>

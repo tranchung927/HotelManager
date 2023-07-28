@@ -24,16 +24,9 @@ public class MainApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         CSSFX.start();
-        FXMLLoader loader = new FXMLLoader(HMResourcesLoader.loadURL("fxml/Login.fxml"));
-        loader.setControllerFactory(c -> new LoginController(stage));
+        FXMLLoader loader = new FXMLLoader(HMResourcesLoader.loadURL("fxml/Main.fxml"));
+        loader.setControllerFactory(c -> new MainController(stage));
         Parent root = loader.load();
-
-
-
-
-
-
-
         Scene scene = new Scene(root);
 /**************************************************
  * Root

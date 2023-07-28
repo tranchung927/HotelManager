@@ -10,6 +10,7 @@ import io.github.palexdev.materialfx.utils.others.loader.MFXLoaderBean;
 import io.github.palexdev.mfxresources.fonts.MFXFontIcon;
 import javafx.application.Platform;
 import javafx.css.PseudoClass;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
@@ -118,6 +119,9 @@ public class MainController implements Initializable {
         loader.addView(MFXLoaderBean.of("REPORTS", loadURL("fxml/Report.fxml")
         ).setBeanToNodeMapper(() -> createToggle("fas-chart-pie", "Báo cáo"))
                 .get());
+        loader.addView(MFXLoaderBean.of("ADMIN", loadURL("fxml/Admin.fxml")
+                ).setBeanToNodeMapper(() -> createToggle("fas-user-tie", "Admin"))
+                .get());
         loader.setOnLoadedAction(beans -> {
             List<ToggleButton> nodes = beans.stream()
                     .map(bean -> {
@@ -147,4 +151,6 @@ public class MainController implements Initializable {
         if (rotate != 0) wrapper.getIcon().setRotate(rotate);
         return toggleNode;
     }
+
+
 }

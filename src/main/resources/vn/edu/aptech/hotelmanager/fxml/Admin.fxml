@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1000.0" styleClass="rootPane" stylesheets="@../css/Admin.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vn.edu.aptech.hotelmanager.controllers.AdminController">
+    <children>
+        <TabPane prefHeight="530.0" prefWidth="768.0" stylesheets="@../css/Admin.css" tabClosingPolicy="UNAVAILABLE">
+            <tabs>
+                <Tab text="Room Management">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="458.0" prefWidth="789.0" stylesheets="@../css/Admin.css">
+                            <children>
+                                <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="589.0" prefWidth="377.0" styleClass="white-bg" stylesheets="@../css/Admin.css" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="600.0" AnchorPane.topAnchor="15.0">
+                                    <children>
+                                        <Label layoutX="35.0" layoutY="64.0" prefHeight="33.0" prefWidth="94.0" stylesheets="@../css/Admin.css" text="Room Name :" />
+                                        <TextField fx:id="roomName" layoutX="148.0" layoutY="66.0" prefHeight="30.0" prefWidth="200.0" styleClass="text-field" stylesheets="@../css/Admin.css" />
+                                        <Label layoutX="42.0" layoutY="123.0" prefHeight="33.0" prefWidth="94.0" stylesheets="@../css/Admin.css" text="Room Type :" />
+                                        <ComboBox fx:id="roomType" layoutX="148.0" layoutY="127.0" onAction="#addValueRoomType" prefHeight="30.0" prefWidth="200.0" promptText="Choose" styleClass="combo-box" stylesheets="@../css/Admin.css" />
+                                        <Label layoutX="55.0" layoutY="185.0" prefHeight="33.0" prefWidth="83.0" stylesheets="@../css/Admin.css" text="Bed Type :" />
+                                        <ComboBox fx:id="bedType" layoutX="148.0" layoutY="187.0" onAction="#addValueBedType" prefHeight="30.0" prefWidth="200.0" promptText="Choose" styleClass="combo-box" stylesheets="@../css/Admin.css" />
+                                        <Label layoutX="83.0" layoutY="248.0" prefHeight="33.0" prefWidth="61.0" stylesheets="@../css/Admin.css" text="Price :" />
+                                        <TextField fx:id="price" layoutX="148.0" layoutY="250.0" prefHeight="30.0" prefWidth="200.0" styleClass="text-field" stylesheets="@../css/Admin.css" />
+                                        <Label layoutX="72.0" layoutY="304.0" prefHeight="33.0" prefWidth="61.0" stylesheets="@../css/Admin.css" text="Status :" />
+                                        <ComboBox fx:id="status" layoutX="148.0" layoutY="306.0" onAction="#addValueStatus" prefHeight="30.0" prefWidth="200.0" promptText="Choose" styleClass="combo-box" stylesheets="@../css/Admin.css" />
+                                        <Label layoutX="15.0" layoutY="361.0" prefHeight="33.0" prefWidth="116.0" stylesheets="@../css/Admin.css" text="Number of bed :" />
+                                        <TextField fx:id="nob" layoutX="148.0" layoutY="363.0" prefHeight="30.0" prefWidth="200.0" styleClass="text-field" stylesheets="@../css/Admin.css" />
+                                        <Button fx:id="addBtn" layoutX="19.0" layoutY="461.0" mnemonicParsing="false" onAction="#addRoom" prefWidth="70.0" styleClass="add-btn" stylesheets="@../css/Admin.css" text="Add" />
+                                        <Button fx:id="updateBtn" layoutX="106.0" layoutY="459.0" mnemonicParsing="false" onAction="#updateRoom" prefHeight="24.0" prefWidth="70.0" styleClass="update-btn" stylesheets="@../css/Admin.css" text="Update" />
+                                        <Button fx:id="deleteBtn" layoutX="205.0" layoutY="459.0" mnemonicParsing="false" onAction="#deleteRoom" prefWidth="70.0" styleClass="delete-btn" stylesheets="@../css/Admin.css" text="Delete" />
+                                        <Button fx:id="clearBtn" layoutX="293.0" layoutY="460.0" mnemonicParsing="false" onAction="#clearRoom" prefWidth="70.0" styleClass="clear-btn" stylesheets="@../css/Admin.css" text="Clear" />
+                              <Label layoutX="62.0" layoutY="22.0" prefHeight="33.0" prefWidth="79.0" stylesheets="@../css/Admin.css" text="Room ID :" />
+                              <TextField fx:id="roomID" layoutX="149.0" layoutY="24.0" prefHeight="30.0" prefWidth="200.0" styleClass="text-field" stylesheets="@../css/Admin.css" />
+                                    </children>
+                                </AnchorPane>
+                                <AnchorPane layoutX="396.0" layoutY="15.0" prefHeight="596.0" prefWidth="580.0" styleClass="white-bg" stylesheets="@../css/Admin.css" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="405.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
+                                    <children>
+                                        <TableView fx:id="tableView" layoutX="9.0" layoutY="23.0" onMouseClicked="#selectRowRoom" prefHeight="523.0" prefWidth="562.0" AnchorPane.bottomAnchor="42.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="22.0">
+                                            <columns>
+                                    <TableColumn fx:id="col_roomID" prefWidth="71.0" text="Room ID" />
+                                                <TableColumn fx:id="col_roomName" prefWidth="106.0" text="Room Name" />
+                                                <TableColumn fx:id="col_roomType" prefWidth="90.0" text="Room Type" />
+                                                <TableColumn fx:id="col_bedType" prefWidth="82.0" text="Bed Type" />
+                                                <TableColumn fx:id="col_price" prefWidth="77.0" text="Price" />
+                                                <TableColumn fx:id="col_status" prefWidth="76.0" text="Status" />
+                                                <TableColumn fx:id="col_nob" prefWidth="56.0" text="NOB" />
+                                            </columns>
+                                        </TableView>
+                                    </children>
+                                </AnchorPane>
+
+
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+                <Tab text="Employee Management">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
+    </children>
+</StackPane>
