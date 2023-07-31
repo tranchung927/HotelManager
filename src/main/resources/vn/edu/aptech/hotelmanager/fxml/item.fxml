@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="150.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vn.edu.aptech.hotelmanager.controllers.ItemController">
+   <children>
+      <VBox layoutX="25.0" layoutY="6.0" onMousePressed="#clickProduct" prefHeight="100.0" prefWidth="150.0" style="-fx-background-radius: 10; -fx-background-color: #b5e48c;" styleClass="shadow" stylesheets="@../css/Sales.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label fx:id="nameLabel" alignment="CENTER" prefHeight="70.0" prefWidth="150.0" style="-fx-background-color: #b5e48c; -fx-background-radius: 10;" text="Label" />
+            <Label fx:id="priceLabel" alignment="CENTER" prefHeight="36.0" prefWidth="150.0" style="-fx-background-color: #0ead69; -fx-text-fill: #fff; -fx-background-radius: 10;" text="Label" />
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

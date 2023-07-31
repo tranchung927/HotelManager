@@ -1,0 +1,10 @@
+@import 'Colors.css';
+
+.shadow {
+    -fx-effect: dropShadow(three-pass-box,rgba(0,0,0,0.3),5,0,0,5);
+}
+.title {
+    -fx-text-fill: #3b65e4;
+    -fx-font-size: 18;
+    -fx-font-weight:700;
+}
