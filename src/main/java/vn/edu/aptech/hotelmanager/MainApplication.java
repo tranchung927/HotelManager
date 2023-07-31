@@ -57,10 +57,5 @@ public class MainApplication extends Application {
 
     public static void main(String[] args) {
         launch(args);
-//        try {
-//            DBConnection.getInstance().getConnection().close();
-//        } catch (SQLException throwable) {
-//            throwable.printStackTrace();
-//        }
     }
 }
