@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXComboBox?>
+<?import io.github.palexdev.materialfx.controls.MFXRadioButton?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vn.edu.aptech.hotelmanager.controllers.CheckinController">
+   <children>
+      <Label layoutX="24.0" layoutY="28.0" prefHeight="17.0" prefWidth="40.0" text="Name" />
+      <Label layoutX="28.0" layoutY="79.0" prefHeight="17.0" prefWidth="31.0" text="Sex" />
+      <Label layoutX="18.0" layoutY="130.0" prefHeight="17.0" prefWidth="51.0" text="Address" />
+      <Label layoutX="12.0" layoutY="182.0" prefHeight="17.0" prefWidth="63.0" text="Nationality" />
+      <Label layoutX="12.0" layoutY="242.0" prefHeight="17.0" prefWidth="63.0" text="ID Number" />
+      <Label layoutX="18.0" layoutY="303.0" prefHeight="17.0" prefWidth="31.0" text="Type" />
+      <MFXTextField layoutX="104.0" layoutY="12.0" prefHeight="49.0" prefWidth="179.0" />
+      <MFXTextField layoutX="104.0" layoutY="114.0" prefHeight="49.0" prefWidth="189.0" />
+      <MFXRadioButton layoutX="104.0" layoutY="79.0" prefHeight="18.0" prefWidth="63.0" text="Male" />
+      <MFXRadioButton layoutX="207.0" layoutY="79.0" text="Female" />
+      <MFXComboBox layoutX="102.0" layoutY="171.0" prefHeight="40.0" prefWidth="84.0" />
+      <MFXTextField layoutX="102.0" layoutY="226.0" prefHeight="49.0" prefWidth="171.0" />
+      <MFXComboBox layoutX="102.0" layoutY="292.0" />
+      <MFXButton layoutX="266.0" layoutY="347.0" text="Checkin" />
+      <MFXButton layoutX="370.0" layoutY="347.0" text="Reserve" />
+      <MFXButton layoutX="452.0" layoutY="347.0" prefHeight="25.0" prefWidth="79.0" text="checkout" />
+   </children>
+</AnchorPane>
