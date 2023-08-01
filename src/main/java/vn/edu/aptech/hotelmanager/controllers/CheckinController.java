@@ -22,6 +22,6 @@ public class CheckinController {
     }
     public void checkout(ActionEvent event) throws IOException {
         CheckoutController checkoutController = new CheckoutController();
-        CheckoutController.display(event);
+        checkoutController.display(event);
     }
 }
