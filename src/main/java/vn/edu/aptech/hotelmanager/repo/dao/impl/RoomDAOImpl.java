@@ -10,36 +10,37 @@ import java.util.List;
 
 public class RoomDAOImpl implements RoomDAO {
     @Override
-    public String getLastRoomId() throws Exception {
-        ResultSet rst = CrudUtil.execute("SELECT * FROM Room ORDER BY roomNumber DESC LIMIT 1");
+    public int getLastRoomId() throws Exception {
+        ResultSet rst = CrudUtil.execute("SELECT * FROM room ORDER BY id DESC LIMIT 1");
         if (!rst.next()) {
-            return null;
+            return -1;
         } else {
-            return rst.getString(1);
+            return rst.getInt(1);
         }
     }
     @Override
     public List<RoomEntity> findAll() throws Exception {
-        ResultSet resultSet = CrudUtil.execute("SELECT * FROM Room");
+        ResultSet resultSet = CrudUtil.execute("SELECT * FROM room");
         List<RoomEntity> roomList =  new ArrayList<>();
         while (resultSet.next()) {
-            roomList.add(new RoomEntity(resultSet.getString(1),resultSet.getInt(2),resultSet.getString(3)));
+            RoomEntity room = resultSet.get//getObject(1, RoomEntity.class);
+            roomList.add(room);
         }
         return roomList;
     }
 
     @Override
-    public RoomEntity find(String key) throws Exception {
-        ResultSet resultSet = CrudUtil.execute("SELECT * FROM Room WHERE roomNumber=?",key);
+    public RoomEntity find(int id) throws Exception {
+        ResultSet resultSet = CrudUtil.execute("SELECT * FROM room WHERE id=?",id);
         if (resultSet.next()) {
-            return new RoomEntity(resultSet.getString(1), resultSet.getInt(2), resultSet.getString(3));
+            return resultSet.getObject(1, RoomEntity.class);
         }
         return null;
     }
 
     @Override
     public boolean save(RoomEntity room) throws Exception {
-        return CrudUtil.execute("INSERT INTO Room VALUES (?,?,?)",
+        return CrudUtil.execute("INSERT INTO room VALUES (?,?,?)",
                 room.getRoomNumber(),room.getTypeId(),room.getRoomStatus());
     }
 
@@ -50,7 +51,7 @@ public class RoomDAOImpl implements RoomDAO {
     }
 
     @Override
-    public boolean delete(String key) throws Exception {
-        return CrudUtil.execute("DELETE FROM Room WHERE roomNumber=?",key);
+    public boolean delete(int id) throws Exception {
+        return CrudUtil.execute("DELETE FROM Room WHERE id=?", id);
     }
 }
