@@ -15,9 +15,13 @@ public class CheckinController {
     public static void display(ActionEvent event) throws IOException {
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
-        FXMLLoader loader = new FXMLLoader(HMResourcesLoader.loadURL("fxml/Checkout.fxml"));
+        FXMLLoader loader = new FXMLLoader(HMResourcesLoader.loadURL("fxml/Checkin.fxml"));
         Parent root = loader.load();
         stage.setScene(new Scene(root));
         stage.show();
+    }
+    public void checkout(ActionEvent event) throws IOException {
+        CheckoutController checkoutController = new CheckoutController();
+        CheckoutController.display(event);
     }
 }

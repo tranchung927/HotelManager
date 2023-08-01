@@ -13,6 +13,7 @@ import javafx.stage.StageStyle;
 import vn.edu.aptech.hotelmanager.controllers.MainController;
 import vn.edu.aptech.hotelmanager.controllers.SplashController;
 import vn.edu.aptech.hotelmanager.repo.db.DBConnection;
+import vn.edu.aptech.hotelmanager.utils.CrudUtil;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -37,6 +38,8 @@ public class MainApplication extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+
+
  /*   private static void openSplash(Stage stage) throws IOException {
         FXMLLoader loader = new FXMLLoader(HMResourcesLoader.loadURL("fxml/Splash.fxml"));
         loader.setControllerFactory(c -> new SplashController(stage));

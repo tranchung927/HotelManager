@@ -44,8 +44,8 @@ public class RoomController {
         CheckinController.display(event);
     }
     public void occupied(ActionEvent event) throws IOException {
-        CheckoutController checkoutController = new CheckoutController();
-        CheckoutController.display(event);
+        CheckinController checkinController = new CheckinController();
+        CheckinController.display(event);
     }
 
 
