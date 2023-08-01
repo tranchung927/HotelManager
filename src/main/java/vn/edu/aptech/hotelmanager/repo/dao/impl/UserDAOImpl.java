@@ -45,7 +45,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public UserEntity find(String key) throws Exception {
+    public UserEntity find(int id) throws Exception {
         return null;
     }
 
@@ -65,8 +65,8 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public boolean delete(String key) throws Exception {
-        return CrudUtil.execute("DELETE FROM User WHERE userId=?",key);
+    public boolean delete(int id) throws Exception {
+        return CrudUtil.execute("DELETE FROM User WHERE userId=?",id);
     }
 }
 

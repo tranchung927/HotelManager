@@ -22,10 +22,10 @@ public class RoomDAOImpl implements RoomDAO {
     public List<RoomEntity> findAll() throws Exception {
         ResultSet resultSet = CrudUtil.execute("SELECT * FROM room");
         List<RoomEntity> roomList =  new ArrayList<>();
-        while (resultSet.next()) {
-            RoomEntity room = resultSet.get//getObject(1, RoomEntity.class);
-            roomList.add(room);
-        }
+//        while (resultSet.next()) {
+//            RoomEntity room = resultSet.get//getObject(1, RoomEntity.class);
+//            roomList.add(room);
+//        }
         return roomList;
     }
 
@@ -40,14 +40,16 @@ public class RoomDAOImpl implements RoomDAO {
 
     @Override
     public boolean save(RoomEntity room) throws Exception {
-        return CrudUtil.execute("INSERT INTO room VALUES (?,?,?)",
-                room.getRoomNumber(),room.getTypeId(),room.getRoomStatus());
+//        return CrudUtil.execute("INSERT INTO room VALUES (?,?,?)",
+//                room.getRoomNumber(),room.getTypeId(),room.getRoomStatus());
+        return false;
     }
 
     @Override
     public boolean update(RoomEntity room) throws Exception {
-        return CrudUtil.execute("UPDATE Room SET typeId=?,roomStatus=? WHERE roomNumber=?",
-                room.getTypeId(),room.getRoomStatus(),room.getRoomNumber());
+//        return CrudUtil.execute("UPDATE Room SET typeId=?,roomStatus=? WHERE roomNumber=?",
+//                room.getTypeId(),room.getRoomStatus(),room.getRoomNumber());
+        return false;
     }
 
     @Override
