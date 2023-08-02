@@ -8,11 +8,11 @@ import java.util.List;
 public interface CrudDAO <T extends IEntity> extends DAO {
     List<T> findAll() throws Exception;
 
-    T find(int id) throws Exception;
+    T find(long id) throws Exception;
 
     boolean save(T entity) throws Exception;
 
     boolean update(T entity) throws Exception;
 
-    boolean delete(int id) throws Exception;
+    boolean delete(long id) throws Exception;
 }

@@ -11,7 +11,7 @@ public class DBConnection {
 
     private DBConnection(){
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/hotel_management","root","");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3308/hotel_management","root","123456");
         } catch (SQLException e) {
             e.printStackTrace();
         }
