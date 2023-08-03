@@ -6,7 +6,7 @@ import java.util.Date;
 
 @Data
 public class Address {
-    private Long id;
+    private long id;
     private Country country;
     private City city;
     private District district;
