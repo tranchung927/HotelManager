@@ -23,7 +23,9 @@ public class RoomDAOImpl implements RoomDAO {
         ResultSet resultSet = CrudUtil.execute("SELECT * FROM Room");
         List<RoomEntity> roomList =  new ArrayList<>();
         while (resultSet.next()) {
-            roomList.add(new RoomEntity(resultSet.getString(1),resultSet.getInt(2),resultSet.getString(3)));
+            roomList.add(new RoomEntity(resultSet.getString(1),
+                    resultSet.getInt(2),resultSet.getInt(3),resultSet.getInt(4),
+                    resultSet.getDouble(5),resultSet.getInt(6)));
         }
         return roomList;
     }
@@ -32,22 +34,25 @@ public class RoomDAOImpl implements RoomDAO {
     public RoomEntity find(String key) throws Exception {
         ResultSet resultSet = CrudUtil.execute("SELECT * FROM Room WHERE roomNumber=?",key);
         if (resultSet.next()) {
-            return new RoomEntity(resultSet.getString(1), resultSet.getInt(2), resultSet.getString(3));
+            return new RoomEntity(resultSet.getString(1),
+                    resultSet.getInt(2),resultSet.getInt(3),resultSet.getInt(4),
+                    resultSet.getDouble(5),resultSet.getInt(6));
         }
         return null;
     }
 
     @Override
     public boolean save(RoomEntity room) throws Exception {
-        return CrudUtil.execute("INSERT INTO Room VALUES (?,?,?)",
-                room.getRoomNumber(),room.getTypeId(),room.getRoomStatus());
+        return CrudUtil.execute("INSERT INTO Room VALUES (?,?,?,?,?,?)",
+                room.getName(),room.getCategoryId(),room.getStatus(),
+                room.getNumberOfBed(),room.getPrice(),room.getFlag());
     }
 
     @Override
-    public boolean update(RoomEntity room) throws Exception {
-        return CrudUtil.execute("UPDATE Room SET typeId=?,roomStatus=? WHERE roomNumber=?",
-                room.getTypeId(),room.getRoomStatus(),room.getRoomNumber());
+    public boolean update(RoomEntity entity) throws Exception {
+        return false;
     }
+
 
     @Override
     public boolean delete(String key) throws Exception {

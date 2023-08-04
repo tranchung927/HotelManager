@@ -4,49 +4,82 @@ import vn.edu.aptech.hotelmanager.common.entity.IEntity;
 
 public class RoomEntity implements IEntity {
 
-    private String roomNumber;
-    private int typeId;
-    private String roomStatus;
-
+    private String name ;
+    private int categoryId;
+    private int  status;
+    private int numberOfBed;
+    private double price;
+    private int flag;
     public RoomEntity() {
     }
 
-    public RoomEntity(String roomNumber, int typeId, String roomStatus) {
-        this.setRoomNumber(roomNumber);
-        this.setTypeId(typeId);
-        this.setRoomStatus(roomStatus);
+    public RoomEntity( String name, int categoryId, int status, int numberOfBed, double price, int flag) {
+        this.name = name;
+        this.categoryId = categoryId;
+        this.status = status;
+        this.numberOfBed = numberOfBed;
+        this.price = price;
+        this.flag = flag;
     }
 
-    public String getRoomNumber() {
-        return roomNumber;
+
+    public String getName() {
+        return name;
     }
 
-    public void setRoomNumber(String roomNumber) {
-        this.roomNumber = roomNumber;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public int getTypeId() {
-        return typeId;
+    public int getCategoryId() {
+        return categoryId;
     }
 
-    public void setTypeId(int typeId) {
-        this.typeId = typeId;
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
     }
 
-    public String getRoomStatus() {
-        return roomStatus;
+    public int getStatus() {
+        return status;
     }
 
-    public void setRoomStatus(String roomStatus) {
-        this.roomStatus = roomStatus;
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public int getNumberOfBed() {
+        return numberOfBed;
+    }
+
+    public void setNumberOfBed(int numberOfBed) {
+        this.numberOfBed = numberOfBed;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public int getFlag() {
+        return flag;
+    }
+
+    public void setFlag(int flag) {
+        this.flag = flag;
     }
 
     @Override
     public String toString() {
-        return "Room{" +
-                "roomNumber='" + roomNumber + '\'' +
-                ", typeId=" + typeId +
-                ", roomStatus='" + roomStatus + '\'' +
+        return "RoomEntity{" +
+                ", name='" + name + '\'' +
+                ", categoryId=" + categoryId +
+                ", status=" + status +
+                ", numberOfBed=" + numberOfBed +
+                ", price=" + price +
+                ", flag=" + flag +
                 '}';
     }
 }

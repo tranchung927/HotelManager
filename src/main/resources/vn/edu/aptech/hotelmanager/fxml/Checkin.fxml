@@ -8,7 +8,7 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="487.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vn.edu.aptech.hotelmanager.controllers.CheckinController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="526.0" prefWidth="619.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vn.edu.aptech.hotelmanager.controllers.CheckinController">
    <children>
       <Label layoutX="24.0" layoutY="28.0" prefHeight="17.0" prefWidth="61.0" text="First Name" />
       <Label layoutX="16.0" layoutY="424.0" prefHeight="17.0" prefWidth="31.0" text="Sex" />
@@ -19,7 +19,6 @@
       <MFXRadioButton layoutX="182.0" layoutY="424.0" text="Female" />
       <MFXTextField layoutX="104.0" layoutY="243.0" prefHeight="49.0" prefWidth="171.0" />
       <MFXButton layoutX="348.0" layoutY="442.0" text="Checkin" />
-      <MFXButton layoutX="409.0" layoutY="442.0" text="Reserve" />
       <Label layoutX="24.0" layoutY="85.0" prefHeight="17.0" prefWidth="61.0" text="First Name" />
       <MFXTextField layoutX="104.0" layoutY="69.0" prefHeight="49.0" prefWidth="101.0" />
       <Label layoutX="24.0" layoutY="141.0" prefHeight="17.0" prefWidth="61.0" text="GroupID" />
@@ -37,7 +36,7 @@
       <Label layoutX="319.0" layoutY="259.0" prefHeight="17.0" prefWidth="39.0" text="Today" />
       <MFXTextField layoutX="364.0" layoutY="303.0" prefHeight="49.0" prefWidth="189.0" />
       <Label layoutX="319.0" layoutY="319.0" prefHeight="17.0" prefWidth="39.0" text="Status" />
-      <MFXButton layoutX="470.0" layoutY="442.0" text="Edit" />
+      <MFXButton layoutX="443.0" layoutY="442.0" text="Edit" />
       <MFXButton layoutX="507.0" layoutY="442.0" onAction="#checkout" text="Checkout" />
    </children>
 </AnchorPane>
