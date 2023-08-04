@@ -1,0 +1,171 @@
+@import '../fonts/Fonts.css';
+@import 'Colors.css';
+
+/**************************************************
+ * Root
+**************************************************/
+.rootPane {
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-border-color: #ebebeb;
+    -fx-border-radius: 10;
+}
+
+
+.rootPane-left {
+    -fx-background-color: linear-gradient(to bottom right, #2f3f89, #9231b5);
+}
+
+/**************************************************
+ * Window Header
+**************************************************/
+.rootPane .close-icon {
+    -mfx-color: #d01818;
+}
+
+.rootPane .close-icon:hover {
+    -fx-opacity: 1.0;
+}
+
+.rootPane .minimize-icon {
+    -mfx-color: #ffbf37;
+    -fx-opacity: 0.5;
+}
+
+.rootPane .minimize-icon:hover {
+    -fx-opacity: 1.0;
+}
+
+.rootPane .always-on-top-icon {
+    -mfx-color: -mfx-purple;
+    -fx-opacity: 0.5;
+}
+
+.rootPane .always-on-top-icon:hover {
+    -fx-opacity: 1.0;
+}
+
+/**************************************************
+ * Label
+**************************************************/
+
+.label-left {
+    -fx-font-family: 'Visby Round CF Medium';
+    -fx-font-size: 24px;
+    -fx-text-fill: white;
+}
+
+.label-right {
+    -fx-font-family: 'Visby Round CF Medium';
+    -fx-font-size: 30px;
+    -fx-text-fill: #8c1077;
+}
+
+
+/**************************************************
+ * Text Fields
+**************************************************/
+.mfx-text-field {
+    -fx-min-width: 130;
+    -fx-font-family: 'Visby Round CF Medium';
+    -fx-border-color: #621d88;
+}
+
+.mfx-text-field .floating-text {
+    -fx-font-family: 'Visby Round CF Medium';
+}
+
+
+/**************************************************
+ * Password Fields
+**************************************************/
+#customPassword {
+    -fx-border-color: -secondary-gradient;
+}
+
+
+#customPassword .mfx-font-icon {
+    -mfx-color: -mfx-blue;
+}
+
+#customPassword .mfx-context-menu .mfx-menu-item:disabled .mfx-font-icon {
+    -mfx-color: #bcbcbc;
+}
+
+#customPassword .floating-text {
+    -fx-text-fill: -mfx-blue;
+}
+
+/**************************************************
+ * Button Login
+**************************************************/
+.mfx-button {
+    -fx-font-family: 'Visby Round CF Medium';
+    -fx-text-fill: -mfx-text-he;
+    -fx-cursor: hand;
+}
+
+.mfx-button .mfx-ripple-generator {
+    -mfx-ripple-radius: 40;
+    -mfx-auto-clip: true;
+}
+
+.mfx-button .text {
+    -fx-font-smoothing-type: lcd;
+}
+
+
+#saveBtn {
+    -fx-background-color: linear-gradient(to bottom right, #66d77b, #13ab29);
+    -fx-text-fill: white
+}
+#clearBtn {
+    -fx-background-color: linear-gradient(to bottom right, #237c71, #10abc0);
+    -fx-text-fill: white
+}
+#updateBtn {
+    -fx-background-color: linear-gradient(to bottom right, #bf36d3, #c010b7);
+    -fx-text-fill: white
+}
+
+.outline-button {
+    -fx-background-color: transparent;
+    -fx-border-color: -mfx-purple;
+    -fx-border-radius: 3;
+
+    -fx-text-fill: -mfx-purple;
+}
+
+.outline-button:hover{
+    -fx-background-color: linear-gradient(to bottom right, #8c0f40, #0c2862);
+    -fx-text-fill: white;
+}
+
+
+.link-button {
+    -fx-background-color: transparent;
+    -fx-border-radius: 3;
+    -fx-text-fill: #0096FF;
+    -fx-underline: true;
+    -fx-cursor: hand;
+}
+
+.link-button:armed
+{
+    -fx-border-color: #006BFF;
+    -fx-text-fill: #006BFF;
+}
+
+/*.link-button .mfx-ripple-generator {*/
+/*    -mfx-ripple-color: #D9E9FF;*/
+/*}*/
+.buttonIcon{
+    -fx-background-color: transparent;
+}
+
+
+
+
+
+
+

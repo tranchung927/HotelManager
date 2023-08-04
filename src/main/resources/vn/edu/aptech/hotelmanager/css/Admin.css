@@ -97,6 +97,58 @@
  * Button
 **************************************************/
 
+.mfx-button {
+    -fx-font-family: 'Visby Round CF Medium';
+    -fx-text-fill: -mfx-text-he;
+}
+
+.mfx-button .mfx-ripple-generator {
+    -mfx-ripple-radius: 40;
+    -mfx-auto-clip: true;
+}
+
+.mfx-button .text {
+    -fx-font-smoothing-type: lcd;
+}
+
+#custom {
+    -fx-background-color: -mfx-purple;
+    -fx-text-fill: white
+}
+
+.outline-button {
+    -fx-background-color: transparent;
+    -fx-border-color: -mfx-purple;
+    -fx-border-radius: 3;
+
+    -fx-text-fill: -mfx-purple;
+}
+
+.outline-button:hover,
+.outline-button:focused {
+    -fx-background-color: -mfx-purple;
+    -fx-text-fill: white;
+}
+
+
+.link-button {
+    -fx-background-color: transparent;
+    -fx-border-radius: 3;
+    -fx-text-fill: #0096FF;
+    -fx-underline: true;
+    -fx-cursor: hand;
+}
+
+.link-button:armed,
+.link-button:focused {
+    -fx-border-color: #006BFF;
+    -fx-text-fill: #006BFF;
+}
+
+.link-button .mfx-ripple-generator {
+    -mfx-ripple-color: #D9E9FF;
+}
+
 .add-btn {
     -fx-background-color: #a16eab;
     -fx-background-radius: 5px;
@@ -248,5 +300,34 @@
 }
 #col {
     -fx-text-alignment: CENTER;
+}
+
+.header-label {
+    -fx-font-family: 'Visby Round CF Bold';
+    -fx-font-size: 14;
+    -fx-text-fill: -mfx-text-he;
+}
+
+.header-label .text {
+    -fx-font-smoothing-type: lcd;
+}
+
+.sub-header-label {
+    -fx-font-family: 'Visby Round CF Demi Bold';
+    -fx-text-fill: -mfx-text-he;
+}
+
+.sub-header-label .text {
+    -fx-font-smoothing-type: lcd;
+}
+
+.grid-pane {
+    -fx-background-color: transparent;
+}
+
+.grid-background {
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0.12, -1.0, 2.0);
 }
 
