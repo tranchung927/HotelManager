@@ -74,19 +74,23 @@ public class AdminController implements Initializable {
         }
     }
 
-    public void selectRow() {
-        Account currentSelected = accountTableView.getSelectionModel().getSelectedValue();
-        int index = accountTableView.getSelectionModel().getSelectedValues().indexOf(currentSelected);
+    public void selectedAccount(Account account) {
+
         try {
             Stage stage = new Stage();
             FXMLLoader loader = new FXMLLoader(HMResourcesLoader.loadURL("fxml/Account.fxml"));
-            AccountController accountController = new AccountController(stage, currentSelected);
+            AccountController accountController = new AccountController(stage, account);
             accountController.setListener(new IAccountControllerListener() {
                 @Override
                 public void addNewAccount(Account account) {}
                 @Override
                 public void updateAccount(Account account) {
-                    accounts.set(index, account);
+                    for (int i = 0; i < accounts.size(); i++) {
+                        if (account.getId() == accounts.get(i).getId()) {
+                            accounts.set(i, account);
+                            break;
+                        }
+                    }
                 }
             });
             loader.setControllerFactory(c -> accountController);
@@ -118,17 +122,75 @@ public class AdminController implements Initializable {
         MFXTableColumn<Account> userNColumn = new MFXTableColumn<>("User Name", false, Comparator.comparing(Account::getUserName));
         MFXTableColumn<Account> passColumn = new MFXTableColumn<>("Password", false, Comparator.comparing(Account::getPassword));
 
-        idColumn.setRowCellFactory(account -> new MFXTableRowCell<>(Account::getId));
-        nameColumn.setRowCellFactory(account -> new MFXTableRowCell<>(Account::getName));
-        emailColumn.setRowCellFactory(account -> new MFXTableRowCell<>(Account::getEmail));
-        phoneColumn.setRowCellFactory(account -> new MFXTableRowCell<>(Account::getPhone));
-        dobColumn.setRowCellFactory(account -> new MFXTableRowCell<>(Account::getDob));
-        sexColumn.setRowCellFactory(account -> new MFXTableRowCell<>(Account::getSex));
-        positionColumn.setRowCellFactory(account -> new MFXTableRowCell<>(Account::getPosition));
-        userNColumn.setRowCellFactory(account -> new MFXTableRowCell<>(Account::getUserName));
-        passColumn.setRowCellFactory(account -> new MFXTableRowCell<>(Account::getPassword));
+        idColumn.setRowCellFactory(account -> new MFXTableRowCell<>(Account::getId) {{
+            setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (account != null)) {
+                    selectedAccount(account);
+                }
+            });
+        }});
+        nameColumn.setRowCellFactory(account -> new MFXTableRowCell<>(Account::getName) {{
+            setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (account != null)) {
+                    selectedAccount(account);
+                }
+            });
+        }});
+        emailColumn.setRowCellFactory(account -> new MFXTableRowCell<>(Account::getEmail) {{
+            setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (account != null)) {
+                    selectedAccount(account);
+                }
+            });
+        }});
+        phoneColumn.setRowCellFactory(account -> new MFXTableRowCell<>(Account::getPhone) {{
+            setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (account != null)) {
+                    selectedAccount(account);
+                }
+            });
+        }});
+        dobColumn.setRowCellFactory(account -> new MFXTableRowCell<>(Account::getDob) {{
+            setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (account != null)) {
+                    selectedAccount(account);
+                }
+            });
+        }});
+        sexColumn.setRowCellFactory(account -> new MFXTableRowCell<>(Account::getSex) {{
+            setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (account != null)) {
+                    selectedAccount(account);
+                }
+            });
+        }});
+        positionColumn.setRowCellFactory(account -> new MFXTableRowCell<>(Account::getPosition) {{
+            setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (account != null)) {
+                    selectedAccount(account);
+                }
+            });
+        }});
+        userNColumn.setRowCellFactory(account -> new MFXTableRowCell<>(Account::getUserName) {{
+            setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (account != null)) {
+                    selectedAccount(account);
+                }
+            });
+        }});
+        passColumn.setRowCellFactory(account -> new MFXTableRowCell<>(Account::getPassword) {{
+            setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (account != null)) {
+                    selectedAccount(account);
+                }
+            });
+        }});
 
-        accountTableView.getTableColumns().addAll(idColumn, nameColumn, emailColumn, phoneColumn, dobColumn, sexColumn, positionColumn, userNColumn, passColumn);
+        accountTableView.getTableColumns().addAll(
+                idColumn, nameColumn, emailColumn,
+                phoneColumn, dobColumn, sexColumn,
+                positionColumn, userNColumn, passColumn
+        );
         accountTableView.getFilters().addAll(
                 new IntegerFilter<>("ID", Account::getId),
                 new StringFilter<>("Name", Account::getName),
