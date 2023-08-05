@@ -49,13 +49,15 @@ public class RoomDAOImpl implements RoomDAO {
     }
 
     @Override
-    public boolean update(RoomEntity entity) throws Exception {
-        return false;
+    public boolean update(RoomEntity room) throws Exception {
+        return CrudUtil.execute("UPDATE Room SET name=?,status=?,number_of_bed=?,price=?,category_id=?,flag=? WHERE name=?",
+                room.getName(),room.getCategoryId(),room.getStatus(),
+                room.getNumberOfBed(),room.getPrice(),room.getFlag(),room.getName());
     }
 
 
     @Override
     public boolean delete(String key) throws Exception {
-        return CrudUtil.execute("DELETE FROM Room WHERE roomNumber=?",key);
+        return CrudUtil.execute("DELETE FROM Room WHERE  name=?",key);
     }
 }

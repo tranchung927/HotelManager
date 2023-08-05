@@ -12,16 +12,20 @@ import vn.edu.aptech.hotelmanager.HMResourcesLoader;
 import java.io.IOException;
 
 public class CheckinController {
-    public static void display(ActionEvent event) throws IOException {
-        Stage stage = new Stage();
+    private static Stage window;
+
+    public static void display(ActionEvent event,Stage stage) throws IOException {
+        window = stage;
         stage.initModality(Modality.APPLICATION_MODAL);
         FXMLLoader loader = new FXMLLoader(HMResourcesLoader.loadURL("fxml/Checkin.fxml"));
         Parent root = loader.load();
         stage.setScene(new Scene(root));
         stage.show();
+
     }
     public void checkout(ActionEvent event) throws IOException {
         CheckoutController checkoutController = new CheckoutController();
         checkoutController.display(event);
+        window.close();
     }
 }

@@ -31,7 +31,6 @@ import java.util.Map;
 
 public class RoomController {
     private final IRoomRepo roomRepo = RepoFactory.getInstance().getRepo(REPO_TYPE.ROOM);
-    private String status;
 
     @FXML
     private final Stage stage;
@@ -40,12 +39,14 @@ public class RoomController {
     }
 
     public void checkin(ActionEvent event) throws IOException {
+        Stage window = new Stage();
         CheckinController checkinController = new CheckinController();
-        CheckinController.display(event);
+        CheckinController.display(event,window);
     }
     public void occupied(ActionEvent event) throws IOException {
+        Stage window = new Stage();
         CheckinController checkinController = new CheckinController();
-        CheckinController.display(event);
+        CheckinController.display(event,window);
     }
 
 
