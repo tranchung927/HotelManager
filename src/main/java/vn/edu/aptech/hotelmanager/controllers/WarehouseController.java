@@ -21,7 +21,6 @@ public class WarehouseController implements Initializable {
     private Stage stage;
 
     public void goInputProduct(ActionEvent event) {
-
         FXMLLoader loader = new FXMLLoader(HMResourcesLoader.loadURL("fxml/Product.fxml"));
         loader.setControllerFactory(c -> new ProductController());
         Parent root = null;

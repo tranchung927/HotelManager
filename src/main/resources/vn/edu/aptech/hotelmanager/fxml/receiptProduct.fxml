@@ -14,7 +14,7 @@
    <top>
       <FlowPane alignment="CENTER" prefHeight="50.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <Label style="-fx-font-weight: bold;" styleClass="title" stylesheets="@../css/Sales.css" text="Thông tin hoá đơn">
+            <Label style="-fx-font-weight: bold;" styleClass="title" stylesheets="@../css/Sales.css" text="Thanh toán thành công">
                <font>
                   <Font name="Arial Bold" size="13.0" />
                </font>

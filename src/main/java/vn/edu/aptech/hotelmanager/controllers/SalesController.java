@@ -18,6 +18,8 @@ import vn.edu.aptech.hotelmanager.HMResourcesLoader;
 import vn.edu.aptech.hotelmanager.common.entity.MyListener;
 import vn.edu.aptech.hotelmanager.utils.ProductBill;
 
+import javax.swing.*;
+import java.awt.geom.Arc2D;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -52,7 +54,8 @@ public class SalesController implements Initializable {
     private TextField totalPriceTextField;
     @FXML
     private ScrollPane scrollPane;
-    private ObservableList<ProductBill> productBillList;
+    public  static Float totalReceipt;
+   public static ObservableList<ProductBill> productBillList;
 
     public ObservableList<ProductBill> getProductBillList() {
         return productBillList;
@@ -60,11 +63,6 @@ public class SalesController implements Initializable {
 
     public SalesController() {
     }
-
-    public void setProductBillList(ObservableList<ProductBill> productBillList) {
-        this.productBillList = productBillList;
-    }
-
     private MyListener myListener;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -116,6 +114,7 @@ public class SalesController implements Initializable {
         for(ProductBill p:productBillList){
             total += p.getQuantity()*p.getPrice();
         }
+        totalReceipt = total;
         totalPriceTextField.setText(total + " VNĐ");
 
     }
@@ -235,7 +234,9 @@ public class SalesController implements Initializable {
             for(ProductBill p:productBillList){
                 total += p.getQuantity()*p.getPrice();
             }
+            totalReceipt = total;
         totalPriceTextField.setText(total + " VNĐ");
+
     }
 
     private boolean checkIfContains(ObservableList<ProductBill> productBillList, int id) {
@@ -269,6 +270,5 @@ public class SalesController implements Initializable {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-
     }
 }

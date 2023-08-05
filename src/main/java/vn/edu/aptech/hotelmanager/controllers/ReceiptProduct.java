@@ -33,20 +33,21 @@ public class ReceiptProduct implements Initializable {
     private TextField totalPriceTextField;
     private ObservableList<ProductBill> productBillListReceipt;
 
+    public ObservableList<ProductBill> getProductBillListReceipt() {
+        return productBillListReceipt;
+    }
+
+    public void setProductBillListReceipt(ObservableList<ProductBill> productBillListReceipt) {
+        this.productBillListReceipt = productBillListReceipt;
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        SalesController salesController = new SalesController();
-        for(ProductBill p: salesController.getProductBillList()){
-            System.out.println("rewceipt: "+ p);
-        }
-        productBillListReceipt = salesController.getProductBillList();
-        productBillListReceipt = FXCollections.observableArrayList(
-
-        );
         idProductCol.setCellValueFactory(new PropertyValueFactory<ProductBill,Integer>("id"));
         ProductNameCol.setCellValueFactory(new PropertyValueFactory<ProductBill,String>("name"));
         quantityCol.setCellValueFactory(new PropertyValueFactory<ProductBill,Integer>("quantity"));
         priceCol.setCellValueFactory(new PropertyValueFactory<ProductBill,Double>("price"));
-        billTableView.setItems(productBillListReceipt);
+        totalPriceTextField.setText(SalesController.totalReceipt+"");
+        billTableView.setItems(SalesController.productBillList);
     }
 }
