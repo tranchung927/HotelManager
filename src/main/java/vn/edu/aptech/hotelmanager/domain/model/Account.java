@@ -1,8 +1,5 @@
 package vn.edu.aptech.hotelmanager.domain.model;
 
-import io.github.palexdev.materialfx.utils.RandomUtils;
-import javafx.beans.property.*;
-
 import java.util.Date;
 
 public class Account {
@@ -117,5 +114,26 @@ public class Account {
                 ", userName='" + userName + '\'' +
                 ", password='" + password + '\'' +
                 '}';
+    }
+
+    public String getFirstName(String name) {
+        String firstName = "";
+
+        String[] splitName = name.split(" ");
+
+        firstName = splitName[0] + " " + splitName[1];
+
+        return firstName;
+    }
+
+    public String getLastName(String name) {
+
+        String[] splitName = name.split(" ");
+        String lastName = "";
+        lastName = splitName[2];
+
+
+        return lastName;
+
     }
 }

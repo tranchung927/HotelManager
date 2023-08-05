@@ -1,8 +1,7 @@
 package vn.edu.aptech.hotelmanager.controllers;
 
-import io.github.palexdev.materialfx.controls.MFXButton;
-import io.github.palexdev.materialfx.controls.MFXPaginatedTableView;
-import io.github.palexdev.materialfx.controls.MFXTableColumn;
+import fr.brouillard.oss.cssfx.CSSFX;
+import io.github.palexdev.materialfx.controls.*;
 import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
 import io.github.palexdev.materialfx.css.themes.MFXThemeManager;
 import io.github.palexdev.materialfx.css.themes.Themes;
@@ -16,6 +15,7 @@ import io.github.palexdev.materialfx.utils.others.observables.When;
 import io.github.palexdev.mfxresources.fonts.MFXFontIcon;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -38,16 +38,14 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.util.*;
 
-public class AdminController implements Initializable {
-    private final Stage stage;
+public class AdminController implements Initializable,IAccountControllerDelegate {
+
 
     /**************************************************
      * Tab - room
      **************************************************/
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
 
         setupPaginated();
 
@@ -61,15 +59,21 @@ public class AdminController implements Initializable {
 
     @FXML
     private MFXPaginatedTableView<Account> paginated;
+    private ObservableList<Account> accounts;
 
-    private void setupPaginated() {
+    void setupPaginated() {
 
-        ObservableList<Account> accounts = FXCollections.observableArrayList();
+        accounts = FXCollections.observableArrayList();
+        accounts.addListener(new ListChangeListener<Account>() {
+            @Override
+            public void onChanged(Change<? extends Account> change) {
+
+            }
+        });
         ResultSet resultSet = null;
-        String url = "SELECT account.id,first_name,last_name,email,phone_number,dob,sex,position.name,username,password " +
-                "FROM account " +
-                "INNER JOIN position ON position.id = account.position_id";
-
+        String url = "SELECT accounts.id,first_name,last_name,email,phone_number,dob,sex,position.name,username,password " +
+                "FROM accounts " +
+                "INNER JOIN position ON position.id = accounts.position_id";
 
         try {
 
@@ -89,14 +93,12 @@ public class AdminController implements Initializable {
                 String user_name = resultSet.getString(9);
                 String pass = resultSet.getString(10);
 
-                account = new Account(id, name, email, phone, dob, sex, position_name, user_name,pass);
+                account = new Account(id, name, email, phone, dob, sex, position_name, user_name, pass);
                 accounts.add(account);
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
-
         MFXTableColumn<Account> idColumn = new MFXTableColumn<>("ID", false, Comparator.comparing(Account::getId));
         MFXTableColumn<Account> nameColumn = new MFXTableColumn<>("Name", false, Comparator.comparing(Account::getName));
         MFXTableColumn<Account> emailColumn = new MFXTableColumn<>("Email", false, Comparator.comparing(Account::getEmail));
@@ -106,6 +108,7 @@ public class AdminController implements Initializable {
         MFXTableColumn<Account> positionColumn = new MFXTableColumn<>("Position", false, Comparator.comparing(Account::getPosition));
         MFXTableColumn<Account> userNColumn = new MFXTableColumn<>("User Name", false, Comparator.comparing(Account::getUserName));
         MFXTableColumn<Account> passColumn = new MFXTableColumn<>("Password", false, Comparator.comparing(Account::getPassword));
+
 
         idColumn.setRowCellFactory(account -> new MFXTableRowCell<>(Account::getId));
         nameColumn.setRowCellFactory(account -> new MFXTableRowCell<>(Account::getName));
@@ -119,7 +122,7 @@ public class AdminController implements Initializable {
 
 
 
-        paginated.getTableColumns().addAll(idColumn, nameColumn, emailColumn, phoneColumn, dobColumn,sexColumn,positionColumn,userNColumn,passColumn);
+        paginated.getTableColumns().addAll(idColumn, nameColumn, emailColumn, phoneColumn, dobColumn, sexColumn, positionColumn, userNColumn, passColumn);
         paginated.getFilters().addAll(
                 new IntegerFilter<>("ID", Account::getId),
                 new StringFilter<>("Name", Account::getName),
@@ -130,20 +133,21 @@ public class AdminController implements Initializable {
         paginated.setItems(accounts);
     }
 
-    public AdminController(Stage stage) {
-        this.stage = stage;
-    }
-
 
     public void addBtn(ActionEvent event) {
 
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("fxml/Account.fxml"));
-            Stage stage = new Stage();
+
+            FXMLLoader loader = new FXMLLoader(HMResourcesLoader.loadURL("fxml/Account.fxml"));
+            Stage stage = null;
+            Stage finalStage = stage;
+            loader.setControllerFactory(c -> new AccountController(finalStage));
+            stage = new Stage();
+            Parent root = loader.load();
             Scene scene = new Scene(root);
             MFXThemeManager.addOn(scene, Themes.DEFAULT, Themes.LEGACY);
 //                scene.setFill(Color.TRANSPARENT);
-//            stage.initStyle(StageStyle.TRANSPARENT);
+            stage.initStyle(StageStyle.TRANSPARENT);
             stage.setScene(scene);
             stage.setTitle("Account Managerment ");
             stage.show();
@@ -152,6 +156,64 @@ public class AdminController implements Initializable {
         }
 
 
+    }
+
+    public void selectRow() {
+
+
+        Account account = paginated.getSelectionModel().getSelectedValue();
+        int num = paginated.getSelectionModel().getSelectedValues().indexOf(account);
+
+        System.out.println(num);
+        System.out.println(account);
+        System.out.println(account.getId());
+        System.out.println(account.getFirstName(account.getName()));
+        System.out.println(account.getLastName(account.getName()));
+        System.out.println(account.getEmail());
+
+
+        if ((num - 1) < -1) {
+            return;
+        }
+
+
+//        accountController.setPass_word((MFXPasswordField) MFXPasswordField.asLabel(account.getPassword()));
+        try {
+            CSSFX.start();
+            FXMLLoader loader = new FXMLLoader(HMResourcesLoader.loadURL("fxml/Account.fxml"));
+            Stage stage = null;
+            Stage finalStage = stage;
+            loader.setControllerFactory(c -> new AccountController(finalStage));
+            stage = new Stage();
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            MFXThemeManager.addOn(scene, Themes.DEFAULT, Themes.LEGACY);
+//                scene.setFill(Color.TRANSPARENT);
+            stage.initStyle(StageStyle.TRANSPARENT);
+            stage.setScene(scene);
+            stage.setTitle("Account Managerment ");
+
+            AccountController accountController = new AccountController(new Stage());
+//        accountController.showBtn();
+
+
+            accountController.setEmployee_id(MFXTextField.asLabel(String.valueOf(account.getId())));
+            accountController.setFirst_name(MFXTextField.asLabel(account.getFirstName(account.getName())));
+            accountController.setLast_name(MFXTextField.asLabel(account.getLastName(account.getName())));
+            accountController.setE_email(MFXTextField.asLabel(String.valueOf(account.getEmail())));
+            accountController.setE_phone(MFXTextField.asLabel(String.valueOf(account.getPhone())));
+
+            accountController.setUser_name(MFXTextField.asLabel(String.valueOf(account.getUserName())));
+            stage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    @Override
+    public void addNewAccount(Account account) {
+        accounts.add(account);
     }
 }
 

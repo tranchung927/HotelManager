@@ -52,6 +52,8 @@ public class AccountController implements Initializable {
     @FXML
     private AnchorPane rootPane;
 
+//    public AccountController() {
+//    }
 
     public AccountController(Stage stage) {
         this.stage = stage;
@@ -59,27 +61,19 @@ public class AccountController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        hideBtn();
 
 
         date_of_bitrh.setGridAlgorithm(DateTimeUtils::partialIntMonthMatrix);
         date_of_bitrh.setConverterSupplier(() -> new DateStringConverter("dd/MM/yyyy", date_of_bitrh.getLocale()));
 
-        closeIcon.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> Platform.exit());
+        closeIcon.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> ((Stage) rootPane.getScene().getWindow()).close());
         minimizeIcon.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> ((Stage) rootPane.getScene().getWindow()).setIconified(true));
 
         alwaysOnTopIcon.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             boolean newVal = !stage.isAlwaysOnTop();
             alwaysOnTopIcon.pseudoClassStateChanged(PseudoClass.getPseudoClass("always-on-top"), newVal);
             stage.setAlwaysOnTop(newVal);
-        });
-
-        rootPane.setOnMousePressed(event -> {
-            x = stage.getX() - event.getScreenX();
-            y = stage.getY() - event.getScreenY();
-        });
-        rootPane.setOnMouseDragged(event -> {
-            stage.setX(event.getScreenX() + x);
-            stage.setY(event.getScreenY() + y);
         });
 
 
@@ -213,6 +207,16 @@ public class AccountController implements Initializable {
 
     @FXML
     private MFXButton updateBtn;
+    
+    
+    public void hideBtn(){
+        saveBtn.setVisible(true);
+        updateBtn.setVisible(false);
+    }
+    public void showBtn(){
+        saveBtn.setVisible(false);
+        updateBtn.setVisible(true);
+    }
 
     @FXML
     private MFXDatePicker date_of_bitrh;
@@ -246,6 +250,62 @@ public class AccountController implements Initializable {
     private MFXTextField user_name;
     @FXML
     private MFXTextField e_desc;
+
+    public MFXTextField getE_email() {
+        return e_email;
+    }
+
+    public void setE_email(MFXTextField e_email) {
+        this.e_email = e_email;
+    }
+
+    public MFXTextField getE_phone() {
+        return e_phone;
+    }
+
+    public void setE_phone(MFXTextField e_phone) {
+        this.e_phone = e_phone;
+    }
+
+    public MFXTextField getEmployee_id() {
+        return employee_id;
+    }
+
+    public void setEmployee_id(MFXTextField employee_id) {
+        this.employee_id = employee_id;
+    }
+
+    public MFXTextField getFirst_name() {
+        return first_name;
+    }
+
+    public void setFirst_name(MFXTextField first_name) {
+        this.first_name = first_name;
+    }
+
+    public MFXTextField getLast_name() {
+        return last_name;
+    }
+
+    public void setLast_name(MFXTextField last_name) {
+        this.last_name = last_name;
+    }
+
+    public MFXPasswordField getPass_word() {
+        return pass_word;
+    }
+
+    public void setPass_word(MFXPasswordField pass_word) {
+        this.pass_word = pass_word;
+    }
+
+    public MFXTextField getUser_name() {
+        return user_name;
+    }
+
+    public void setUser_name(MFXTextField user_name) {
+        this.user_name = user_name;
+    }
 
     public String getAddressId(String ci, String dis) {
 
@@ -402,6 +462,8 @@ public class AccountController implements Initializable {
                 alert.setContentText("Add Successfully");
                 alert.showAndWait();
 
+                AdminController adminController = new AdminController();
+                adminController.setupPaginated();
                 clearBtn();
 
             }
@@ -433,6 +495,8 @@ public class AccountController implements Initializable {
 
 
     }
+
+
 
 
 }
