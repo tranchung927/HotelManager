@@ -1,15 +1,10 @@
 package vn.edu.aptech.hotelmanager.controllers;
 
 import io.github.palexdev.materialfx.controls.*;
-import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
 
-import io.github.palexdev.materialfx.filter.IntegerFilter;
-import io.github.palexdev.materialfx.filter.StringFilter;
 import io.github.palexdev.materialfx.utils.DateTimeUtils;
 import io.github.palexdev.materialfx.utils.others.dates.DateStringConverter;
-import io.github.palexdev.materialfx.utils.others.observables.When;
 import io.github.palexdev.mfxresources.fonts.MFXFontIcon;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.css.PseudoClass;
@@ -24,6 +19,7 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.*;
 
 import javafx.scene.control.Alert;
@@ -35,11 +31,6 @@ import vn.edu.aptech.hotelmanager.repo.db.DBConnection;
 import vn.edu.aptech.hotelmanager.utils.CrudUtil;
 
 public class AccountController implements Initializable {
-    private final Stage stage;
-
-    private double x = 0;
-    private double y = 0;
-
     @FXML
     private MFXFontIcon alwaysOnTopIcon;
 
@@ -52,43 +43,79 @@ public class AccountController implements Initializable {
     @FXML
     private AnchorPane rootPane;
 
-//    public AccountController() {
-//    }
+    @FXML
+    private MFXDatePicker dobDatePicker;
 
-    public AccountController(Stage stage) {
+    @FXML
+    private MFXTextField codeTextField;
+
+    @FXML
+    private MFXTextField e_email;
+
+    @FXML
+    private MFXTextField e_phone;
+
+    @FXML
+    private MFXTextField e_role;
+
+    @FXML
+    private MFXTextField e_status;
+
+    @FXML
+    private MFXTextField employee_id;
+
+    @FXML
+    private MFXTextField first_name;
+
+    @FXML
+    private MFXTextField lastNameTextField;
+
+    @FXML
+    private MFXPasswordField passwordTextField;
+
+    @FXML
+    private MFXTextField usernameTextField;
+
+    @FXML
+    private MFXTextField descTextField;
+
+    @FXML
+    private MFXComboBox<?> sex;
+
+    private final Stage stage;
+    private double x = 0;
+    private double y = 0;
+    private IAccountControllerListener listener;
+    private Account account;
+    private String[] sexs = {"Male", "Female", "Other"};
+
+    public AccountController(Stage stage, Account account) {
         this.stage = stage;
+        this.account = account == null ? new Account() : account;
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         hideBtn();
-
-
-        date_of_bitrh.setGridAlgorithm(DateTimeUtils::partialIntMonthMatrix);
-        date_of_bitrh.setConverterSupplier(() -> new DateStringConverter("dd/MM/yyyy", date_of_bitrh.getLocale()));
-
+        dobDatePicker.setGridAlgorithm(DateTimeUtils::partialIntMonthMatrix);
+        dobDatePicker.setConverterSupplier(() -> new DateStringConverter("dd/MM/yyyy", dobDatePicker.getLocale()));
         closeIcon.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> ((Stage) rootPane.getScene().getWindow()).close());
         minimizeIcon.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> ((Stage) rootPane.getScene().getWindow()).setIconified(true));
-
         alwaysOnTopIcon.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             boolean newVal = !stage.isAlwaysOnTop();
             alwaysOnTopIcon.pseudoClassStateChanged(PseudoClass.getPseudoClass("always-on-top"), newVal);
             stage.setAlwaysOnTop(newVal);
         });
-
-
         addValueSex();
         addValuePositions();
         addValueCCD();
+    }
 
-
+    public void setListener(IAccountControllerListener listener) {
+        this.listener = listener;
     }
 
     ///////////////////////////////////////////////////////////////
-    @FXML
-    private MFXComboBox<?> sex;
-
-    private String[] sexs = {"Male", "Female", "Other"};
 
     @FXML
     public void addValueSex() {
@@ -142,12 +169,9 @@ public class AccountController implements Initializable {
 
             List<String> list = new ArrayList<>();
             while (resultSet.next()) {
-
                 String countries_name = resultSet.getString(1);
                 list.add(countries_name);
-
             }
-
 
             ObservableList observableList = FXCollections.observableList(list);
             country.setItems(observableList);
@@ -158,9 +182,6 @@ public class AccountController implements Initializable {
 //////////////////////////////////////////////////
         String country_select = (String) country.getSelectionModel().getSelectedItem();
 //        System.out.println(country_select);
-
-
-
         String url1 = "SELECT id,name FROM cities WHERE cities.country_id = (SELECT countries.id FROM countries WHERE countries.name = '" + country_select + "')";
         try {
             ResultSet resultSet = CrudUtil.execute(url1);
@@ -169,8 +190,6 @@ public class AccountController implements Initializable {
                 String cities = resultSet.getString(2);
                 list.add(cities);
             }
-
-
             ObservableList observableList = FXCollections.observableList(list);
             city.setItems(observableList);
 
@@ -217,96 +236,6 @@ public class AccountController implements Initializable {
         saveBtn.setVisible(false);
         updateBtn.setVisible(true);
     }
-
-    @FXML
-    private MFXDatePicker date_of_bitrh;
-    @FXML
-    private MFXTextField e_code;
-
-    @FXML
-    private MFXTextField e_email;
-
-    @FXML
-    private MFXTextField e_phone;
-
-    @FXML
-    private MFXTextField e_role;
-
-    @FXML
-    private MFXTextField e_status;
-
-    @FXML
-    private MFXTextField employee_id;
-
-    @FXML
-    private MFXTextField first_name;
-
-    @FXML
-    private MFXTextField last_name;
-    @FXML
-    private MFXPasswordField pass_word;
-
-    @FXML
-    private MFXTextField user_name;
-    @FXML
-    private MFXTextField e_desc;
-
-    public MFXTextField getE_email() {
-        return e_email;
-    }
-
-    public void setE_email(MFXTextField e_email) {
-        this.e_email = e_email;
-    }
-
-    public MFXTextField getE_phone() {
-        return e_phone;
-    }
-
-    public void setE_phone(MFXTextField e_phone) {
-        this.e_phone = e_phone;
-    }
-
-    public MFXTextField getEmployee_id() {
-        return employee_id;
-    }
-
-    public void setEmployee_id(MFXTextField employee_id) {
-        this.employee_id = employee_id;
-    }
-
-    public MFXTextField getFirst_name() {
-        return first_name;
-    }
-
-    public void setFirst_name(MFXTextField first_name) {
-        this.first_name = first_name;
-    }
-
-    public MFXTextField getLast_name() {
-        return last_name;
-    }
-
-    public void setLast_name(MFXTextField last_name) {
-        this.last_name = last_name;
-    }
-
-    public MFXPasswordField getPass_word() {
-        return pass_word;
-    }
-
-    public void setPass_word(MFXPasswordField pass_word) {
-        this.pass_word = pass_word;
-    }
-
-    public MFXTextField getUser_name() {
-        return user_name;
-    }
-
-    public void setUser_name(MFXTextField user_name) {
-        this.user_name = user_name;
-    }
-
     public String getAddressId(String ci, String dis) {
 
         String id = null;
@@ -362,17 +291,21 @@ public class AccountController implements Initializable {
 
             DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy ");
 
-            String idEmployee = employee_id.getText();
+            // Khi bâm save thì fill các trường trên UI vào biến account
+            account.setFirstName(first_name.getText());
+            account.setLastName(lastNameTextField.getText());
+            Date dob = Date.from(dobDatePicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
+            account.setDob(dob);
+            account.setEmail(e_email.getText());
+            /// Bổ sung thêm các trường còn lai
 
+            String idEmployee = employee_id.getText();
             String fname = first_name.getText();
-            String lname = last_name.getText();
+            String lname = lastNameTextField.getText();
             String email = e_email.getText();
             String phone = e_phone.getText().toLowerCase();
-            LocalDate dob1 = date_of_bitrh.getValue();
-
-
-            String code = e_code.getText();
-
+            LocalDate dob1 = dobDatePicker.getValue();
+            String code = codeTextField.getText();
             String getSex = (String) sex.getSelectionModel().getSelectedItem();
             int sex = 0;
             for (int i = 0; i < sexs.length; i++) {
@@ -380,33 +313,25 @@ public class AccountController implements Initializable {
                     sex = i + 1;
                 }
             }
-
             String status = e_status.getText();
             Calendar cal = Calendar.getInstance();
             Date date = cal.getTime();
             String todaysdate = dateFormat.format(date);
             Date localDate = dateFormat.parse(todaysdate);
-
-
-            String description = e_desc.getText();
+            String description = descTextField.getText();
             String role = e_role.getText();
-            String username = user_name.getText();
-            String password = pass_word.getText();
-
+            String username = usernameTextField.getText();
+            String password = passwordTextField.getText();
             String getPosition = (String) position.getSelectionModel().getSelectedItem();
-
             int position_id = 0;
             for (int j = 0; j < positions.length; j++) {
-                if (positions[j] == getPosition) {
+                if (Objects.equals(positions[j], getPosition)) {
                     position_id = j + 1;
                 }
             }
-
             String city_select = (String) city.getSelectionModel().getSelectedItem();
             String district_select = (String) district.getSelectionModel().getSelectedItem();
             String address_id = getAddressId(city_select, district_select);
-
-
             Alert alert;
             if (idEmployee.isEmpty()
                     || fname.isEmpty()
@@ -461,14 +386,10 @@ public class AccountController implements Initializable {
                 alert.setHeaderText(null);
                 alert.setContentText("Add Successfully");
                 alert.showAndWait();
-
-                AdminController adminController = new AdminController();
-                adminController.setupPaginated();
+                // khi thêm mới thì gọi accNewAccount còn sửa thì gọi updateAccount
+                this.listener.addNewAccount(account);
                 clearBtn();
-
             }
-
-
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -477,28 +398,22 @@ public class AccountController implements Initializable {
     public void clearBtn() {
         employee_id.setText("");
         first_name.setText("");
-        last_name.setText("");
+        lastNameTextField.setText("");
         e_email.setText("");
         e_phone.setText("");
-        date_of_bitrh.setText("");
-        e_code.setText("");
+        dobDatePicker.setText("");
+        codeTextField.setText("");
         sex.getSelectionModel().clearSelection();
         e_status.setText("");
-        e_desc.setText("");
+        descTextField.setText("");
         e_role.setText("");
-        user_name.setText("");
-        pass_word.setText("");
+        usernameTextField.setText("");
+        passwordTextField.setText("");
         position.getSelectionModel().clearSelection();
         country.getSelectionModel().clearSelection();
         city.getSelectionModel().clearSelection();
         district.getSelectionModel().clearSelection();
-
-
     }
-
-
-
-
 }
 
 

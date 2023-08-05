@@ -35,7 +35,7 @@
                               maxWidth="-Infinity" prefHeight="40.0" prefWidth="200.0" AnchorPane.rightAnchor="370.0"/>
                 <Label layoutX="602.0" layoutY="100.0" prefHeight="20.0" text="Last Name :"
                        AnchorPane.topAnchor="100.0"/>
-                <MFXTextField fx:id="last_name" floatMode="ABOVE" layoutX="597.0" layoutY="130.0" maxHeight="-Infinity"
+                <MFXTextField fx:id="lastNameTextField" floatMode="ABOVE" layoutX="597.0" layoutY="130.0" maxHeight="-Infinity"
                               maxWidth="-Infinity" prefHeight="40.0" prefWidth="200.0" AnchorPane.rightAnchor="100.0"/>
                 <Label layoutX="56.0" layoutY="185.0" prefHeight="20.0" text="Email :" AnchorPane.leftAnchor="55.0"
                        AnchorPane.topAnchor="185.0"/>
@@ -47,11 +47,11 @@
                               maxWidth="-Infinity" prefHeight="40.0" prefWidth="200.0" promptText="0123456789"
                               AnchorPane.rightAnchor="370.0"/>
                 <Label layoutX="602.0" layoutY="185.0" prefHeight="20.0" text="Date of birth :"/>
-                <MFXDatePicker fx:id="date_of_bitrh" layoutX="600.0" layoutY="216.0" maxHeight="-Infinity"
+                <MFXDatePicker fx:id="dobDatePicker" layoutX="600.0" layoutY="216.0" maxHeight="-Infinity"
                                maxWidth="-Infinity" prefHeight="30.0" prefWidth="200.0"/>
                 <Label layoutX="56.0" layoutY="268.0" prefHeight="20.0" text="Code :" AnchorPane.leftAnchor="55.0"
                        AnchorPane.topAnchor="270.0"/>
-                <MFXTextField fx:id="e_code" floatMode="ABOVE" layoutX="50.0" layoutY="299.0" maxHeight="-Infinity"
+                <MFXTextField fx:id="codeTextField" floatMode="ABOVE" layoutX="50.0" layoutY="299.0" maxHeight="-Infinity"
                               maxWidth="-Infinity" prefHeight="40.0" prefWidth="200.0" promptText="###"
                               AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="300.0"/>
                 <Label layoutX="335.0" layoutY="270.0" prefHeight="20.0" text="Sex :"/>
@@ -67,10 +67,10 @@
                              maxWidth="-Infinity" onAction="#addValuePositions" prefHeight="40.0" prefWidth="200.0"
                              promptText="Choose"/>
                 <Label layoutX="335.0" layoutY="355.0" prefHeight="20.0" text="User Name :"/>
-                <MFXTextField fx:id="user_name" floatMode="ABOVE" layoutX="315.0" layoutY="385.0" maxHeight="-Infinity"
+                <MFXTextField fx:id="usernameTextField" floatMode="ABOVE" layoutX="315.0" layoutY="385.0" maxHeight="-Infinity"
                               maxWidth="-Infinity" prefHeight="40.0" prefWidth="200.0" AnchorPane.rightAnchor="370.0"/>
                 <Label layoutX="602.0" layoutY="355.0" prefHeight="20.0" text="Password :"/>
-                <MFXPasswordField fx:id="pass_word" floatMode="ABOVE" layoutX="600.0" layoutY="385.0"
+                <MFXPasswordField fx:id="passwordTextField" floatMode="ABOVE" layoutX="600.0" layoutY="385.0"
                                   maxHeight="-Infinity" prefHeight="40.0" prefWidth="200.0"/>
                 <Label layoutX="56.0" layoutY="448.0" prefHeight="20.0" text="Role :" AnchorPane.topAnchor="440.0"/>
                 <MFXTextField fx:id="e_role" floatMode="ABOVE" layoutX="51.0" layoutY="478.0" maxHeight="-Infinity"
@@ -88,7 +88,7 @@
                              maxWidth="-Infinity" onAction="#addValueCCD" prefHeight="40.0" prefWidth="200.0"
                              promptText="Choose"/>
                 <Label layoutX="336.0" layoutY="525.0" prefHeight="20.0" text="Description :"/>
-                <MFXTextField fx:id="e_desc" floatMode="ABOVE" layoutX="330.0" layoutY="560.0" maxHeight="-Infinity"
+                <MFXTextField fx:id="descTextField" floatMode="ABOVE" layoutX="330.0" layoutY="560.0" maxHeight="-Infinity"
                               maxWidth="-Infinity" prefHeight="40.0" prefWidth="471.0"/>
                 <MFXButton fx:id="saveBtn" buttonType="RAISED" layoutX="51.0" layoutY="43.0" onAction="#saveBtn"
                            styleClass="mfx-button" stylesheets="@../css/Account.css" text="Save" visible="true"/>

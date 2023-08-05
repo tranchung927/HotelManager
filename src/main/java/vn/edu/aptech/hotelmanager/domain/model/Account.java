@@ -3,7 +3,6 @@ package vn.edu.aptech.hotelmanager.domain.model;
 import java.util.Date;
 
 public class Account {
-
     private int id;
     private String name;
     private String email;
@@ -13,6 +12,8 @@ public class Account {
     private String position;
     private String userName;
     private String password;
+    private String firstName;
+    private String lastName;
 
     public Account() {
     }
@@ -27,6 +28,22 @@ public class Account {
         this.position = position;
         this.userName = userName;
         this.password = password;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public int getId() {
@@ -116,24 +133,7 @@ public class Account {
                 '}';
     }
 
-    public String getFirstName(String name) {
-        String firstName = "";
-
-        String[] splitName = name.split(" ");
-
-        firstName = splitName[0] + " " + splitName[1];
-
-        return firstName;
-    }
-
-    public String getLastName(String name) {
-
-        String[] splitName = name.split(" ");
-        String lastName = "";
-        lastName = splitName[2];
-
-
-        return lastName;
-
+    public String getFullName() {
+        return firstName + " " + lastName;
     }
 }
