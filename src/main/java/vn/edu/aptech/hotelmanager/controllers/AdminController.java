@@ -29,7 +29,6 @@ import java.util.*;
 
 public class AdminController implements Initializable {
 
-    private final Stage stage;
     /**************************************************
      * Tab - room
      **************************************************/
@@ -38,9 +37,6 @@ public class AdminController implements Initializable {
     private MFXPaginatedTableView<Account> accountTableView;
     private ObservableList<Account> accounts;
 
-    public AdminController(Stage stage) {
-        this.stage = stage;
-    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setupPaginated();
@@ -53,6 +49,7 @@ public class AdminController implements Initializable {
 
     public void addBtn(ActionEvent event) {
         try {
+            Stage stage = new Stage();
             FXMLLoader loader = new FXMLLoader(HMResourcesLoader.loadURL("fxml/Account.fxml"));
             AccountController accountController = new AccountController(stage, null);
             accountController.setListener(new IAccountControllerListener() {
@@ -69,7 +66,6 @@ public class AdminController implements Initializable {
             Parent root = loader.load();
             Scene scene = new Scene(root);
             MFXThemeManager.addOn(scene, Themes.DEFAULT, Themes.LEGACY);
-            stage.initStyle(StageStyle.TRANSPARENT);
             stage.setScene(scene);
             stage.setTitle("Account");
             stage.show();
@@ -82,6 +78,7 @@ public class AdminController implements Initializable {
         Account currentSelected = accountTableView.getSelectionModel().getSelectedValue();
         int index = accountTableView.getSelectionModel().getSelectedValues().indexOf(currentSelected);
         try {
+            Stage stage = new Stage();
             FXMLLoader loader = new FXMLLoader(HMResourcesLoader.loadURL("fxml/Account.fxml"));
             AccountController accountController = new AccountController(stage, currentSelected);
             accountController.setListener(new IAccountControllerListener() {
@@ -96,7 +93,6 @@ public class AdminController implements Initializable {
             Parent root = loader.load();
             Scene scene = new Scene(root);
             MFXThemeManager.addOn(scene, Themes.DEFAULT, Themes.LEGACY);
-            stage.initStyle(StageStyle.TRANSPARENT);
             stage.setScene(scene);
             stage.setTitle("Account");
             stage.show();

@@ -121,7 +121,6 @@ public class MainController implements Initializable {
                 .get());
         loader.addView(MFXLoaderBean.of("ADMIN", loadURL("fxml/Admin.fxml"))
                 .setBeanToNodeMapper(() -> createToggle("fas-user-tie", "Admin"))
-                .setControllerFactory(c -> new AdminController(stage))
                 .get());
         loader.setOnLoadedAction(beans -> {
             List<ToggleButton> nodes = beans.stream()
