@@ -1,139 +1,38 @@
 package vn.edu.aptech.hotelmanager.domain.model;
+import lombok.Data;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
-
-public class Account {
-    private int id;
-    private String name;
-    private String email;
-    private String phone;
-    private Date dob;
-    private String sex;
-    private String position;
-    private String userName;
-    private String password;
+@Data
+public class Account  {
+    private long id;
     private String firstName;
     private String lastName;
-
-    public Account() {
-    }
-
-    public Account(int id, String name, String email, String phone, Date dob, String sex, String position, String userName, String password) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.phone = phone;
-        this.dob = dob;
-        this.sex = sex;
-        this.position = position;
-        this.userName = userName;
-        this.password = password;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public Date getDob() {
-        return dob;
-    }
-
-    public void setDob(Date dob) {
-        this.dob = dob;
-    }
-
-    public String getSex() {
-        return sex;
-    }
-
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
-
-    public String getPosition() {
-        return position;
-    }
-
-    public void setPosition(String position) {
-        this.position = position;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    @Override
-    public String toString() {
-        return "Account{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", phone='" + phone + '\'' +
-                ", dob=" + dob +
-                ", sex='" + sex + '\'' +
-                ", position='" + position + '\'' +
-                ", userName='" + userName + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }
-
+    private String email;
+    private String phoneNumber;
+    private Date dob;
+    private String code;
+    private GENDER_TYPE gender;
+    private int status;
+    private Date createdAt;
+    private Date modifiedAt;
+    private String description;
+    private String role;
+    private String username;
+    private String password;
+    private Position position;
+    private long addressId;
     public String getFullName() {
         return firstName + " " + lastName;
+    }
+    public String getGenderName() {
+        return gender.getName();
+    }
+    public String getDOBFormat() {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        return format.format(dob);
+    }
+    public long getPositionId() {
+        return position.getId();
     }
 }

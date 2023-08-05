@@ -421,8 +421,8 @@ public class AccountController implements Initializable {
         first_name.setText(account.getFirstName());
         lastNameTextField.setText(account.getLastName());
         e_email.setText(account.getEmail());
-        e_phone.setText(account.getPhone());
-        usernameTextField.setText(account.getUserName());
+        e_phone.setText(account.getPhoneNumber());
+        usernameTextField.setText(account.getUsername());
         passwordTextField.setText(account.getPassword());
 
 

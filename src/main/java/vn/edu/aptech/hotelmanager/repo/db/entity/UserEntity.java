@@ -1,4 +1,4 @@
-package vn.edu.aptech.hotelmanager.repo.entity;
+package vn.edu.aptech.hotelmanager.repo.db.entity;
 
 import vn.edu.aptech.hotelmanager.common.entity.IEntity;
 

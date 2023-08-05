@@ -19,7 +19,10 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import vn.edu.aptech.hotelmanager.HMResourcesLoader;
+import vn.edu.aptech.hotelmanager.domain.REPO_TYPE;
+import vn.edu.aptech.hotelmanager.domain.RepoFactory;
 import vn.edu.aptech.hotelmanager.domain.model.Account;
+import vn.edu.aptech.hotelmanager.domain.repo.IAccountRepo;
 import vn.edu.aptech.hotelmanager.utils.CrudUtil;
 
 import java.io.IOException;
@@ -113,13 +116,13 @@ public class AdminController implements Initializable {
             }
         });
         MFXTableColumn<Account> idColumn = new MFXTableColumn<>("ID", false, Comparator.comparing(Account::getId));
-        MFXTableColumn<Account> nameColumn = new MFXTableColumn<>("Name", false, Comparator.comparing(Account::getName));
+        MFXTableColumn<Account> nameColumn = new MFXTableColumn<>("Name", false, Comparator.comparing(Account::getFullName));
         MFXTableColumn<Account> emailColumn = new MFXTableColumn<>("Email", false, Comparator.comparing(Account::getEmail));
-        MFXTableColumn<Account> phoneColumn = new MFXTableColumn<>("Phone Number", false, Comparator.comparing(Account::getPhone));
-        MFXTableColumn<Account> dobColumn = new MFXTableColumn<>("DOB", false, Comparator.comparing(Account::getSex));
-        MFXTableColumn<Account> sexColumn = new MFXTableColumn<>("Sex", false, Comparator.comparing(Account::getPosition));
-        MFXTableColumn<Account> positionColumn = new MFXTableColumn<>("Position", false, Comparator.comparing(Account::getPosition));
-        MFXTableColumn<Account> userNColumn = new MFXTableColumn<>("User Name", false, Comparator.comparing(Account::getUserName));
+        MFXTableColumn<Account> phoneColumn = new MFXTableColumn<>("Phone Number", false, Comparator.comparing(Account::getPhoneNumber));
+        MFXTableColumn<Account> dobColumn = new MFXTableColumn<>("DOB", false, Comparator.comparing(Account::getDOBFormat));
+        MFXTableColumn<Account> sexColumn = new MFXTableColumn<>("Sex", false, Comparator.comparing(Account::getGenderName));
+        MFXTableColumn<Account> positionColumn = new MFXTableColumn<>("Position", false, Comparator.comparing(Account::getPositionId));
+        MFXTableColumn<Account> userNColumn = new MFXTableColumn<>("Username", false, Comparator.comparing(Account::getUsername));
         MFXTableColumn<Account> passColumn = new MFXTableColumn<>("Password", false, Comparator.comparing(Account::getPassword));
 
         idColumn.setRowCellFactory(account -> new MFXTableRowCell<>(Account::getId) {{
@@ -129,7 +132,7 @@ public class AdminController implements Initializable {
                 }
             });
         }});
-        nameColumn.setRowCellFactory(account -> new MFXTableRowCell<>(Account::getName) {{
+        nameColumn.setRowCellFactory(account -> new MFXTableRowCell<>(Account::getFullName) {{
             setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && (account != null)) {
                     selectedAccount(account);
@@ -143,7 +146,7 @@ public class AdminController implements Initializable {
                 }
             });
         }});
-        phoneColumn.setRowCellFactory(account -> new MFXTableRowCell<>(Account::getPhone) {{
+        phoneColumn.setRowCellFactory(account -> new MFXTableRowCell<>(Account::getPhoneNumber) {{
             setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && (account != null)) {
                     selectedAccount(account);
@@ -157,7 +160,7 @@ public class AdminController implements Initializable {
                 }
             });
         }});
-        sexColumn.setRowCellFactory(account -> new MFXTableRowCell<>(Account::getSex) {{
+        sexColumn.setRowCellFactory(account -> new MFXTableRowCell<>(Account::getGenderName) {{
             setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && (account != null)) {
                     selectedAccount(account);
@@ -171,7 +174,7 @@ public class AdminController implements Initializable {
                 }
             });
         }});
-        userNColumn.setRowCellFactory(account -> new MFXTableRowCell<>(Account::getUserName) {{
+        userNColumn.setRowCellFactory(account -> new MFXTableRowCell<>(Account::getUsername) {{
             setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && (account != null)) {
                     selectedAccount(account);
@@ -192,39 +195,15 @@ public class AdminController implements Initializable {
                 positionColumn, userNColumn, passColumn
         );
         accountTableView.getFilters().addAll(
-                new IntegerFilter<>("ID", Account::getId),
-                new StringFilter<>("Name", Account::getName),
+                new StringFilter<>("Name", Account::getFullName),
                 new StringFilter<>("Email", Account::getEmail),
-                new StringFilter<>("Phone", Account::getPhone)
+                new StringFilter<>("Phone", Account::getPhoneNumber)
         );
     }
     private void getAccountData() {
-        ResultSet resultSet = null;
-        String url = "SELECT accounts.id,first_name,last_name,email,phone_number,dob,sex,position.name,username,password " +
-                "FROM accounts " +
-                "INNER JOIN position ON position.id = accounts.position_id";
-        try {
-            Account account;
-            resultSet = CrudUtil.execute(url);
-            while (resultSet.next()) {
-                int id = resultSet.getInt(1);
-                String first_name = resultSet.getString(2);
-                String last_name = resultSet.getString(3);
-                String name = first_name + " " + last_name;
-                String email = resultSet.getString(4);
-                String phone = resultSet.getString(5);
-                Date dob = resultSet.getDate(6);
-                String sex = resultSet.getString(7);
-                String position_name = resultSet.getString(8);
-                String user_name = resultSet.getString(9);
-                String pass = resultSet.getString(10);
-                account = new Account(id, name, email, phone, dob, sex, position_name, user_name, pass);
-                accounts.add(account);
-                accountTableView.setItems(accounts);
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        IAccountRepo repo = RepoFactory.getInstance().getRepo(REPO_TYPE.ACCOUNT);
+        accounts.addAll(repo.getListAccount(1, 20));
+        accountTableView.setItems(accounts);
     }
 }
 
