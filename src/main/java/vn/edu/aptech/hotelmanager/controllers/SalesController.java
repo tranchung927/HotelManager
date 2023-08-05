@@ -28,16 +28,6 @@ import java.util.ResourceBundle;
 
 public class SalesController implements Initializable {
     private Stage stage;
-    private  String nameProduct;
-
-    public String getNameProduct() {
-        return nameProduct;
-    }
-
-    public void setNameProduct(String nameProduct) {
-        this.nameProduct = nameProduct;
-    }
-
     @FXML
     private TableView <ProductBill> billTableView; //table;
     @FXML
@@ -54,26 +44,25 @@ public class SalesController implements Initializable {
     private TextField totalPriceTextField;
     @FXML
     private ScrollPane scrollPane;
+    //Lấy dữ liệu vảo receipt
     public  static Float totalReceipt;
+    // thao tac để import du lieu vào bảng
    public static ObservableList<ProductBill> productBillList;
-
-    public ObservableList<ProductBill> getProductBillList() {
-        return productBillList;
-    }
-
     public SalesController() {
     }
     private MyListener myListener;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // thêm dữ liêu vào bảng
         productBillList = FXCollections.observableArrayList(
-
         );
         idProductCol.setCellValueFactory(new PropertyValueFactory<ProductBill,Integer>("id"));
         ProductNameCol.setCellValueFactory(new PropertyValueFactory<ProductBill,String>("name"));
         quantityCol.setCellValueFactory(new PropertyValueFactory<ProductBill,Integer>("quantity"));
         priceCol.setCellValueFactory(new PropertyValueFactory<ProductBill,Double>("price"));
         billTableView.setItems(productBillList);
+        //--------------------------------
+        // thêm thông tin sản phẩm
         productBills.addAll(getData());
         if(productBills.size() > 0){
             //setChosenProduct(productBills.get(0));
@@ -205,7 +194,7 @@ public class SalesController implements Initializable {
 
         productBill = new ProductBill();
         productBill.setId(14);
-        productBill.setName("Nước heniken");
+        productBill.setName("Bia heniken");
         productBill.setPrice(25000.0);
         productBills.add(productBill);
         return productBills;

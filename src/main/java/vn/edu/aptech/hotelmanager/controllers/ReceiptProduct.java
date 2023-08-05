@@ -47,7 +47,7 @@ public class ReceiptProduct implements Initializable {
         ProductNameCol.setCellValueFactory(new PropertyValueFactory<ProductBill,String>("name"));
         quantityCol.setCellValueFactory(new PropertyValueFactory<ProductBill,Integer>("quantity"));
         priceCol.setCellValueFactory(new PropertyValueFactory<ProductBill,Double>("price"));
-        totalPriceTextField.setText(SalesController.totalReceipt+"");
+        totalPriceTextField.setText(SalesController.totalReceipt+ " VNĐ");
         billTableView.setItems(SalesController.productBillList);
     }
 }

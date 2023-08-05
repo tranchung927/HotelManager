@@ -23,6 +23,12 @@
                   </Label>
                </children>
             </FlowPane>
+            <FlowPane alignment="CENTER_LEFT" layoutX="10.0" layoutY="57.0" prefHeight="63.0" prefWidth="600.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="31.0" prefWidth="89.0" text="Id" />
+                  <MFXTextField fx:id="txtIdProduct" floatMode="ABOVE" prefHeight="30.0" prefWidth="457.0" />
+               </children>
+            </FlowPane>
             <FlowPane alignment="CENTER_LEFT" layoutX="10.0" layoutY="42.0" prefHeight="63.0" prefWidth="600.0">
                <children>
                   <Label alignment="CENTER" prefHeight="31.0" prefWidth="89.0" text="Tên " />
@@ -32,7 +38,7 @@
             <FlowPane alignment="CENTER_LEFT" layoutX="10.0" layoutY="57.0" prefHeight="63.0" prefWidth="600.0">
                <children>
                   <Label alignment="CENTER" prefHeight="31.0" prefWidth="89.0" text="Số lượng" />
-                  <MFXTextField fx:id="txtPriceProduct" floatMode="ABOVE" prefHeight="30.0" prefWidth="457.0" />
+                  <MFXTextField fx:id="txtQuantityProduct" floatMode="ABOVE" prefHeight="30.0" prefWidth="457.0" />
                </children>
             </FlowPane>
             <FlowPane alignment="CENTER_LEFT" layoutX="10.0" layoutY="120.0" prefHeight="63.0" prefWidth="600.0">
@@ -44,7 +50,7 @@
             <FlowPane alignment="CENTER_LEFT" layoutX="10.0" layoutY="183.0" prefHeight="63.0" prefWidth="600.0">
                <children>
                   <Label alignment="CENTER" prefHeight="31.0" prefWidth="89.0" text="Giá nhập" />
-                  <MFXTextField fx:id="txtPriceProduct" floatMode="ABOVE" prefHeight="30.0" prefWidth="457.0" />
+                  <MFXTextField fx:id="txtInputPrice" floatMode="ABOVE" prefHeight="30.0" prefWidth="457.0" />
                </children>
             </FlowPane>
             <FlowPane alignment="CENTER_LEFT" layoutX="10.0" layoutY="246.0" prefHeight="63.0" prefWidth="600.0">
@@ -56,12 +62,12 @@
             <FlowPane alignment="CENTER_LEFT" layoutX="10.0" layoutY="309.0" prefHeight="63.0" prefWidth="600.0">
                <children>
                   <Label alignment="CENTER" prefHeight="31.0" prefWidth="89.0" text="Đơn vị tính" />
-                  <MFXComboBox fx:id="txtInitProduct" floatMode="ABOVE" prefHeight="32.0" prefWidth="202.0" />
+                  <MFXComboBox fx:id="txtInitProduct" alignment="CENTER" floatMode="ABOVE" prefHeight="32.0" prefWidth="202.0" />
                </children>
             </FlowPane>
             <FlowPane alignment="CENTER" prefHeight="55.0" prefWidth="600.0">
                <children>
-                  <MFXButton fx:id="btnAddProduct" buttonType="RAISED" prefHeight="38.0" prefWidth="138.0" text="Lưu sản phẩm" />
+                  <MFXButton fx:id="btnSaveProduct" buttonType="RAISED" onAction="#saveProduct" prefHeight="38.0" prefWidth="138.0" text="Lưu sản phẩm" />
                </children>
             </FlowPane>
          </children>
