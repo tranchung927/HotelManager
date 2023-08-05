@@ -19,7 +19,7 @@
                                 <AnchorPane fx:id="rootPane" layoutX="25.0" layoutY="13.0" prefHeight="596.0" prefWidth="580.0" styleClass="white-bg" stylesheets="@../css/Admin.css" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="13.0">
                                     <children>
                                         <Label alignment="CENTER" layoutX="-42.0" layoutY="176.0" maxWidth="1.7976931348623157E308" styleClass="header-label" text="Label" visible="false" />
-                                        <MFXPaginatedTableView fx:id="accountTableView" layoutX="13.0" layoutY="75.0" maxWidth="-Infinity" minWidth="-Infinity" onMouseClicked="#selectRow" onMousePressed="#selectRow" prefHeight="146.0" prefWidth="947.0" rowsPerPage="10" styleClass="mfx-table-view" stylesheets="@../css/Admin.css" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="74.0" />
+                                        <MFXPaginatedTableView fx:id="accountTableView" layoutX="13.0" layoutY="75.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="146.0" prefWidth="947.0" rowsPerPage="10" styleClass="mfx-table-view" stylesheets="@../css/Admin.css" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="74.0" />
                                         <Label layoutX="425.0" layoutY="22.0" text="EMPLOYEE TABLE" AnchorPane.topAnchor="22.0" />
                                         <Button fx:id="custom" layoutX="881.0" layoutY="41.0" mnemonicParsing="false" onAction="#addBtn" prefHeight="26.0" prefWidth="53.0" text="Add" />
                                     </children>

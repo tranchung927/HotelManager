@@ -109,6 +109,8 @@ public class AccountController implements Initializable {
         addValueSex();
         addValuePositions();
         addValueCCD();
+
+        updateUI();
     }
 
     public void setListener(IAccountControllerListener listener) {
@@ -413,6 +415,18 @@ public class AccountController implements Initializable {
         country.getSelectionModel().clearSelection();
         city.getSelectionModel().clearSelection();
         district.getSelectionModel().clearSelection();
+    }
+    public void updateUI(){
+       employee_id.setText(String.valueOf(account.getId()));
+        first_name.setText(account.getFirstName());
+        lastNameTextField.setText(account.getLastName());
+        e_email.setText(account.getEmail());
+        e_phone.setText(account.getPhone());
+        usernameTextField.setText(account.getUserName());
+        passwordTextField.setText(account.getPassword());
+
+
+
     }
 }
 
