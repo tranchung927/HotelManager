@@ -1,6 +1,5 @@
 package vn.edu.aptech.hotelmanager.controllers;
 
-import fr.brouillard.oss.cssfx.CSSFX;
 import io.github.palexdev.materialfx.controls.*;
 import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
 import io.github.palexdev.materialfx.css.themes.MFXThemeManager;
@@ -17,7 +16,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import vn.edu.aptech.hotelmanager.HMResourcesLoader;
@@ -29,7 +27,7 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.util.*;
 
-public class AdminController {
+public class AdminController implements Initializable {
 
     private final Stage stage;
     /**************************************************
@@ -42,6 +40,9 @@ public class AdminController {
 
     public AdminController(Stage stage) {
         this.stage = stage;
+    }
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
         setupPaginated();
         getAccountData();
         accountTableView.autosizeColumnsOnInitialization();
@@ -108,7 +109,7 @@ public class AdminController {
         accounts.addListener(new ListChangeListener<Account>() {
             @Override
             public void onChanged(Change<? extends Account> change) {
-                
+
             }
         });
         MFXTableColumn<Account> idColumn = new MFXTableColumn<>("ID", false, Comparator.comparing(Account::getId));
