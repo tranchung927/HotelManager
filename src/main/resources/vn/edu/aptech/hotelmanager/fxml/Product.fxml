@@ -56,7 +56,7 @@
             <FlowPane alignment="CENTER_LEFT" layoutX="10.0" layoutY="246.0" prefHeight="63.0" prefWidth="600.0">
                <children>
                   <Label alignment="CENTER" prefHeight="31.0" prefWidth="89.0" text="Ngày nhập" />
-                  <MFXDatePicker fx:id="txtDataInputProduct" prefHeight="24.0" />
+                  <MFXDatePicker fx:id="txtDateInputProduct" prefHeight="24.0" />
                </children>
             </FlowPane>
             <FlowPane alignment="CENTER_LEFT" layoutX="10.0" layoutY="309.0" prefHeight="63.0" prefWidth="600.0">

@@ -48,8 +48,6 @@ public class SalesController implements Initializable {
     public  static Float totalReceipt;
     // thao tac để import du lieu vào bảng
    public static ObservableList<ProductBill> productBillList;
-    public SalesController() {
-    }
     private MyListener myListener;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -81,7 +79,6 @@ public class SalesController implements Initializable {
                 AnchorPane anchorPane = fxmlLoader.load();
                 ItemController itemController = fxmlLoader.getController();
                 itemController.setData(productBills.get(i),myListener);
-
                 if(column == 3){
                     column = 0;
                     row++;
@@ -107,7 +104,6 @@ public class SalesController implements Initializable {
         totalPriceTextField.setText(total + " VNĐ");
 
     }
-
     //-----------------------------------------
     private List<ProductBill> productBills = new ArrayList<>();
     private List<ProductBill> getData(){

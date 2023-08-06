@@ -1,23 +1,13 @@
 package vn.edu.aptech.hotelmanager.utils;
 
-import java.util.Date;
-
 public class ProductWareHouse {
     private String name;
     private Integer id;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
     private Integer quantityImport;
     private  String userImport;
     private Double priceInput;
-    private Date dateInput;
+    private String dateInput;
     private Unit unit;
 
     public String getName() {
@@ -45,11 +35,11 @@ public class ProductWareHouse {
         this.priceInput = priceInput;
     }
 
-    public Date getDateInput() {
+    public String getDateInput() {
         return dateInput;
     }
 
-    public void setDateInput(Date dateInput) {
+    public void setDateInput(String dateInput) {
         this.dateInput = dateInput;
     }
 
@@ -65,11 +55,19 @@ public class ProductWareHouse {
         return quantityImport;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public void setQuantityImport(Integer quantityImport) {
         this.quantityImport = quantityImport;
     }
 
-    public ProductWareHouse(String name, Integer id, Integer quantityImport, String userImport, Double priceInput, Date dateInput, Unit unit) {
+    public ProductWareHouse(String name, Integer id, Integer quantityImport, String userImport, Double priceInput, String dateInput, Unit unit) {
         this.name = name;
         this.id = id;
         this.quantityImport = quantityImport;
@@ -82,6 +80,20 @@ public class ProductWareHouse {
     public ProductWareHouse(String thăngLong, int i, int i1, Object o, double v, Unit lon) {
     }
 
+    @Override
+    public String toString() {
+        return "ProductWareHouse{" +
+                "name='" + name + '\'' +
+                ", id=" + id +
+                ", quantityImport=" + quantityImport +
+                ", userImport='" + userImport + '\'' +
+                ", priceInput=" + priceInput +
+                ", dateInput='" + dateInput + '\'' +
+                ", unit=" + unit +
+                '}';
+    }
+
     public ProductWareHouse() {
+
     }
 }
