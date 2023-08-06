@@ -29,3 +29,7 @@
 	-fx-background-radius: 10;
 	-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0.12, -1.0, 2.0);
 }
+
+#customerTableView {
+	 -fx-fixed-cell-size: 20px;
+ }

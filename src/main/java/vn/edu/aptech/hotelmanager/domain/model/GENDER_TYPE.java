@@ -16,4 +16,19 @@ public enum GENDER_TYPE {
             }
         }
     }
+    @Override
+    public String toString() {
+        switch (this) {
+            case MALE -> {
+                return "Male";
+            }
+            case FEMALE -> {
+                return "Female";
+            }
+            case OTHER -> {
+                return "Other";
+            }
+        }
+        return null;
+    }
 }

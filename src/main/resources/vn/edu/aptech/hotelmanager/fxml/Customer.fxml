@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
-<GridPane xmlns="http://javafx.com/javafx/20.0.0"
-          xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="vn.edu.aptech.hotelmanager.controllers.CustomerController"
-          styleClass="grid-pane"
-          maxHeight="-Infinity" maxWidth="-Infinity">
-
-</GridPane>
+<?import io.github.palexdev.materialfx.controls.MFXPaginatedTableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<AnchorPane maxHeight="1.7976931348623157E308"
+            maxWidth="1.7976931348623157E308"
+            fx:id="rootAnchorPane"
+            styleClass="grid-pane"
+            stylesheets="@../css/Common.css"
+            xmlns="http://javafx.com/javafx/20.0.0"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="vn.edu.aptech.hotelmanager.controllers.CustomerController">
+    <MFXPaginatedTableView fx:id="customerTableView"
+                           AnchorPane.leftAnchor="30.0"
+                           AnchorPane.topAnchor="10.0"
+                           AnchorPane.rightAnchor="2.0"/>
+</AnchorPane>
