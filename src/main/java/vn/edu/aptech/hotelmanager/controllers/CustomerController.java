@@ -64,17 +64,16 @@ public class CustomerController implements Initializable {
         DoubleBinding maxWidthColumn = customerTableView.widthProperty().multiply(0.2);
         // FirstName Column
         MFXTableColumn<CustomerDTO> firstNameColumn = new MFXTableColumn<>("First Name", false,
-                (o1, o2) -> o1.getCustomer().getFirstName().compareTo(o2.getCustomer().getFirstName()));
+                Comparator.comparing(o -> o.getCustomer().getFirstName()));
         Function<CustomerDTO, String> mapFirstName = u -> u.getCustomer().getFirstName();
         firstNameColumn.setRowCellFactory(dto -> new MFXTableRowCell<>(mapFirstName));
 
         // Last Name Column
         MFXTableColumn<CustomerDTO> lastNameColumn = new MFXTableColumn<>("Last Name", false,
-                (o1, o2) -> o1.getCustomer().getLastName().compareTo(o2.getCustomer().getLastName()));
+                Comparator.comparing(o -> o.getCustomer().getLastName()));
         Function<CustomerDTO, String> mapLastName = u -> u.getCustomer().getLastName();
         lastNameColumn.setRowCellFactory(dto -> new MFXTableRowCell<>(mapLastName) {{
                 setAlignment(Pos.CENTER);
-                setMaxWidth(50);
 		}});
         lastNameColumn.prefWidthProperty().bind(maxWidthColumn);
 
@@ -99,28 +98,27 @@ public class CustomerController implements Initializable {
         genderColumn.setRowCellFactory(dto -> new MFXTableRowCell<>(mapGenderTitle));
 
         // Add Column
-        customerTableView.getTableColumns().addAll(Arrays.asList(
+        List<MFXTableColumn<CustomerDTO>> tableColumnList = Arrays.asList(
                 firstNameColumn, lastNameColumn,
                 emailColumn, phoneColumn,
                 dobColumn, genderColumn
-        ));
+        );
+        tableColumnList.forEach(col -> col.prefWidthProperty().bind(customerTableView.widthProperty().multiply(0.167)));
+        customerTableView.getTableColumns().addAll(tableColumnList);
 
         // Filter
         Function<CustomerDTO, GENDER_TYPE> mapGender = u -> u.getCustomer().getGender();
         EnumFilter<CustomerDTO, GENDER_TYPE> genderFilter = new EnumFilter<>("Gender", mapGender, GENDER_TYPE.class);
         customerTableView.getFilters().add(genderFilter);
-        customerTableView.getSelectionModel().selectionProperty().addListener(new MapChangeListener<Integer, CustomerDTO>() {
-            @Override
-            public void onChanged(Change<? extends Integer, ? extends CustomerDTO> change) {
-                if (!change.getMap().values().isEmpty()) {
-                    Integer currentIndex = (Integer) change.getMap().keySet().toArray()[0];
-                    if (Objects.equals(currentIndex, selectedIndex)) {
-                        return;
-                    }
-                    CustomerDTO customerDTO = (CustomerDTO) change.getMap().values().toArray()[0];
-                    selectedIndex = currentIndex;
-                    showCustomerDetail(customerDTO);
+        customerTableView.getSelectionModel().selectionProperty().addListener((MapChangeListener<Integer, CustomerDTO>) change -> {
+            if (!change.getMap().values().isEmpty()) {
+                Integer currentIndex = (Integer) change.getMap().keySet().toArray()[0];
+                if (Objects.equals(currentIndex, selectedIndex)) {
+                    return;
                 }
+                CustomerDTO customerDTO = (CustomerDTO) change.getMap().values().toArray()[0];
+                selectedIndex = currentIndex;
+                showCustomerDetail(customerDTO);
             }
         });
     }

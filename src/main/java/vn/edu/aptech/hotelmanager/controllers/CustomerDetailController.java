@@ -11,9 +11,14 @@ import io.github.palexdev.materialfx.utils.others.dates.DateStringConverter;
 import io.github.palexdev.materialfx.validation.Constraint;
 import io.github.palexdev.materialfx.validation.Severity;
 import javafx.beans.binding.Bindings;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.css.PseudoClass;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.util.StringConverter;
@@ -26,7 +31,6 @@ import vn.edu.aptech.hotelmanager.domain.model.DOCUMENT_TYPE;
 import vn.edu.aptech.hotelmanager.domain.model.District;
 import vn.edu.aptech.hotelmanager.domain.repo.ILocationRepo;
 
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
 import java.util.List;
@@ -36,16 +40,37 @@ import java.util.function.Predicate;
 
 public class CustomerDetailController implements Initializable {
     private static final PseudoClass INVALID_PSEUDO_CLASS = PseudoClass.getPseudoClass("invalid");
+    @FXML
     public MFXTextField firstNameTextField;
+
+    @FXML
     public MFXTextField lastNameTextField;
+
+    @FXML
     public MFXTextField emailTextField;
+
+    @FXML
     public MFXTextField phoneTextField;
+
+    @FXML
     public MFXTextField docValueTextField;
+
+    @FXML
     public MFXComboBox<DOCUMENT_TYPE> docTypeComboBox;
+
+    @FXML
     public MFXFilterComboBox<Country> countryComboBox;
+
+    @FXML
     public MFXFilterComboBox<City> cityComboBox;
+
+    @FXML
     public MFXFilterComboBox<District> districtComboBox;
+
+    @FXML
     public MFXTextField addressTextField;
+
+    @FXML
     public MFXDatePicker birthDayPicker;
 
     private final CustomerDTO customerDTO;
@@ -55,24 +80,22 @@ public class CustomerDetailController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setupUI();
-        firstNameTextField.setText(customerDTO.getCustomer().getFirstName());
-        lastNameTextField.setText(customerDTO.getCustomer().getLastName());
-        emailTextField.setText(customerDTO.getCustomer().getEmail());
-        phoneTextField.setText(customerDTO.getCustomer().getPhoneNumber());
-        birthDayPicker.setText(customerDTO.getCustomer().getDob().toString());
-        if (customerDTO.getDocument() != null) {
-            docValueTextField.setText(customerDTO.getDocument().getValue());
-            docTypeComboBox.setText(customerDTO.getDocument().getType().toString());
-        }
-        if (customerDTO.getAddress() != null) {
-            countryComboBox.setText(customerDTO.getAddress().getCountry().getName());
-            cityComboBox.setText(customerDTO.getAddress().getCity().getName());
-            districtComboBox.setText(customerDTO.getAddress().getDistrict().getName());
-            addressTextField.setText(customerDTO.getAddress().getFullAddress());
-        }
-        getCountries();
+//        firstNameTextField.setText(customerDTO.getCustomer().getFirstName());
+//        lastNameTextField.setText(customerDTO.getCustomer().getLastName());
+//        emailTextField.setText(customerDTO.getCustomer().getEmail());
+//        phoneTextField.setText(customerDTO.getCustomer().getPhoneNumber());
+//        birthDayPicker.setText(customerDTO.getCustomer().getDob().toString());
+//        if (customerDTO.getDocument() != null) {
+//            docValueTextField.setText(customerDTO.getDocument().getValue());
+//            docTypeComboBox.setText(customerDTO.getDocument().getType().toString());
+//        }
+//        if (customerDTO.getAddress() != null) {
+//            countryComboBox.setText(customerDTO.getAddress().getCountry().getName());
+//            cityComboBox.setText(customerDTO.getAddress().getCity().getName());
+//            districtComboBox.setText(customerDTO.getAddress().getDistrict().getName());
+//            addressTextField.setText(customerDTO.getAddress().getFullAddress());
+//        }
     }
-
     private void setupUI() {
         birthDayPicker.setGridAlgorithm(DateTimeUtils::partialIntMonthMatrix);
         birthDayPicker.setConverterSupplier(() -> new DateStringConverter("yyyy-MM-dd", birthDayPicker.getLocale()));
@@ -91,7 +114,7 @@ public class CustomerDetailController implements Initializable {
         setTextFieldValid(phoneTextField, 1);
         setTextFieldValid(docValueTextField, 10);
 
-        setupComboBox(countryComboBox);
+        setupCountryComboBox();
     }
 
     private void setTextFieldValid(MFXTextField fieldValid, int minimumLength) {
@@ -121,6 +144,9 @@ public class CustomerDetailController implements Initializable {
     }
 
     private void getCountries() {
+        if (!countryComboBox.getItems().isEmpty()) {
+            return;
+        }
         StringConverter<Country> converter = FunctionalStringConverter.to(Country::getName);
         Function<String, Predicate<Country>> filterFunction = s -> country -> StringUtils.containsIgnoreCase(converter.toString(country), s);
         ILocationRepo repo = RepoFactory.getInstance().getRepo(REPO_TYPE.LOCATION);
@@ -129,28 +155,16 @@ public class CustomerDetailController implements Initializable {
         countryComboBox.setItems(countries);
         countryComboBox.setConverter(converter);
         countryComboBox.setFilterFunction(filterFunction);
-
     }
 
-    private void setupComboBox(MFXComboBox comboBox) {
-//        Constraint selectedConstraint = Constraint.Builder.build()
-//                .setSeverity(Severity.ERROR)
-//                .setCondition(Bindings.createBooleanBinding( () -> comboBox.getSelectedItem() != null))
-//                .get();
-//        comboBox.getValidator().constraint(selectedConstraint);
-//        comboBox.getValidator().validProperty().addListener((observable, oldValue, newValue) -> {
-//            if (newValue) {
-//                comboBox.pseudoClassStateChanged(INVALID_PSEUDO_CLASS, false);
-//            }
-//        });
-//
-//        comboBox.delegateFocusedProperty().addListener((observable, oldValue, newValue) -> {
-//            if (oldValue && !newValue) {
-//                List<Constraint> constraints = comboBox.validate();
-//                if (!constraints.isEmpty()) {
-//                    comboBox.pseudoClassStateChanged(INVALID_PSEUDO_CLASS, true);
-//                }
-//            }
-//        });
+    private void setupCountryComboBox() {
+        countryComboBox.delegateFocusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                getCountries();
+            }
+        });
+        countryComboBox.setOnAction(actionEvent -> {
+
+        });
     }
 }
