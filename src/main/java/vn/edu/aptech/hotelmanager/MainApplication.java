@@ -11,8 +11,12 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import vn.edu.aptech.hotelmanager.controllers.MainController;
+import vn.edu.aptech.hotelmanager.controllers.SplashController;
+import vn.edu.aptech.hotelmanager.repo.db.DBConnection;
+import vn.edu.aptech.hotelmanager.utils.CrudUtil;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class MainApplication extends Application {
     @Override
@@ -28,9 +32,22 @@ public class MainApplication extends Application {
         stage.setScene(scene);
         stage.setTitle("Hotel FX");
         stage.show();
+ //       openSplash(stage);
     }
 
     public static void main(String[] args) {
         launch(args);
     }
+
+
+ /*   private static void openSplash(Stage stage) throws IOException {
+        FXMLLoader loader = new FXMLLoader(HMResourcesLoader.loadURL("fxml/Splash.fxml"));
+        loader.setControllerFactory(c -> new SplashController(stage));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        MFXThemeManager.addOn(scene, Themes.DEFAULT, Themes.LEGACY);
+        stage.setScene(scene);
+        stage.setTitle("Splash");
+        stage.show();
+    }*/
 }

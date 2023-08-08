@@ -1,23 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import io.github.palexdev.materialfx.controls.MFXPaginatedTableView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
-<AnchorPane maxHeight="1.7976931348623157E308"
-            maxWidth="1.7976931348623157E308"
-            fx:id="rootAnchorPane"
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity"
             styleClass="grid-pane"
-            stylesheets="@../css/Common.css"
             xmlns="http://javafx.com/javafx/20.0.0"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="vn.edu.aptech.hotelmanager.controllers.CustomerController">
-    <MFXPaginatedTableView fx:id="customerTableView"
-                           AnchorPane.leftAnchor="0"
-                           AnchorPane.topAnchor="0"
-                           AnchorPane.rightAnchor="0"/>
-    <MFXButton AnchorPane.rightAnchor="12"
-               AnchorPane.bottomAnchor="12"
-               minHeight="44.0" minWidth="76.0"
-               buttonType="RAISED"
-               text="Thêm mới"/>
+    <MFXButton alignment="CENTER" prefHeight="65.0" prefWidth="230.0" text="Button" />
 </AnchorPane>
