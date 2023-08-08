@@ -11,8 +11,9 @@ public class DBConnection {
 
     private DBConnection(){
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/hotel_management","root","12345678");
-        } catch (SQLException e) {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/<database name>","<user name>","<password>");
+        } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
     }
@@ -24,7 +25,6 @@ public class DBConnection {
     public Connection getConnection(){
         return connection;
     }
-
 
 }
 

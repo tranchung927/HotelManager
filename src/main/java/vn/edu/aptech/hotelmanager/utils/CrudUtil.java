@@ -20,5 +20,4 @@ public class CrudUtil {
         }
         return (T) ((Boolean) (pstm.executeUpdate() > 0));    // boolean
     }
-
 }
