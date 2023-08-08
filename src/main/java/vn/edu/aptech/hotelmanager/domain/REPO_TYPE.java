@@ -1,5 +1,5 @@
 package vn.edu.aptech.hotelmanager.domain;
 
 public enum REPO_TYPE {
-    USER,ROOM;
+    USER,ROOM,LOCATION;
 }
