@@ -8,4 +8,6 @@ import java.util.List;
 public interface IAccountRepo extends IRepo {
     List<Account> getListAccount(int page, int pageSize);
     Account createOrUpdateAccount(Account account) throws Exception;
+
+    String getLastAccountId() throws Exception;
 }

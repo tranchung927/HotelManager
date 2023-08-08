@@ -1,4 +1,6 @@
 package vn.edu.aptech.hotelmanager.domain.model;
+import io.github.palexdev.materialfx.controls.MFXButton;
+import javafx.scene.control.Button;
 import lombok.Data;
 
 import java.text.SimpleDateFormat;
@@ -21,7 +23,8 @@ public class Account  {
     private String username;
     private String password;
     private Position position;
-    private long addressId;
+    private String addressId;
+
     public String getFullName() {
         return firstName + " " + lastName;
     }
@@ -32,7 +35,9 @@ public class Account  {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         return format.format(dob);
     }
-    public long getPositionId() {
-        return position.getId();
+    public String getPositionName() {
+        return position.getName();
     }
+
+
 }

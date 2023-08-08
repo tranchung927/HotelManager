@@ -116,11 +116,11 @@
 
 
 #saveBtn {
-    -fx-background-color: linear-gradient(to bottom right, #66d77b, #13ab29);
+    -fx-background-color: #1b930e;
     -fx-text-fill: white
 }
-#clearBtn {
-    -fx-background-color: linear-gradient(to bottom right, #237c71, #10abc0);
+#deleteBtn {
+    -fx-background-color: #d20f43;
     -fx-text-fill: white
 }
 #updateBtn {

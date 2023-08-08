@@ -10,7 +10,6 @@ import io.github.palexdev.materialfx.utils.others.loader.MFXLoaderBean;
 import io.github.palexdev.mfxresources.fonts.MFXFontIcon;
 import javafx.application.Platform;
 import javafx.css.PseudoClass;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
@@ -105,7 +104,7 @@ public class MainController implements Initializable {
         loader.addView(MFXLoaderBean.of("ROOMS", loadURL("fxml/Room.fxml"))
                 .setBeanToNodeMapper(() -> createToggle("fas-hotel", "Danh sách phòng"))
                 .setDefaultRoot(true)
-                .setControllerFactory(c -> new RoomController(stage))
+                .setControllerFactory(c -> new RoomController(stage, null))
                 .get());
         loader.addView(MFXLoaderBean.of("CUSTOMERS", loadURL("fxml/Customer.fxml"))
                 .setBeanToNodeMapper(() -> createToggle("fas-users", "Danh sách khách hàng"))

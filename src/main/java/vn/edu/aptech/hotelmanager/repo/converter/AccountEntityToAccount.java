@@ -30,7 +30,7 @@ public class AccountEntityToAccount implements IEntityConverter<Account>{
             position.setId(source.getLong("position_id"));
             position.setName(source.getString("position_name"));
             account.setPosition(position);
-            account.setAddressId(source.getLong("address_id"));
+            account.setAddressId(source.getString("address_id"));
         } catch (Exception e) {
             e.printStackTrace();
         }

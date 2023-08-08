@@ -1,8 +1,6 @@
 package vn.edu.aptech.hotelmanager.repo;
 
 import vn.edu.aptech.hotelmanager.domain.model.Account;
-import vn.edu.aptech.hotelmanager.domain.model.GENDER_TYPE;
-import vn.edu.aptech.hotelmanager.domain.model.Position;
 import vn.edu.aptech.hotelmanager.domain.repo.IAccountRepo;
 import vn.edu.aptech.hotelmanager.repo.converter.AccountEntityToAccount;
 import vn.edu.aptech.hotelmanager.utils.CrudUtil;
@@ -16,11 +14,12 @@ public class AccountRepoImpl implements IAccountRepo {
     public List<Account> getListAccount(int page, int pageSize) {
         List<Account> accountList =  new ArrayList<>();
         try {
-            ResultSet resultSet = CrudUtil.execute("SELECT id, first_name, last_name, email, phone_number," +
-                    " dob, code, sex, status, created_at, modified_at," +
-                    " description, role, username, password, position_id, position.name AS position_name" +
-                    " FROM accounts " +
-                    "INNER JOIN position ON position.id = accounts.position_id");
+            ResultSet resultSet = CrudUtil.execute("SELECT accounts.id, first_name, last_name, email, phone_number, " +
+                    "dob, accounts.code, sex, accounts.status, accounts.created_at, accounts.modified_at, description, role," +
+                    " username, password, position_id, positions.name AS position_name,addresses.id AS address_id " +
+                    "FROM accounts " +
+                    "INNER JOIN positions ON positions.id = accounts.position_id " +
+                    "INNER JOIN addresses ON addresses.id = accounts.address_id");
             while (resultSet.next()) {
                 accountList.add(new AccountEntityToAccount().convert(resultSet));
             }
@@ -34,6 +33,8 @@ public class AccountRepoImpl implements IAccountRepo {
     public Account createOrUpdateAccount(Account account) throws Exception {
         if (account.getId() > 0) {
             // UPDATE
+            String url ="";
+
         } else {
             // CREATE
             // TODO
@@ -44,5 +45,14 @@ public class AccountRepoImpl implements IAccountRepo {
             }
         }
         return null;
+    }
+    @Override
+    public String getLastAccountId() throws Exception {
+        ResultSet rst = CrudUtil.execute("SELECT * FROM accounts ORDER BY id DESC LIMIT 1");
+        if (!rst.next()) {
+            return null;
+        } else {
+            return  rst.getString(1);
+        }
     }
 }
