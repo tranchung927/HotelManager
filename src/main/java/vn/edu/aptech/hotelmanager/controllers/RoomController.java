@@ -3,33 +3,25 @@ package vn.edu.aptech.hotelmanager.controllers;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXComboBox;
 import io.github.palexdev.materialfx.controls.MFXTextField;
-import io.github.palexdev.materialfx.dialogs.MFXGenericDialog;
-import io.github.palexdev.materialfx.dialogs.MFXGenericDialogBuilder;
-import io.github.palexdev.materialfx.dialogs.MFXStageDialog;
-import io.github.palexdev.materialfx.enums.ScrimPriority;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import vn.edu.aptech.hotelmanager.domain.REPO_TYPE;
 import vn.edu.aptech.hotelmanager.domain.RepoFactory;
-import vn.edu.aptech.hotelmanager.domain.repo.ILocationRepo;
+import vn.edu.aptech.hotelmanager.domain.model.ROOM_STATUS_TYPE;
+import vn.edu.aptech.hotelmanager.domain.model.Room;
 import vn.edu.aptech.hotelmanager.domain.repo.IRoomRepo;
+import vn.edu.aptech.hotelmanager.repo.RoomRepoImpl;
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 public class RoomController implements Initializable {
+    private final Room room;
     @FXML
     private MFXTextField categoryTextField;
 
@@ -52,14 +44,19 @@ public class RoomController implements Initializable {
     private MFXComboBox<?> statusComboBox;
     private final IRoomRepo roomRepo = RepoFactory.getInstance().getRepo(REPO_TYPE.ROOM);
 
+    private IRoomController listener;
+
     private final Stage stage;
     private String[] statusList = {"Available", "Occupied", "Repair", "Dirty", "Reserve"};
 
-    @FXML
-    private GridPane grid;
-
-    public RoomController(Stage stage, Object o) {
+    public RoomController(Stage stage, Room room) {
         this.stage = stage;
+        this.room = room == null ? new Room() : room;
+    };
+
+    public RoomController(Stage stage, Object o, Room room) {
+        this.stage = stage;
+        this.room = room;
     }
 
 
@@ -78,6 +75,29 @@ public class RoomController implements Initializable {
         }
         ObservableList observableList = FXCollections.observableList(list);
         statusComboBox.setItems(observableList);
+
+    }
+
+    public void saveRoomBtn(){
+        try {
+            room.setName(roomNameTextField.getText());
+            room.setStatus(ROOM_STATUS_TYPE.getStatusStr((String) statusComboBox.getSelectionModel().getSelectedItem()));
+            room.setNumberOfBeds(Integer.parseInt(nobTextField.getText()));
+            room.setPrice(Double.parseDouble(priceTextField.getText()));
+            room.setCategoryId(Long.parseLong(categoryTextField.getText()));
+
+            RoomRepoImpl repo = RepoFactory.getInstance().getRepo(REPO_TYPE.ROOM);
+            repo.insertRoom(room);
+
+            this.listener.addNewRoom(room);
+
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
+
+
+
+
 
     }
 }

@@ -38,6 +38,7 @@ public class AccountRepoImpl implements IAccountRepo {
         } else {
             // CREATE
             // TODO
+
             // SAU KHI CREATE xong thì query account mới nhất
             ResultSet rst = CrudUtil.execute("SELECT * FROM accouts ORDER BY RoomId DESC LIMIT 1");
             if (!rst.next()) {

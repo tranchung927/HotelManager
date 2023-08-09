@@ -47,7 +47,7 @@ public class AdminController implements Initializable {
     private MFXPaginatedTableView<Account> accountTableView;
 
     @FXML
-    private MFXPaginatedTableView<?> roomTableView;
+    private MFXPaginatedTableView<Room> roomTableView;
 
     private ObservableList<Account> accounts;
     private ObservableList<Room> rooms;
@@ -248,7 +248,7 @@ public class AdminController implements Initializable {
     }
 
 
-    public void addRoomBtn(ActionEvent event) {
+    public void addRoomBtn() {
         try {
             Stage stage = new Stage();
             FXMLLoader loader = new FXMLLoader(HMResourcesLoader.loadURL("fxml/Room.fxml"));
@@ -349,11 +349,11 @@ public class AdminController implements Initializable {
 
         roomTableView.getTableColumns().addAll(idRoomColumn, nameRoomColumn, statusColumn, nobColumn, priceColumn, categoryColumn);
 
-        roomTableView.getFilters().addAll(
-                new StringFilter<>("Name", Room::getName),
-                new StringFilter<>("Status", Room::getStatus),
-                new StringFilter<>("Price", Room::getPrice)
-        );
+//        roomTableView.getFilters().addAll(
+//                new StringFilter<>("Name", Room::getName),
+//                new StringFilter<>("Status", Room::getStatus)
+//
+//        );
     }
     private void getRoomData() {
 
