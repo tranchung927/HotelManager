@@ -23,12 +23,6 @@
                   </Label>
                </children>
             </FlowPane>
-            <FlowPane alignment="CENTER_LEFT" layoutX="10.0" layoutY="57.0" prefHeight="63.0" prefWidth="600.0">
-               <children>
-                  <Label alignment="CENTER" prefHeight="31.0" prefWidth="89.0" text="Id" />
-                  <MFXTextField fx:id="txtIdProduct" floatMode="ABOVE" prefHeight="30.0" prefWidth="457.0" />
-               </children>
-            </FlowPane>
             <FlowPane alignment="CENTER_LEFT" layoutX="10.0" layoutY="42.0" prefHeight="63.0" prefWidth="600.0">
                <children>
                   <Label alignment="CENTER" prefHeight="31.0" prefWidth="89.0" text="Tên " />
@@ -51,6 +45,12 @@
                <children>
                   <Label alignment="CENTER" prefHeight="31.0" prefWidth="89.0" text="Giá nhập" />
                   <MFXTextField fx:id="txtInputPrice" floatMode="ABOVE" prefHeight="30.0" prefWidth="457.0" />
+               </children>
+            </FlowPane>
+            <FlowPane alignment="CENTER_LEFT" layoutX="10.0" layoutY="246.0" prefHeight="63.0" prefWidth="600.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="31.0" prefWidth="89.0" text="Giá xuất" />
+                  <MFXTextField fx:id="txtOutputPrice" floatMode="ABOVE" prefHeight="30.0" prefWidth="457.0" />
                </children>
             </FlowPane>
             <FlowPane alignment="CENTER_LEFT" layoutX="10.0" layoutY="246.0" prefHeight="63.0" prefWidth="600.0">

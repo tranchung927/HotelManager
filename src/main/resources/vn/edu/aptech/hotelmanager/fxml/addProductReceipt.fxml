@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
-<?import io.github.palexdev.materialfx.controls.MFXComboBox?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="328.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vn.edu.aptech.hotelmanager.controllers.SalesController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="328.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vn.edu.aptech.hotelmanager.controllers.addProductReceiptController">
    <top>
       <FlowPane alignment="CENTER" prefHeight="50.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
@@ -23,24 +24,26 @@
             <HBox alignment="CENTER_LEFT" prefHeight="56.0" prefWidth="600.0">
                <children>
                   <Label alignment="CENTER" prefHeight="32.0" prefWidth="148.0" text="Tên  sản phẩm" />
-                  <Label fx:id="nameLabelProduct" prefHeight="98.0" prefWidth="181.0" text="Thang long" />
+                  <Label fx:id="nameProductWantBuy" prefHeight="98.0" prefWidth="181.0" text="Thang long" />
                </children>
             </HBox>
             <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="56.0" prefWidth="600.0">
                <children>
                   <Label alignment="CENTER" prefHeight="32.0" prefWidth="148.0" text="Số lượng" />
-                  <MFXComboBox floatMode="ABOVE" text="1" />
+                  <MFXTextField fx:id="quantiyProductWantToBuy" borderGap="5.0" floatMode="ABOVE" prefHeight="42.0" prefWidth="108.0" />
+                  <Pane prefHeight="18.0" prefWidth="79.0" />
+                  <MFXButton fx:id="removeQuantity" buttonType="RAISED" prefHeight="42.0" prefWidth="95.0" text="Xoá" />
                </children>
             </HBox>
             <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="56.0" prefWidth="600.0">
                <children>
                   <Label alignment="CENTER" prefHeight="32.0" prefWidth="148.0" text="Đơn giá" />
-                  <Label fx:id="priceLabelProduct" prefHeight="98.0" prefWidth="181.0" text="20.000 VNĐ" />
+                  <Label fx:id="priceLabel" prefHeight="98.0" prefWidth="181.0" text="20.000 VNĐ" />
                </children>
             </HBox>
             <HBox alignment="CENTER" layoutX="10.0" layoutY="122.0" prefHeight="56.0" prefWidth="600.0">
                <children>
-                  <MFXButton buttonType="RAISED" prefHeight="36.0" prefWidth="155.0" text="Thêm sản phẩm" />
+                  <MFXButton buttonType="RAISED" onAction="#addProductChoose" prefHeight="36.0" prefWidth="155.0" text="Thêm sản phẩm" />
                </children>
                <VBox.margin>
                   <Insets top="20.0" />

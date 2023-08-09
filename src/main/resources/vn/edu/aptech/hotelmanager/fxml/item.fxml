@@ -8,7 +8,7 @@
    <children>
       <VBox layoutX="25.0" layoutY="6.0" onMousePressed="#clickProduct" prefHeight="100.0" prefWidth="150.0" style="-fx-background-radius: 10; -fx-background-color: #b5e48c;" styleClass="shadow" stylesheets="@../css/Sales.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label fx:id="nameLabel" alignment="CENTER" prefHeight="70.0" prefWidth="150.0" style="-fx-background-color: #b5e48c; -fx-background-radius: 10;" text="Label" />
+            <Label fx:id="nameLabel" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="150.0" style="-fx-background-color: #b5e48c; -fx-background-radius: 10;" text="Label" />
             <Label fx:id="priceLabel" alignment="CENTER" prefHeight="36.0" prefWidth="150.0" style="-fx-background-color: #0ead69; -fx-text-fill: #fff; -fx-background-radius: 10;" text="Label" />
          </children>
       </VBox>

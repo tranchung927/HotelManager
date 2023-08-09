@@ -8,3 +8,9 @@
     -fx-font-size: 18;
     -fx-font-weight:700;
 }
+.outline-button {
+	-fx-background-color: transparent;
+	-fx-border-color: -mfx-purple;
+	-fx-border-radius: 3;
+	-fx-text-fill: -mfx-purple;
+}
