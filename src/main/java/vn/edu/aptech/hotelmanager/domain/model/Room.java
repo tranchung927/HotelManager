@@ -8,7 +8,7 @@ public class Room {
     private double price;
     private long categoryId;
 
-    public Room(long id, String name, ROOM_STATUS_TYPE status, int numberOfBeds, double price, long categoryID) {
+    public Room(long id, String name, ROOM_STATUS_TYPE status, int numberOfBeds, double price, long categoryId) {
         this.id = id;
         this.name = name;
         this.status = status;
