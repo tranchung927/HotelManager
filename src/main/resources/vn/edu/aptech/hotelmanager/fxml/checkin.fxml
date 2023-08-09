@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXComboBox?>
+<?import io.github.palexdev.materialfx.controls.MFXDatePicker?>
+<?import io.github.palexdev.materialfx.controls.MFXFilterComboBox?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="658.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vn.edu.aptech.hotelmanager.controllers.CheckinController">
+   <children>
+      <MFXTextField fx:id="GroupID" alignment="CENTER" layoutX="24.0" layoutY="14.0" prefHeight="49.0" prefWidth="171.0" promptText="GroupID" />
+      <MFXTextField fx:id="document_type" layoutX="24.0" layoutY="234.0" prefHeight="54.0" prefWidth="186.0" promptText="Documnet Value" />
+      <MFXFilterComboBox fx:id="assignee" layoutX="24.0" layoutY="98.0" prefHeight="45.0" prefWidth="171.0" promptText="Assignee" />
+      <MFXFilterComboBox fx:id="documnet_type" layoutX="24.0" layoutY="163.0" prefHeight="45.0" prefWidth="151.0" promptText="Document Type" />
+      <MFXTextField fx:id="fname" layoutX="24.0" layoutY="302.0" prefHeight="54.0" prefWidth="151.0" promptText="First Name" />
+      <MFXTextField fx:id="lname" layoutX="24.0" layoutY="370.0" prefHeight="54.0" prefWidth="151.0" promptText="Last Name" />
+      <MFXTextField fx:id="email" layoutX="24.0" layoutY="443.0" prefHeight="54.0" prefWidth="151.0" promptText="Email" />
+      <MFXTextField fx:id="phone_number" layoutX="24.0" layoutY="510.0" prefHeight="54.0" prefWidth="151.0" promptText="Phone Number" />
+      <MFXDatePicker fx:id="dob" layoutX="376.0" layoutY="22.0" promptText="Date of birth" />
+      <MFXComboBox fx:id="sex" layoutX="385.0" layoutY="81.0" promptText="Sex" />
+      <TextArea fx:id="description" layoutX="376.0" layoutY="143.0" prefHeight="200.0" prefWidth="200.0" promptText="Description" />
+      <MFXComboBox fx:id="address" layoutX="376.0" layoutY="370.0" promptText="Sex" text="Address" />
+      <MFXDatePicker fx:id="checkin" layoutX="376.0" layoutY="443.0" promptText="Checkin" />
+      <MFXDatePicker fx:id="checkout" layoutX="376.0" layoutY="510.0" promptText="Checkout" />
+      <MFXButton fx:id="checkinbtn" layoutX="245.0" layoutY="598.0" text="Checkin" />
+      <MFXButton fx:id="edit" layoutX="318.0" layoutY="598.0" text="Edit" />
+      <MFXButton fx:id="checkoutbtn" layoutX="390.0" layoutY="598.0" text="Checkout" onAction="#checkout"/>
+   </children>
+</AnchorPane>
