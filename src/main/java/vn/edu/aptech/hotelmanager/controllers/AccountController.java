@@ -3,42 +3,30 @@ package vn.edu.aptech.hotelmanager.controllers;
 import io.github.palexdev.materialfx.controls.*;
 
 import io.github.palexdev.materialfx.utils.DateTimeUtils;
+import io.github.palexdev.materialfx.utils.StringUtils;
+import io.github.palexdev.materialfx.utils.others.FunctionalStringConverter;
 import io.github.palexdev.materialfx.utils.others.dates.DateStringConverter;
-import io.github.palexdev.mfxresources.fonts.MFXFontIcon;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.*;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
 import vn.edu.aptech.hotelmanager.common.BaseController;
 import vn.edu.aptech.hotelmanager.domain.REPO_TYPE;
 import vn.edu.aptech.hotelmanager.domain.RepoFactory;
+import vn.edu.aptech.hotelmanager.domain.dto.AccountDTO;
 import vn.edu.aptech.hotelmanager.domain.model.*;
 import vn.edu.aptech.hotelmanager.domain.repo.IAccountRepo;
 import vn.edu.aptech.hotelmanager.domain.repo.ILocationRepo;
-import vn.edu.aptech.hotelmanager.repo.AccountRepoImpl;
-import vn.edu.aptech.hotelmanager.repo.db.DBConnection;
-import vn.edu.aptech.hotelmanager.utils.CrudUtil;
 
 
 public class AccountController extends BaseController implements Initializable {
@@ -72,11 +60,11 @@ public class AccountController extends BaseController implements Initializable {
     @FXML
     private MFXButton saveBtn;
     @FXML
-    private MFXComboBox<Country> countryComboBox;
+    private MFXFilterComboBox<Country> countryComboBox;
     @FXML
-    private MFXComboBox<City> cityComboBox;
+    private MFXFilterComboBox<City> cityComboBox;
     @FXML
-    private MFXComboBox<District> districtComboBox;
+    private MFXFilterComboBox<District> districtComboBox;
     @FXML
     private MFXComboBox<GENDER_TYPE> sexComboBox;
     @FXML
@@ -99,31 +87,53 @@ public class AccountController extends BaseController implements Initializable {
         this.ownerNode = ownerPane;
         dobDatePicker.setGridAlgorithm(DateTimeUtils::partialIntMonthMatrix);
         dobDatePicker.setConverterSupplier(() -> new DateStringConverter("dd/MM/yyyy", dobDatePicker.getLocale()));
-        setupUI();
         updateUI();
         getAddressAndUpdateUI();
+        getPositionAndUpdateUI();
     }
     public void setListener(IAccountControllerListener listener) {
         this.listener = listener;
     }
 
-    private void setupUI() {
+    private void setupAddressComboBox() {
+
+        StringConverter<Country> converterCountry = FunctionalStringConverter.to(Country::getName);
+        countryComboBox.setConverter(converterCountry);
+        Function<String, Predicate<Country>> filterCountryFunction = s -> country -> StringUtils.containsIgnoreCase(converterCountry.toString(country), s);
+        countryComboBox.setFilterFunction(filterCountryFunction);
+
+        StringConverter<City> converterCity = FunctionalStringConverter.to(City::getName);
+        cityComboBox.setConverter(converterCity);
+        Function<String, Predicate<City>> filterCityFunction = s -> country -> StringUtils.containsIgnoreCase(converterCity.toString(country), s);
+        cityComboBox.setFilterFunction(filterCityFunction);
+
+        StringConverter<District> converterDistrict = FunctionalStringConverter.to(District::getName);
+        districtComboBox.setConverter(converterDistrict);
+        Function<String, Predicate<District>> filterDistrictFunction = s -> country -> StringUtils.containsIgnoreCase(converterDistrict.toString(country), s);
+        districtComboBox.setFilterFunction(filterDistrictFunction);
+
         countryComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
-            if (oldValue.getId() != newValue.getId()) {
-                cityComboBox.clearSelection();
-                cityComboBox.clear();
-                cityComboBox.setItems(FXCollections.observableList(new ArrayList<>()));
-                districtComboBox.clearSelection();
-                districtComboBox.clear();
-                districtComboBox.setItems(FXCollections.observableList(new ArrayList<>()));
-            }
+            cityComboBox.clearSelection();
+            cityComboBox.clear();
+            cityComboBox.setItems(FXCollections.observableList(new ArrayList<>()));
+            districtComboBox.clearSelection();
+            districtComboBox.clear();
+            districtComboBox.setItems(FXCollections.observableList(new ArrayList<>()));
+            address.setCountry(newValue);
+            address.setCity(null);
+            address.setDistrict(null);
+            getCities();
         });
         cityComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
-            if (oldValue.getId() != newValue.getId()) {
-                districtComboBox.clearSelection();
-                districtComboBox.clear();
-                districtComboBox.setItems(FXCollections.observableList(new ArrayList<>()));
-            }
+            districtComboBox.clearSelection();
+            districtComboBox.clear();
+            districtComboBox.setItems(FXCollections.observableList(new ArrayList<>()));
+            address.setCity(newValue);
+            address.setDistrict(null);
+            getDistricts();
+        });
+        districtComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
+            address.setDistrict(newValue);
         });
     }
 
@@ -134,6 +144,83 @@ public class AccountController extends BaseController implements Initializable {
         phoneTextField.setText(account.getPhoneNumber());
         usernameTextField.setText(account.getUsername());
         passwordTextField.setText(account.getPassword());
+        List<GENDER_TYPE> genderList = new ArrayList<>();
+        genderList.add(GENDER_TYPE.MALE);
+        genderList.add(GENDER_TYPE.FEMALE);
+        genderList.add(GENDER_TYPE.OTHER);
+        ObservableList<GENDER_TYPE> observableGenderList = FXCollections.observableList(genderList);
+        sexComboBox.setItems(observableGenderList);
+        sexComboBox.selectItem(account.getGender());
+        sexComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
+            if (oldValue != newValue) {
+                account.setGender(newValue);
+            }
+        });
+    }
+    private void getAddressAndUpdateUI() {
+        if (account.getAddressId() > 0) {
+           try {
+               address = locationRepo.getAddressById(account.getAddressId());
+               getCountries();
+               countryComboBox.selectItem(address.getCountry());
+               getCities();
+               cityComboBox.selectItem(address.getCity());
+               getDistricts();
+               districtComboBox.selectItem(address.getDistrict());
+           } catch (Exception e) {
+               e.printStackTrace();
+           }
+        } else  {
+            address = new Address();
+        }
+        setupAddressComboBox();
+    }
+
+    private void getPositionAndUpdateUI() {
+        StringConverter<Position> converter = FunctionalStringConverter.to(Position::getName);
+        List<Position> listPositions = accountRepo.getListPosition();
+        ObservableList<Position> positionObservableList = FXCollections.observableList(listPositions);
+        positionComboBox.setItems(positionObservableList);
+        positionComboBox.setConverter(converter);
+        if (account.getPosition() != null) {
+            positionComboBox.selectItem(account.getPosition());
+        }
+        positionComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
+            if (oldValue.getId() != newValue.getId()) {
+                account.setPosition(newValue);
+            }
+        });
+    }
+
+    private void getCountries() {
+        if (countryComboBox.getItems().isEmpty()) {
+            List<Country> countryList = locationRepo.getListCountries();
+            ObservableList<Country> countries = FXCollections.observableArrayList(countryList);
+            countryComboBox.setItems(countries);
+        }
+    }
+    private void getCities() {
+        if (countryComboBox.getSelectionModel() == null) {
+            return;
+        }
+        if (cityComboBox.getItems().isEmpty()) {
+            long countryId = countryComboBox.getSelectionModel().getSelectedItem().getId();
+            List<City> cityList = locationRepo.getListCitiesByCountryId(countryId);
+            ObservableList<City> cities = FXCollections.observableArrayList(cityList);
+            cityComboBox.setItems(cities);
+        }
+    }
+
+    private void getDistricts() {
+        if (cityComboBox.getSelectionModel() == null) {
+            return;
+        }
+        if (districtComboBox.getItems().isEmpty()) {
+            long cityId = cityComboBox.getSelectionModel().getSelectedItem().getId();
+            List<District> districtList = locationRepo.getListDistrictsByCityId(cityId);
+            ObservableList<District> districts = FXCollections.observableArrayList(districtList);
+            districtComboBox.setItems(districts);
+        }
     }
 
     private void deleteAccount() {
@@ -154,79 +241,33 @@ public class AccountController extends BaseController implements Initializable {
         }
         this.showErrorDialog("Error", "An error occurred, please try again!");
     }
-
-    private void getAddressAndUpdateUI() {
-        if (account.getAddressId() > 0) {
-           try {
-               address = locationRepo.getAddressById(account.getAddressId());
-               countryComboBox.selectItem(address.getCountry());
-               countryComboBox.setText(address.getCountry().getName());
-               cityComboBox.selectItem(address.getCity());
-               cityComboBox.setText(address.getCity().getName());
-               districtComboBox.selectItem(address.getDistrict());
-               districtComboBox.setText(address.getDistrict().getName());
-           } catch (Exception e) {
-               e.printStackTrace();
-           }
-        }
-    }
-
-    @FXML
-    private void showSelectionSex() {
-        if (sexComboBox.getItems().isEmpty()) {
-            List<GENDER_TYPE> genderList = new ArrayList<>();
-            genderList.add(GENDER_TYPE.MALE);
-            genderList.add(GENDER_TYPE.FEMALE);
-            genderList.add(GENDER_TYPE.OTHER);
-            ObservableList<GENDER_TYPE> observableGenderList = FXCollections.observableList(genderList);
-            sexComboBox.setItems(observableGenderList);
-        }
-    }
-    @FXML
-    private void showSelectionPosition() {
-        if (positionComboBox.getItems().isEmpty()) {
-            List<Position> listPositions = accountRepo.getListPosition();
-            ObservableList<Position> positionObservableList = FXCollections.observableList(listPositions);
-            positionComboBox.setItems(positionObservableList);
-        }
-    }
-    @FXML
-    private void showSelectionCountry() {
-        if (countryComboBox.getItems().isEmpty()) {
-            List<Country> countryList = locationRepo.getListCountries();
-            ObservableList<Country> observableList = FXCollections.observableList(countryList);
-            countryComboBox.setItems(observableList);
-        }
-    }
-
-    @FXML
-    private void showSelectionCity() {
-        if (countryComboBox.getSelectionModel() == null) {
-            return;
-        }
-        long countryId = countryComboBox.getSelectionModel().getSelectedItem().getId();
-        if (cityComboBox.getItems().isEmpty()) {
-            List<City> cityList = locationRepo.getListCitiesByCountryId(countryId);
-            ObservableList<City> observableList = FXCollections.observableList(cityList);
-            cityComboBox.setItems(observableList);
-        }
-    }
-
-    @FXML
-    private void showSelectionDistrict() {
-        if (cityComboBox.getSelectionModel() == null) {
-            return;
-        }
-        long cityId = cityComboBox.getSelectionModel().getSelectedItem().getId();
-        if (districtComboBox.getItems().isEmpty()) {
-            List<District> cityList = locationRepo.getListDistrictsByCityId(cityId);
-            ObservableList<District> observableList = FXCollections.observableList(cityList);
-            districtComboBox.setItems(observableList);
-        }
-    }
-
     @FXML
     private void onClickedSave() {
+        if (account.getPosition() == null ||
+                address.getCountry() == null ||
+                address.getCity() == null ||
+                address.getDistrict() == null) {
+            showErrorDialog("Error", "Please fill all blank fields");
+        } else {
+            AccountDTO accountDTO = new AccountDTO();
+            accountDTO.setAccount(account);
+            accountDTO.setPosition(account.getPosition());
+            accountDTO.setAddress(address);
+            try {
+                AccountDTO result = accountRepo.createOrUpdate(accountDTO);
+                if (account.getId() > 0) {
+                    listener.updateAccount(result.getAccount());
+                } else {
+                    listener.addNewAccount(result.getAccount());
+                }
+                showInfoDialog("Success", account.getId() > 0 ? "Updated Successfully!" : "Created Successfully!", event -> {
+                    hiddenDialog();
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+                showErrorDialog("Error", "An error occurred, please try again!");
+            }
+        }
 //
 //
 //

@@ -4,6 +4,9 @@ public enum ACCOUNT_ROLE_TYPE {
     MANAGER, STAFF;
 
     public static ACCOUNT_ROLE_TYPE valueOfName(String name) {
+        if (name == null) {
+            return ACCOUNT_ROLE_TYPE.STAFF;
+        }
         switch (name) {
             case "manager" -> {
                 return ACCOUNT_ROLE_TYPE.MANAGER;

@@ -252,24 +252,24 @@ public class AdminController implements Initializable {
         try {
             Stage stage = new Stage();
             FXMLLoader loader = new FXMLLoader(HMResourcesLoader.loadURL("fxml/Room.fxml"));
-            RoomController roomController = new RoomController(stage, null);
-            roomController.setListener(new IRoomController() {
-
-                @Override
-                public void addNewRoom(Room room) {
-                    rooms.add(room);
-                }
-
-                @Override
-                public void updateRoom(Room room) {
-
-                }
-
-                @Override
-                public void deleteRoom(Room room) {
-
-                }
-            });
+            RoomController roomController = new RoomController(stage);
+//            roomController.setListener(new IRoomController() {
+//
+//                @Override
+//                public void addNewRoom(Room room) {
+//                    rooms.add(room);
+//                }
+//
+//                @Override
+//                public void updateRoom(Room room) {
+//
+//                }
+//
+//                @Override
+//                public void deleteRoom(Room room) {
+//
+//                }
+//            });
 
             loader.setControllerFactory(c -> roomController);
             Parent root = loader.load();
