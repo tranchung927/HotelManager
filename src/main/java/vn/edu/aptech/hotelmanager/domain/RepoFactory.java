@@ -2,6 +2,7 @@ package vn.edu.aptech.hotelmanager.domain;
 
 import vn.edu.aptech.hotelmanager.common.repo.IRepo;
 import vn.edu.aptech.hotelmanager.repo.AccountRepoImpl;
+import vn.edu.aptech.hotelmanager.repo.CustomerRepoImpl;
 import vn.edu.aptech.hotelmanager.repo.LocationRepoImpl;
 import vn.edu.aptech.hotelmanager.repo.RoomRepoImpl;
 import vn.edu.aptech.hotelmanager.repo.UserRepoImpl;
@@ -19,6 +20,7 @@ public class RepoFactory {
             case ROOM -> (T) new RoomRepoImpl();
             case LOCATION -> (T) new LocationRepoImpl();
             case ACCOUNT -> (T) new AccountRepoImpl();
+            case CUSTOMER -> (T) new CustomerRepoImpl();
         };
     }
 }

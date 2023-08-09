@@ -19,17 +19,18 @@ public class Account  {
     private Date createdAt;
     private Date modifiedAt;
     private String description;
-    private String role;
+    private ACCOUNT_ROLE_TYPE role;
     private String username;
     private String password;
+    private long positionId;
     private Position position;
-    private String addressId;
+    private long addressId;
 
     public String getFullName() {
         return firstName + " " + lastName;
     }
     public String getGenderName() {
-        return gender.getName();
+        return gender.toString();
     }
     public String getDOBFormat() {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -38,6 +39,4 @@ public class Account  {
     public String getPositionName() {
         return position.getName();
     }
-
-
 }

@@ -1,103 +1,103 @@
 package vn.edu.aptech.hotelmanager.controllers;
 
 import io.github.palexdev.materialfx.controls.MFXButton;
-import io.github.palexdev.materialfx.controls.MFXComboBox;
-import io.github.palexdev.materialfx.controls.MFXTextField;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import io.github.palexdev.materialfx.dialogs.MFXGenericDialog;
+import io.github.palexdev.materialfx.dialogs.MFXGenericDialogBuilder;
+import io.github.palexdev.materialfx.dialogs.MFXStageDialog;
+import io.github.palexdev.materialfx.enums.ScrimPriority;
+import io.github.palexdev.mfxresources.fonts.MFXFontIcon;
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import vn.edu.aptech.hotelmanager.HMResourcesLoader;
 import vn.edu.aptech.hotelmanager.domain.REPO_TYPE;
 import vn.edu.aptech.hotelmanager.domain.RepoFactory;
-import vn.edu.aptech.hotelmanager.domain.model.ROOM_STATUS_TYPE;
-import vn.edu.aptech.hotelmanager.domain.model.Room;
+import vn.edu.aptech.hotelmanager.domain.dto.CustomerDTO;
+import vn.edu.aptech.hotelmanager.domain.repo.ILocationRepo;
 import vn.edu.aptech.hotelmanager.domain.repo.IRoomRepo;
-import vn.edu.aptech.hotelmanager.repo.RoomRepoImpl;
 
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.Map;
 
-public class RoomController implements Initializable {
-    private final Room room;
-    @FXML
-    private MFXTextField categoryTextField;
-
-    @FXML
-    private MFXButton deleteRoomBtn;
-
-    @FXML
-    private MFXTextField nobTextField;
-
-    @FXML
-    private MFXTextField priceTextField;
-
-    @FXML
-    private MFXTextField roomNameTextField;
-
-    @FXML
-    private MFXButton saveRoomBtn;
-
-    @FXML
-    private MFXComboBox<?> statusComboBox;
+public class RoomController {
     private final IRoomRepo roomRepo = RepoFactory.getInstance().getRepo(REPO_TYPE.ROOM);
-
-    private IRoomController listener;
-
+    private MFXGenericDialog dialogContent;
+    private MFXStageDialog dialog;
     private final Stage stage;
-    private String[] statusList = {"Available", "Occupied", "Repair", "Dirty", "Reserve"};
 
-    public RoomController(Stage stage, Room room) {
+    @FXML
+    private GridPane grid;
+    public RoomController(Stage stage) {
         this.stage = stage;
-        this.room = room == null ? new Room() : room;
-    };
-
-    public RoomController(Stage stage, Object o, Room room) {
-        this.stage = stage;
-        this.room = room;
     }
 
-
-    public void setListener(IRoomController iRoomControllerListener) {
+    @FXML
+    private void onClickedTapMe(ActionEvent event) {
+        showDialog(Map.entry(new MFXButton("Confirm"), e -> {
+                    // Handle when tap confirm
+                }),
+                Map.entry(new MFXButton("Cancel"), e -> {
+                    this.hiddenDialog();
+                })
+        );
     }
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        addValueStatusComboBox();
-    }
-
-    public void addValueStatusComboBox() {
-        List<String> list = new ArrayList<>();
-        for (String status : statusList){
-            list.add(status);
-        }
-        ObservableList observableList = FXCollections.observableList(list);
-        statusComboBox.setItems(observableList);
-
-    }
-
-    public void saveRoomBtn(){
+    @SafeVarargs
+    private void showDialog(Map.Entry<Node, EventHandler<MouseEvent>>... actions) {
+        Parent root = null;
         try {
-            room.setName(roomNameTextField.getText());
-            room.setStatus(ROOM_STATUS_TYPE.getStatusStr((String) statusComboBox.getSelectionModel().getSelectedItem()));
-            room.setNumberOfBeds(Integer.parseInt(nobTextField.getText()));
-            room.setPrice(Double.parseDouble(priceTextField.getText()));
-            room.setCategoryId(Long.parseLong(categoryTextField.getText()));
-
-            RoomRepoImpl repo = RepoFactory.getInstance().getRepo(REPO_TYPE.ROOM);
-            repo.insertRoom(room);
-
-            this.listener.addNewRoom(room);
-
-        }catch (Exception e){
-            throw new RuntimeException(e);
+            FXMLLoader loader = new FXMLLoader(HMResourcesLoader.loadURL("fxml/CustomerDetail.fxml"));
+            loader.setControllerFactory(c -> new CustomerDetailController(new CustomerDTO()));
+            root = loader.load();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        if (root == null) {
+            return;
+        }
+        this.dialogContent = MFXGenericDialogBuilder.build()
+                .makeScrollable(true)
+                .setHeaderIcon(null)
+                .setShowAlwaysOnTop(false)
+                .setHeaderText("Customer Info")
+                .setContent(root)
+                .addActions(actions)
+                .get();
+        this.dialogContent.setMaxSize(800, 800);
+        this.dialog = MFXGenericDialogBuilder.build(dialogContent)
+                .toStageDialogBuilder()
+                .initOwner(stage)
+                .initModality(Modality.APPLICATION_MODAL)
+                .setDraggable(false)
+                .setTitle("Dialogs")
+                .setOwnerNode(grid)
+                .setScrimPriority(ScrimPriority.WINDOW)
+                .setScrimOwner(true)
+                .get();
+        this.dialog.showDialog();
+    }
+    private void hiddenDialog() {
+        if (this.dialogContent == null || this.dialog == null) {
+            return;
+        }
+        this.dialog.setOnHidden(e -> {
+            this.dialog = null;
+            this.dialogContent = null;
+        });
+        this.dialog.close();
+    }
+    private void convertDialogTo(String styleClass) {
+        dialogContent.getStyleClass().removeIf(
+                s -> s.equals("mfx-info-dialog") || s.equals("mfx-warn-dialog") || s.equals("mfx-error-dialog")
+        );
 
-
-
-
-
+        if (styleClass != null)
+            dialogContent.getStyleClass().add(styleClass);
     }
 }

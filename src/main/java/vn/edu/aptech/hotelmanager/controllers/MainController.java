@@ -104,10 +104,11 @@ public class MainController implements Initializable {
         loader.addView(MFXLoaderBean.of("ROOMS", loadURL("fxml/Room.fxml"))
                 .setBeanToNodeMapper(() -> createToggle("fas-hotel", "Danh sách phòng"))
                 .setDefaultRoot(true)
-                .setControllerFactory(c -> new RoomController(stage, null))
+                .setControllerFactory(c -> new RoomController(stage))
                 .get());
         loader.addView(MFXLoaderBean.of("CUSTOMERS", loadURL("fxml/Customer.fxml"))
                 .setBeanToNodeMapper(() -> createToggle("fas-users", "Danh sách khách hàng"))
+                .setControllerFactory(c -> new CustomerController(stage))
                 .get());
         loader.addView(MFXLoaderBean.of("SALES", loadURL("fxml/Sales.fxml"))
                 .setBeanToNodeMapper(() -> createToggle("fas-cart-plus", "Quản lý bán hàng"))

@@ -16,45 +16,34 @@ public enum GENDER_TYPE {
             }
         }
     }
-    public static GENDER_TYPE getGenderType(String gender) {
-        switch (gender) {
-            case "Male" -> {
-                return GENDER_TYPE.MALE;
-            }
-            case "Female" -> {
-                return GENDER_TYPE.FEMALE;
-            }
-            default -> {
-                return GENDER_TYPE.OTHER;
-            }
 
-        }
-    }
-    public static int getGenderID(String gender) {
-        switch (gender) {
-            case "Male" -> {
+    public int toStatus() {
+        switch (this) {
+            case MALE -> {
                 return 1;
             }
-            case "Female" -> {
+            case FEMALE -> {
                 return 2;
             }
             default -> {
                 return 3;
             }
-
         }
     }
-    public String getName() {
+
+    @Override
+    public String toString() {
         switch (this) {
             case MALE -> {
-                return "Nam";
+                return "Male";
             }
             case FEMALE -> {
-                return "Nữ";
+                return "Female";
             }
-            default -> {
-                return "Khác";
+            case OTHER -> {
+                return "Other";
             }
         }
+        return null;
     }
 }
