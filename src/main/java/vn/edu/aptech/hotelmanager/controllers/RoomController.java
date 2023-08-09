@@ -13,6 +13,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import vn.edu.aptech.hotelmanager.domain.REPO_TYPE;
 import vn.edu.aptech.hotelmanager.domain.RepoFactory;
+import vn.edu.aptech.hotelmanager.domain.model.Room;
 import vn.edu.aptech.hotelmanager.domain.repo.IRoomRepo;
 import vn.edu.aptech.hotelmanager.repo.dao.impl.RoomDAOImpl;
 import vn.edu.aptech.hotelmanager.repo.entity.RoomEntity;
@@ -30,31 +31,31 @@ public class RoomController implements Initializable {
     private AnchorPane anchorPane;
 
     @FXML
-    private TableView<RoomEntity> rooms;
+    private TableView<Room> rooms;
 
     @FXML
-    private TableColumn<RoomEntity, Integer> flag;
+    private TableColumn<Room, Integer> flag;
 
     @FXML
-    private TableColumn<RoomEntity, Integer> category;
+    private TableColumn<Room, Integer> category;
 
     @FXML
-    private TableColumn<RoomEntity, Integer> id;
+    private TableColumn<Room, Integer> id;
 
     @FXML
-    private TableColumn<RoomEntity, String> name;
+    private TableColumn<Room, String> name;
 
     @FXML
-    private TableColumn<RoomEntity, Integer> numberOfBeds;
+    private TableColumn<Room, Integer> numberOfBeds;
 
     @FXML
-    private TableColumn<RoomEntity, Double> price;
+    private TableColumn<Room, Double> price;
 
     @FXML
-    private TableColumn<RoomEntity, Integer> status;
+    private TableColumn<Room, Integer> status;
 
-    private List<RoomEntity> roomlist ;
-    private List<RoomEntity>  setRoomList()  throws Exception {
+    private List<Room> roomlist ;
+    private List<Room>  setRoomList()  throws Exception {
         RoomDAOImpl roomDAO= new RoomDAOImpl();
          return  roomlist = roomDAO.findAll();
     }
