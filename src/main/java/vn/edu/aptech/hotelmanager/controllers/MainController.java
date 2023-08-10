@@ -108,6 +108,7 @@ public class MainController implements Initializable {
                 .get());
         loader.addView(MFXLoaderBean.of("CUSTOMERS", loadURL("fxml/Customer.fxml"))
                 .setBeanToNodeMapper(() -> createToggle("fas-users", "Danh sách khách hàng"))
+                .setControllerFactory(c -> new CustomerController(stage))
                 .get());
         loader.addView(MFXLoaderBean.of("SALES", loadURL("fxml/Sales.fxml"))
                 .setBeanToNodeMapper(() -> createToggle("fas-cart-plus", "Quản lý bán hàng"))
@@ -117,6 +118,9 @@ public class MainController implements Initializable {
                 .get());
         loader.addView(MFXLoaderBean.of("REPORTS", loadURL("fxml/Report.fxml")
         ).setBeanToNodeMapper(() -> createToggle("fas-chart-pie", "Báo cáo"))
+                .get());
+        loader.addView(MFXLoaderBean.of("ADMIN", loadURL("fxml/Admin.fxml"))
+                .setBeanToNodeMapper(() -> createToggle("fas-user-tie", "Admin"))
                 .get());
         loader.setOnLoadedAction(beans -> {
             List<ToggleButton> nodes = beans.stream()
@@ -147,4 +151,6 @@ public class MainController implements Initializable {
         if (rotate != 0) wrapper.getIcon().setRotate(rotate);
         return toggleNode;
     }
+
+
 }

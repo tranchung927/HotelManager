@@ -23,10 +23,13 @@ public class AccountEntityToAccount implements IEntityConverter<Account>{
             account.setCreatedAt(source.getDate("created_at"));
             account.setModifiedAt(source.getDate("modified_at"));
             account.setDescription(source.getString("description"));
-            account.setRole(source.getString("role"));
+            account.setRole(ACCOUNT_ROLE_TYPE.valueOfName(source.getString("role")));
             account.setUsername(source.getString("username"));
             account.setPassword(source.getString("password"));
-            account.setPositionId(source.getLong("position_id"));
+            Position position = new Position();
+            position.setId(source.getLong("position_id"));
+            position.setName(source.getString("position_name"));
+            account.setPosition(position);
             account.setAddressId(source.getLong("address_id"));
         } catch (Exception e) {
             e.printStackTrace();

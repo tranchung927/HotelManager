@@ -3,7 +3,8 @@ package vn.edu.aptech.hotelmanager.domain.model;
 import lombok.Data;
 
 @Data
-public class Position {
+public class Document {
     private long id;
-    private String name;
+    private DOCUMENT_TYPE type;
+    private String value;
 }

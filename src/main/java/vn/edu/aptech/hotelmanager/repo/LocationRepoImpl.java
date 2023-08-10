@@ -13,7 +13,6 @@ import vn.edu.aptech.hotelmanager.utils.CrudUtil;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class LocationRepoImpl implements ILocationRepo {
@@ -66,11 +65,11 @@ public class LocationRepoImpl implements ILocationRepo {
                     "B.id AS country_id, B.name AS country_name," +
                     "C.id AS city_id, C.name AS city_name," +
                     "D.id AS district_id, D.name AS district_name" +
-                    "FROM addresses AS A" +
-                    "INNER JOIN cities AS C ON A.city_id = C.id" +
-                    "INNER JOIN countries AS B ON C.country_id = B.id" +
-                    "INNER JOIN districts AS D ON A.district_id = D.id" +
-                    "WHERE A.id=?";
+                    " FROM addresses AS A" +
+                    " INNER JOIN cities AS C ON A.city_id = C.id" +
+                    " INNER JOIN countries AS B ON C.country_id = B.id" +
+                    " INNER JOIN districts AS D ON A.district_id = D.id" +
+                    " WHERE A.id=?";
             ResultSet resultSet = CrudUtil.execute(sql, id);
             if (resultSet.next()) {
                 return new AddressEntityToAddress().convert(resultSet);

@@ -1,0 +1,333 @@
+@import '../fonts/Fonts.css';
+@import 'Colors.css';
+
+
+.rootPane {
+    -fx-background-color: #ffff;
+    /*-fx-background-radius: 10;*/
+    -fx-border-color: #7e7070;
+    -fx-border-radius: 10;
+}
+
+.tab-pane {
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-border-color: #7e7070;
+    -fx-border-radius: 10;
+
+}
+
+.tab-pane:selected {
+    -fx-background-color: #FAFCFB;
+    -fx-background-radius: 0;
+    -fx-border-width: 3 0 0 0;
+    -fx-border-color: linear-gradient(to bottom right, #6f1f85, #9231b5);
+}
+
+.tab-pane:focused {
+    -fx-background-color: rgba(29, 104, 189, 0);
+
+}
+
+.tab-pane .tab-header {
+    -fx-background-color: #46af7b;
+    -fx-border-radius: 10;
+}
+
+.tab-pane .text {
+    -fx-font-family: 'Visby Round CF Heavy';
+    -fx-font-size: 14px;
+    -fx-text-fill: #c42424;
+}
+
+.white-bg {
+    -fx-background-color: white;
+    -fx-border-radius: 10;
+    -fx-border-color: #7e7070;
+
+}
+
+.label {
+    -fx-font-family: 'Visby Round CF Heavy';
+    -fx-font-size: 14;
+    -fx-text-fill: #14325d;
+
+
+}
+
+/**************************************************
+ * Text fields
+**************************************************/
+.text-field {
+    -fx-background-color: #ffff;
+    -fx-background-radius: 8px;
+    -fx-border-color: linear-gradient(to right, #444857, #537e90);
+    /*-fx-border-radius: 8px;*/
+    -fx-border-width: 0 0 0.8px 0;
+    -fx-font-size: 13px;
+    -fx-font-family: 'Visby Round CF Heavy';
+}
+
+.text-field:focused {
+    -fx-border-color: linear-gradient(to bottom right, #2f3f89, #9231b5);
+    -fx-border-width: 0 0 1.8px 0;
+}
+
+/**************************************************
+ * Combo-Box
+**************************************************/
+.combo-box {
+    -fx-background-color: #ffff;
+    -fx-background-radius: 5px;
+    -fx-border-color: linear-gradient(to right, #444857, #537e90);
+    -fx-border-radius: 5px;
+    -fx-border-width: 0.8px;
+    -fx-font-family: 'Visby Round CF Heavy';
+    -fx-font-size: 13px;
+
+
+}
+
+.combo-box:focused {
+    -fx-border-color: linear-gradient(to bottom right, #2f3f89, #9231b5);
+    -fx-border-width: 1.2px;
+}
+
+/**************************************************
+ * Button
+**************************************************/
+
+.mfx-button {
+    -fx-font-family: 'Visby Round CF Medium';
+    -fx-text-fill: -mfx-text-he;
+}
+
+.mfx-button .mfx-ripple-generator {
+    -mfx-ripple-radius: 40;
+    -mfx-auto-clip: true;
+}
+
+.mfx-button .text {
+    -fx-font-smoothing-type: lcd;
+}
+
+#custom {
+    -fx-background-color: -mfx-purple;
+    -fx-text-fill: white
+}
+
+.outline-button {
+    -fx-background-color: transparent;
+    -fx-border-color: -mfx-purple;
+    -fx-border-radius: 3;
+
+    -fx-text-fill: -mfx-purple;
+}
+
+.outline-button:hover,
+.outline-button:focused {
+    -fx-background-color: -mfx-purple;
+    -fx-text-fill: white;
+}
+
+
+.link-button {
+    -fx-background-color: transparent;
+    -fx-border-radius: 3;
+    -fx-text-fill: #0096FF;
+    -fx-underline: true;
+    -fx-cursor: hand;
+}
+
+.link-button:armed,
+.link-button:focused {
+    -fx-border-color: #006BFF;
+    -fx-text-fill: #006BFF;
+}
+
+.link-button .mfx-ripple-generator {
+    -mfx-ripple-color: #D9E9FF;
+}
+
+.add-btn {
+    -fx-background-color: #a16eab;
+    -fx-background-radius: 5px;
+    -fx-cursor: hand;
+    -fx-text-fill: #ffff;
+    -fx-font-family: 'Visby Round CF Heavy';
+    -fx-font-size: 14px;
+
+
+}
+
+.add-btn:hover {
+    -fx-background-color: linear-gradient(to bottom right, #8a8ea8, #62187e);
+
+}
+
+.update-btn {
+    -fx-background-color: #2551a8;
+    -fx-background-radius: 5px;
+    -fx-cursor: hand;
+    -fx-text-fill: #ffff;
+    -fx-font-family: 'Visby Round CF Heavy';
+    -fx-font-size: 14px;
+
+
+}
+
+.update-btn:hover {
+    -fx-background-color: linear-gradient(to bottom right, #8a8ea8, #1f21a4);
+
+}
+
+.delete-btn {
+    -fx-background-color: #bd2235;
+    -fx-background-radius: 5px;
+    -fx-cursor: hand;
+    -fx-text-fill: #ffff;
+    -fx-font-family: 'Visby Round CF Heavy';
+    -fx-font-size: 14px;
+
+
+}
+
+.delete-btn:hover {
+    -fx-background-color: linear-gradient(to bottom right, #8a8ea8, #b71616);
+
+}
+
+.clear-btn {
+    -fx-background-color: #27a614;
+    -fx-background-radius: 5px;
+    -fx-cursor: hand;
+    -fx-text-fill: #ffff;
+    -fx-font-family: 'Visby Round CF Heavy';
+    -fx-font-size: 14px;
+
+
+}
+
+.clear-btn:hover {
+    -fx-background-color: linear-gradient(to bottom right, #8a8ea8, #2c940d);
+
+}
+
+/**************************************************
+ * Table View
+**************************************************/
+.table-view {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-border-color: linear-gradient(to bottom right, #8996c9, #b7a9ce);
+    -fx-background-radius:1 8px;
+    -fx-border-radius: 5px ;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+
+}
+.table-view:focused {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: linear-gradient(to bottom right, #2f3f89, #9231b5);
+    -fx-background-insets: 0 0 0 0;
+
+}
+
+.table-view .column-header ,filter {
+    -fx-background-color: transparent;
+    -fx-size: 50px;
+    -fx-font-size: 12px;
+
+}
+.table-view .column-header .label {
+    -fx-text-fill: #ffff;
+     -fx-font-size: 12px;
+
+
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+}
+
+
+.table-col {
+    -fx-text-fill: #ffff;
+    -fx-font-size: 12px;
+    -fx-text-alignment: CENTER;
+
+}
+.table-view .table-cell {
+    -fx-text-fill: #ffff;
+}
+.table-row-cell {
+    -fx-background-color: linear-gradient(to top left, #6e7dc0, #b059d2);
+    -fx-table-cell-color: #564c4c;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0;
+    /*-fx-alignment: center;*/
+    /*-fx-text-fill: #ffff;*/
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #e4d6ec;
+    -fx-table-cell-color: #8a8484;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0;
+
+}
+.table-row-cell:selected {
+    -fx-background-color: linear-gradient(to top left, #b2b8c9,#2cad90);
+    -fx-background-insets: 0;
+    -fx-padding: 1;
+
+}
+.table-row-cell:filled:hover {
+
+    /*-fx-size:50px;*/
+    -fx-alignment: CENTER;
+    -fx-text-alignment: center;
+
+
+}
+.table-view .table-column{
+    -fx-text-alignment: center;
+    -fx-alignment: CENTER
+
+}
+#col {
+    -fx-text-alignment: CENTER;
+}
+
+.header-label {
+    -fx-font-family: 'Visby Round CF Bold';
+    -fx-font-size: 14;
+    -fx-text-fill: -mfx-text-he;
+}
+
+.header-label .text {
+    -fx-font-smoothing-type: lcd;
+}
+
+.sub-header-label {
+    -fx-font-family: 'Visby Round CF Demi Bold';
+    -fx-text-fill: -mfx-text-he;
+}
+
+.sub-header-label .text {
+    -fx-font-smoothing-type: lcd;
+}
+
+.grid-pane {
+    -fx-background-color: transparent;
+}
+
+.grid-background {
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0.12, -1.0, 2.0);
+}
+

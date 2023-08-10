@@ -15,7 +15,7 @@
  * Window Header
 **************************************************/
 .rootPane .close-icon {
-	-mfx-color: -mfx-red;
+	-mfx-color: #d01818;
 	-fx-opacity: 0.5;
 }
 
