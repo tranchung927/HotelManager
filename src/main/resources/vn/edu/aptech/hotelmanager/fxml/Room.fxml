@@ -21,8 +21,8 @@
             <Label layoutX="340.0" layoutY="39.0" text="Price :" />
             <Label layoutX="344.0" layoutY="133.0" text="Category :" />
             <MFXTextField fx:id="categoryTextField" floatMode="ABOVE" layoutX="344.0" layoutY="159.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="30.0" prefWidth="150.0" />
-            <MFXButton fx:id="saveRoomBtn" buttonType="RAISED" layoutX="366.0" layoutY="352.0" prefHeight="25.0" prefWidth="53.0" text="Save" />
-            <MFXButton fx:id="deleteRoomBtn" buttonType="RAISED" layoutX="451.0" layoutY="352.0" text="Delete" />
+            <MFXButton fx:id="saveRoomBtn" buttonType="RAISED" layoutX="366.0" layoutY="352.0" onMouseClicked="#onClickSaveOrUpdate" prefHeight="25.0" prefWidth="53.0" text="Save" />
+            <MFXButton fx:id="deleteRoomBtn" buttonType="RAISED" layoutX="451.0" layoutY="352.0" onMouseClicked="#deleteRoom" text="Delete" />
          </children>
       </AnchorPane>
    </children>

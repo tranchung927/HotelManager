@@ -1,16 +1,21 @@
 package vn.edu.aptech.hotelmanager.controllers;
 
 import io.github.palexdev.materialfx.controls.MFXButton;
+import io.github.palexdev.materialfx.controls.MFXComboBox;
+import io.github.palexdev.materialfx.controls.MFXTextField;
 import io.github.palexdev.materialfx.dialogs.MFXGenericDialog;
 import io.github.palexdev.materialfx.dialogs.MFXGenericDialogBuilder;
 import io.github.palexdev.materialfx.dialogs.MFXStageDialog;
 import io.github.palexdev.materialfx.enums.ScrimPriority;
 import io.github.palexdev.mfxresources.fonts.MFXFontIcon;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.input.MouseEvent;
@@ -18,86 +23,148 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import vn.edu.aptech.hotelmanager.HMResourcesLoader;
+import vn.edu.aptech.hotelmanager.common.BaseController;
 import vn.edu.aptech.hotelmanager.domain.REPO_TYPE;
 import vn.edu.aptech.hotelmanager.domain.RepoFactory;
 import vn.edu.aptech.hotelmanager.domain.dto.CustomerDTO;
+import vn.edu.aptech.hotelmanager.domain.model.Account;
+import vn.edu.aptech.hotelmanager.domain.model.ROOM_STATUS_TYPE;
+import vn.edu.aptech.hotelmanager.domain.model.Room;
 import vn.edu.aptech.hotelmanager.domain.repo.ILocationRepo;
 import vn.edu.aptech.hotelmanager.domain.repo.IRoomRepo;
+import vn.edu.aptech.hotelmanager.utils.CrudUtil;
 
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 
-public class RoomController {
+public class RoomController implements Initializable {
     private final IRoomRepo roomRepo = RepoFactory.getInstance().getRepo(REPO_TYPE.ROOM);
     private MFXGenericDialog dialogContent;
     private MFXStageDialog dialog;
     private final Stage stage;
 
-    @FXML
-    private GridPane grid;
-    public RoomController(Stage stage) {
-        this.stage = stage;
-    }
 
     @FXML
-    private void onClickedTapMe(ActionEvent event) {
-        showDialog(Map.entry(new MFXButton("Confirm"), e -> {
-                    // Handle when tap confirm
-                }),
-                Map.entry(new MFXButton("Cancel"), e -> {
-                    this.hiddenDialog();
-                })
-        );
+    private MFXTextField categoryTextField;
+
+    @FXML
+    private MFXButton deleteRoomBtn;
+
+    @FXML
+    private MFXTextField nobTextField;
+
+    @FXML
+    private MFXTextField priceTextField;
+
+    @FXML
+    private MFXTextField roomNameTextField;
+
+    @FXML
+    private MFXButton saveRoomBtn;
+
+    @FXML
+    private MFXComboBox<ROOM_STATUS_TYPE> statusComboBox;
+
+    @FXML
+    private GridPane grid;
+    private IRoomController listener;
+    private Room room;
+
+    public RoomController(Stage stage, Room room) {
+        this.stage = stage;
+        this.room = room == null ? new Room() : room;
     }
-    @SafeVarargs
-    private void showDialog(Map.Entry<Node, EventHandler<MouseEvent>>... actions) {
-        Parent root = null;
+
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        updateUI();
+
+    }
+
+    public void setListener(IRoomController listener) {
+        this.listener = listener;
+    }
+
+    public void updateUI() {
+        roomNameTextField.setText(room.getName());
+        priceTextField.setText(String.valueOf(room.getPrice()));
+        List<ROOM_STATUS_TYPE> roomStatusTypeList = new ArrayList<>();
+        roomStatusTypeList.add(ROOM_STATUS_TYPE.AVAILABLE);
+        roomStatusTypeList.add(ROOM_STATUS_TYPE.RESERVE);
+        roomStatusTypeList.add(ROOM_STATUS_TYPE.DIRTY);
+        roomStatusTypeList.add(ROOM_STATUS_TYPE.OCCUPIED);
+        ObservableList<ROOM_STATUS_TYPE> roomStatusTypes = FXCollections.observableList(roomStatusTypeList);
+        statusComboBox.setItems(roomStatusTypes);
+        statusComboBox.selectItem(room.getStatus());
+        statusComboBox.getSelectionModel().selectedItemProperty().addListener((option, oldValue, newValue) -> {
+            if (oldValue != newValue) {
+                room.setStatus(newValue);
+            }
+        });
+        categoryTextField.setText(String.valueOf(room.getCategoryId()));
+        nobTextField.setText(String.valueOf(room.getNumberOfBeds()));
+    }
+
+    public IRoomRepo getRoomRepo() {
+        return roomRepo;
+    }
+
+    public BaseController baseController;
+
+    private void deleteRoom() {
+        Boolean isSuccess = false;
         try {
-            FXMLLoader loader = new FXMLLoader(HMResourcesLoader.loadURL("fxml/CustomerDetail.fxml"));
-            loader.setControllerFactory(c -> new CustomerDetailController(new CustomerDTO()));
-            root = loader.load();
+            isSuccess = roomRepo.deleteRoom(room.getId());
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if (root == null) {
-            return;
-        }
-        this.dialogContent = MFXGenericDialogBuilder.build()
-                .makeScrollable(true)
-                .setHeaderIcon(null)
-                .setShowAlwaysOnTop(false)
-                .setHeaderText("Customer Info")
-                .setContent(root)
-                .addActions(actions)
-                .get();
-        this.dialogContent.setMaxSize(800, 800);
-        this.dialog = MFXGenericDialogBuilder.build(dialogContent)
-                .toStageDialogBuilder()
-                .initOwner(stage)
-                .initModality(Modality.APPLICATION_MODAL)
-                .setDraggable(false)
-                .setTitle("Dialogs")
-                .setOwnerNode(grid)
-                .setScrimPriority(ScrimPriority.WINDOW)
-                .setScrimOwner(true)
-                .get();
-        this.dialog.showDialog();
-    }
-    private void hiddenDialog() {
-        if (this.dialogContent == null || this.dialog == null) {
-            return;
-        }
-        this.dialog.setOnHidden(e -> {
-            this.dialog = null;
-            this.dialogContent = null;
-        });
-        this.dialog.close();
-    }
-    private void convertDialogTo(String styleClass) {
-        dialogContent.getStyleClass().removeIf(
-                s -> s.equals("mfx-info-dialog") || s.equals("mfx-warn-dialog") || s.equals("mfx-error-dialog")
-        );
 
-        if (styleClass != null)
-            dialogContent.getStyleClass().add(styleClass);
+        if (isSuccess) {
+            this.listener.deleteRoom(room);
+            baseController.showInfoDialog("Success", "Delete Successfully!", event -> {
+                baseController.hiddenDialog();
+                // Đóng màn account
+            });
+            return;
+        }
+        baseController.showErrorDialog("Error", "An error occurred, please try again!");
     }
+
+    private void onClickSaveOrUpdate() {
+        room.setName(roomNameTextField.getText());
+        room.setStatus(ROOM_STATUS_TYPE.getStatusStr(String.valueOf(statusComboBox.getSelectionModel().getSelectedItem())));
+        room.setNumberOfBeds(Integer.parseInt(nobTextField.getText()));
+        room.setPrice(Double.parseDouble(priceTextField.getText()));
+        room.setCategoryId(Long.parseLong(categoryTextField.getText()));
+
+        if (room.getName() == null
+                || room.getStatus() == null
+                || room.getNumberOfBeds() == 0
+                || room.getPrice() == 0
+                || room.getCategoryId() == 0) {
+            baseController.showErrorDialog("Error", "Please fill all blank fields");
+        } else {
+
+            Room room1 = null;
+            try {
+                room1 = roomRepo.creatOrUpdate(room);
+                if (room.getId() > 0) {
+                    listener.updateRoom(room1);
+                } else {
+                    listener.addNewRoom(room1);
+                }
+                baseController.showInfoDialog("Success", room.getId() > 0 ? "Updated Successfully!" : "Created Successfully!", event -> {
+                    baseController.hiddenDialog();
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+                baseController.showErrorDialog("Error", "An error occurred, please try again!");
+            }
+        }
+    }
+
 }

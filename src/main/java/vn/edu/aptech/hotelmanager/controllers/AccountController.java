@@ -12,6 +12,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.*;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -75,6 +80,8 @@ public class AccountController extends BaseController implements Initializable {
     private Address address;
     private Account account;
 
+
+
     public AccountController(Stage stage, Account account) {
         this.stage = stage;
         this.account = account == null ? new Account() : account;
@@ -82,15 +89,21 @@ public class AccountController extends BaseController implements Initializable {
         this.locationRepo = RepoFactory.getInstance().getRepo(REPO_TYPE.LOCATION);
     }
 
-    @Override
+
+
+
+
+        @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.ownerNode = ownerPane;
         dobDatePicker.setGridAlgorithm(DateTimeUtils::partialIntMonthMatrix);
         dobDatePicker.setConverterSupplier(() -> new DateStringConverter("dd/MM/yyyy", dobDatePicker.getLocale()));
+
         updateUI();
         getAddressAndUpdateUI();
         getPositionAndUpdateUI();
     }
+
     public void setListener(IAccountControllerListener listener) {
         this.listener = listener;
     }
@@ -156,21 +169,23 @@ public class AccountController extends BaseController implements Initializable {
                 account.setGender(newValue);
             }
         });
+
     }
+
     private void getAddressAndUpdateUI() {
         if (account.getAddressId() > 0) {
-           try {
-               address = locationRepo.getAddressById(account.getAddressId());
-               getCountries();
-               countryComboBox.selectItem(address.getCountry());
-               getCities();
-               cityComboBox.selectItem(address.getCity());
-               getDistricts();
-               districtComboBox.selectItem(address.getDistrict());
-           } catch (Exception e) {
-               e.printStackTrace();
-           }
-        } else  {
+            try {
+                address = locationRepo.getAddressById(account.getAddressId());
+                getCountries();
+                countryComboBox.selectItem(address.getCountry());
+                getCities();
+                cityComboBox.selectItem(address.getCity());
+                getDistricts();
+                districtComboBox.selectItem(address.getDistrict());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
             address = new Address();
         }
         setupAddressComboBox();
@@ -199,6 +214,7 @@ public class AccountController extends BaseController implements Initializable {
             countryComboBox.setItems(countries);
         }
     }
+
     private void getCities() {
         if (countryComboBox.getSelectionModel() == null) {
             return;
@@ -241,8 +257,28 @@ public class AccountController extends BaseController implements Initializable {
         }
         this.showErrorDialog("Error", "An error occurred, please try again!");
     }
+
     @FXML
-    private void onClickedSave() {
+    private void onClickedSave() throws ParseException {
+        account.setFirstName(firstNameTextField.getText());
+        account.setLastName(lastNameTextField.getText());
+        account.setEmail(emailTextField.getText());
+        account.setPhoneNumber(phoneTextField.getText());
+        Date dob = Date.from(dobDatePicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy ");
+        String format = dateFormat.format(dob);
+        Date gDate = dateFormat.parse(format);
+        LocalDate date = dob.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        account.setDob(gDate);
+        account.setGender(GENDER_TYPE.valueOf(String.valueOf(sexComboBox.getSelectionModel().getSelectedItem())));
+        Position position = new Position();
+        position.setName(String.valueOf(positionComboBox.getSelectionModel().getSelectedItem()));
+        account.setPosition(position);
+        account.setUsername(usernameTextField.getText());
+        account.setPassword(passwordTextField.getText());
+        account.setAddressId(address.getId());
+
+
         if (account.getPosition() == null ||
                 address.getCountry() == null ||
                 address.getCity() == null ||
@@ -443,6 +479,7 @@ public class AccountController extends BaseController implements Initializable {
 ////        }
 
     }
+
     @FXML
     private void onClickedDelete() {
         this.showWarningDialog("Confirmation", "Are you sure to delete?",

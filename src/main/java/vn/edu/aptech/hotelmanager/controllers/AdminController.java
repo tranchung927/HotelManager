@@ -75,7 +75,7 @@ public class AdminController implements Initializable {
         try {
             Stage stage = new Stage();
             FXMLLoader loader = new FXMLLoader(HMResourcesLoader.loadURL("fxml/Account.fxml"));
-            AccountController accountController = new AccountController(stage, null);
+            AccountController accountController = new AccountController(stage, new Account());
             accountController.setListener(new IAccountControllerListener() {
                 @Override
                 public void addNewAccount(Account account) {
@@ -252,24 +252,24 @@ public class AdminController implements Initializable {
         try {
             Stage stage = new Stage();
             FXMLLoader loader = new FXMLLoader(HMResourcesLoader.loadURL("fxml/Room.fxml"));
-            RoomController roomController = new RoomController(stage);
-//            roomController.setListener(new IRoomController() {
-//
-//                @Override
-//                public void addNewRoom(Room room) {
-//                    rooms.add(room);
-//                }
-//
-//                @Override
-//                public void updateRoom(Room room) {
-//
-//                }
-//
-//                @Override
-//                public void deleteRoom(Room room) {
-//
-//                }
-//            });
+            RoomController roomController = new RoomController(stage,null);
+            roomController.setListener(new IRoomController() {
+
+                @Override
+                public void addNewRoom(Room room) {
+                    rooms.add(room);
+                }
+
+                @Override
+                public void updateRoom(Room room) {
+
+                }
+
+                @Override
+                public void deleteRoom(Room room) {
+
+                }
+            });
 
             loader.setControllerFactory(c -> roomController);
             Parent root = loader.load();
@@ -366,6 +366,45 @@ public class AdminController implements Initializable {
 
 
     private void selectedRoom(Room room) {
+        try {
+            Stage stage = new Stage();
+            FXMLLoader loader = new FXMLLoader(HMResourcesLoader.loadURL("fxml/Room.fxml"));
+            RoomController roomController = new RoomController(stage,room);
+            roomController.setListener(new IRoomController() {
+
+                @Override
+                public void addNewRoom(Room room) {
+
+                }
+
+                @Override
+                public void updateRoom(Room room) {
+                    for (int i = 0; i < rooms.size(); i++) {
+                        if (room.getId() == rooms.get(i).getId()) {
+                            rooms.set(i, room);
+                            break;
+                        }
+                    }
+
+                }
+
+                @Override
+                public void deleteRoom(Room room) {
+                    rooms.remove(room);
+
+                }
+            });
+
+            loader.setControllerFactory(c -> roomController);
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            MFXThemeManager.addOn(scene, Themes.DEFAULT, Themes.LEGACY);
+            stage.setScene(scene);
+            stage.setTitle("Room");
+            stage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
 
     }

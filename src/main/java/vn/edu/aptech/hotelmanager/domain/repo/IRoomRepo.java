@@ -8,7 +8,11 @@ import java.util.List;
 public interface IRoomRepo extends IRepo {
     List<Room> getListRoom(int page, int pageSize);
 
-    void insertRoom(Room room);
+    Room creatOrUpdate(Room room) throws Exception;
 
     String getLastRoomId();
+
+    Boolean deleteRoom(Long id) throws Exception;
+
+
 }
