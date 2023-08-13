@@ -115,6 +115,7 @@ public class RoomController implements Initializable {
 
     public BaseController baseController;
 
+    @FXML
     private void deleteRoom() {
         Boolean isSuccess = false;
         try {
@@ -134,6 +135,7 @@ public class RoomController implements Initializable {
         baseController.showErrorDialog("Error", "An error occurred, please try again!");
     }
 
+    @FXML
     private void onClickSaveOrUpdate() {
         room.setName(roomNameTextField.getText());
         room.setStatus(ROOM_STATUS_TYPE.getStatusStr(String.valueOf(statusComboBox.getSelectionModel().getSelectedItem())));
