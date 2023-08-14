@@ -19,6 +19,7 @@ import vn.edu.aptech.hotelmanager.domain.dto.ProductDTO;
 import vn.edu.aptech.hotelmanager.domain.model.Product;
 import vn.edu.aptech.hotelmanager.domain.model.Receipt;
 import vn.edu.aptech.hotelmanager.domain.repo.IProductRepo;
+import vn.edu.aptech.hotelmanager.domain.repo.IWareHouseRepo;
 
 import java.io.IOException;
 import java.net.URL;
@@ -26,6 +27,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class WarehouseController implements Initializable {
+    IProductRepo productRepo = RepoFactory.getInstance().getRepo(REPO_TYPE.PRODUCT);
+    IWareHouseRepo receipt = RepoFactory.getInstance().getRepo(REPO_TYPE.WAREHOUSE);
     @FXML
     private MFXTableView<Receipt> infoImportProduct;
     @FXML
@@ -63,20 +66,6 @@ public class WarehouseController implements Initializable {
         infoReceiptImportProductUI();
         infoReceiptOfCus();
        getData();
-       IProductRepo receipt = RepoFactory.getInstance().getRepo(REPO_TYPE.PRODUCT);
-       List<Receipt> receiptList = receipt.getListReceiptCustomer(1,2,"");
-        System.out.println("receipt: " + receiptList);
-        tableReceiptCustomer = FXCollections.observableArrayList(
-        );
-        for(Receipt r:receiptList){
-            if(r.getType().getId() == 2){
-                tableReceiptCustomer.add(r);
-            }else {
-                tableImportProductInWarehouse = FXCollections.observableArrayList();
-            }
-        }
-
-        infoReceipt.setItems(tableReceiptCustomer);
     }
     public void importProductInWareHouse(ActionEvent event) {
         isSelectedImportProductInWareHouse = true;
@@ -94,13 +83,27 @@ public class WarehouseController implements Initializable {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-    }
 
-    public void deleteProductInWareHouse(ActionEvent event) {
-//      ProductWareHouse selectedImportProduct = wareHouseTableView.getSelectionModel().getSelectedItem();
-//        productWareHouses.remove(selectedImportProduct);
-//        ProductWareHouse selectedImportProductReceipt = wareHouseTableViewRecipt.getSelectionModel().getSelectedItem();
-//        productWareHousesReceipt.remove(selectedImportProductReceipt);
+    }
+    public void deleteProductInWareHouse(ActionEvent event) throws Exception {
+        Product selectedAllProductInWareHouse = (Product) tableProduct.getSelectionModel().getSelectedValue();
+
+        Receipt selectedReceiptCustomer = infoReceipt.getSelectionModel().getSelectedValue();
+        Receipt selectedReceiptWareHouse = infoImportProduct.getSelectionModel().getSelectedValue();
+        if(selectedAllProductInWareHouse != null){
+            productRepo.deleteProduct(selectedAllProductInWareHouse.getId());
+            getData();
+            selectedAllProductInWareHouse = null;
+        }
+        if(selectedReceiptCustomer != null){
+            receipt.deleteRececeipt(selectedReceiptCustomer.getId());
+            getData();
+            selectedReceiptCustomer = null;
+        }if(selectedReceiptWareHouse != null){
+            receipt.deleteRececeipt(selectedReceiptWareHouse.getId());
+            getData();
+            selectedReceiptWareHouse = null;
+        }
     }
     private void getData(){
         IProductRepo productRep = RepoFactory.getInstance().getRepo(REPO_TYPE.PRODUCT);
@@ -108,17 +111,31 @@ public class WarehouseController implements Initializable {
                 .stream().map((ProductDTO::getProduct)).toList();
         productWareHouses = FXCollections.observableArrayList(listProduct);
         tableProduct.setItems(productWareHouses);
-
+        List<Receipt> receiptList = receipt.getListReceiptCustomer(1,2,"");
+        tableReceiptCustomer = FXCollections.observableArrayList();
+        tableImportProductInWarehouse = FXCollections.observableArrayList();
+        for(Receipt r:receiptList){
+            if(r.getType().getId() == 2){
+                tableReceiptCustomer.add(r);
+            }
+        }
+        for (Receipt r:receiptList){
+            if(r.getType().getId() == 1){
+                tableImportProductInWarehouse.add(r);
+            }
+        }
+        infoImportProduct.setItems(tableImportProductInWarehouse);
+        infoReceipt.setItems(tableReceiptCustomer);
     }
     private void infoReceiptImportProductUI(){
-        MFXTableColumn<Receipt> colId = new MFXTableColumn<>("Id", true);
-        MFXTableColumn<Receipt> colName = new MFXTableColumn<>("Tên", true);
-        MFXTableColumn<Receipt> colQuantity = new MFXTableColumn<>("Số lượng", true);
-        MFXTableColumn<Receipt> colProductImporter = new MFXTableColumn<>("Người nhập", true);
-        MFXTableColumn<Receipt> colPriceInput = new MFXTableColumn<>("Giá nhập", true);
-        MFXTableColumn<Receipt> colPriceCost = new MFXTableColumn<>("Giá bán", true);
-        MFXTableColumn<Receipt> colUnit = new MFXTableColumn<>("Đơn vị tính", true);
-        MFXTableColumn<Receipt> colDateImport = new MFXTableColumn<>("Ngày nhập", true);
+        MFXTableColumn<Receipt> colId = new MFXTableColumn<>("Stt", true);
+        MFXTableColumn<Receipt> colName = new MFXTableColumn<>("Name", true);
+        MFXTableColumn<Receipt> colQuantity = new MFXTableColumn<>("Quantity", true);
+        MFXTableColumn<Receipt> colProductImporter = new MFXTableColumn<>("Creator", true);
+        MFXTableColumn<Receipt> colPriceInput = new MFXTableColumn<>("Import price", true);
+        MFXTableColumn<Receipt> colPriceCost = new MFXTableColumn<>("Cost price", true);
+        MFXTableColumn<Receipt> colUnit = new MFXTableColumn<>("Unit", true);
+        MFXTableColumn<Receipt> colDateImport = new MFXTableColumn<>("Date added", true);
 
         colId.setRowCellFactory(receipt -> new MFXTableRowCell<>(Receipt::getId));
         colName.setRowCellFactory(receipt -> new MFXTableRowCell<>(Receipt::getProductName));
@@ -133,12 +150,12 @@ public class WarehouseController implements Initializable {
 
     }
     private void infoReceiptOfCus(){
-        MFXTableColumn<Receipt> colCode = new MFXTableColumn<>("Mã", true);
-        MFXTableColumn<Receipt> colCreateAt = new MFXTableColumn<>("Ngày nhập", true);
-        MFXTableColumn<Receipt> colPayment = new MFXTableColumn<>("Tổng tiền", true);
-        MFXTableColumn<Receipt> colImporter = new MFXTableColumn<>("Người tạo", true);
+        MFXTableColumn<Receipt> colCode = new MFXTableColumn<>("Id", true);
+        MFXTableColumn<Receipt> colCreateAt = new MFXTableColumn<>("Date added", true);
+        MFXTableColumn<Receipt> colPayment = new MFXTableColumn<>("Total", true);
+        MFXTableColumn<Receipt> colImporter = new MFXTableColumn<>("Creator", true);
 
-        colCode.setRowCellFactory(receipt -> new MFXTableRowCell<>(Receipt::getId));
+        colCode.setRowCellFactory(receipt -> new MFXTableRowCell<>(Receipt::getReceiptCode));
         colCreateAt.setRowCellFactory(receipt -> new MFXTableRowCell<>(Receipt::getCreateAt));
         colPayment.setRowCellFactory(receipt -> new MFXTableRowCell<>(Receipt::getTotalPayment));
         colImporter.setRowCellFactory(receipt -> new MFXTableRowCell<>(Receipt::getImporter));
@@ -161,7 +178,6 @@ public class WarehouseController implements Initializable {
         categoryColumn.setRowCellFactory(product -> new MFXTableRowCell<>(Product::getInputPrice));
         tableProduct.getTableColumns().addAll(idColumn,nameColumn,quantityColumn,unitColumn,inputPrice);
     }
-
     public void refeshData(ActionEvent event) {
         getData();
     }

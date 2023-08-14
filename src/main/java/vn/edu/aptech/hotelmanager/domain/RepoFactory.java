@@ -24,6 +24,7 @@ public class RepoFactory {
             case INVENTORY -> (T) new InventoryRepoImpl();
             case ACCOUNT -> (T) new AccountRepoImpl();
             case CUSTOMER -> (T) new CustomerRepoImpl();
+            case  WAREHOUSE -> (T) new WareHouseImpl();
         };
     }
 }

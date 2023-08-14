@@ -1,6 +1,5 @@
 package vn.edu.aptech.hotelmanager.controllers;
 
-import com.mysql.cj.x.protobuf.MysqlxPrepare;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXComboBox;
 import io.github.palexdev.materialfx.controls.MFXDatePicker;
@@ -10,143 +9,78 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextField;
 import vn.edu.aptech.hotelmanager.domain.REPO_TYPE;
 import vn.edu.aptech.hotelmanager.domain.RepoFactory;
-import vn.edu.aptech.hotelmanager.domain.dto.ProductDTO;
-import vn.edu.aptech.hotelmanager.domain.model.Inventory;
-import vn.edu.aptech.hotelmanager.domain.model.PricePolicy;
-import vn.edu.aptech.hotelmanager.domain.model.Product;
+import vn.edu.aptech.hotelmanager.domain.model.*;
 import vn.edu.aptech.hotelmanager.domain.repo.IProductRepo;
+import vn.edu.aptech.hotelmanager.domain.repo.IWareHouseRepo;
 import vn.edu.aptech.hotelmanager.repo.db.DBConnection;
-import vn.edu.aptech.hotelmanager.utils.ProductBill;
-import vn.edu.aptech.hotelmanager.utils.ProductWareHouse;
 import vn.edu.aptech.hotelmanager.utils.Unit;
 
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.ResourceBundle;
 
 public class ProductController implements Initializable {
+    private final IProductRepo productRepo = RepoFactory.getInstance().getRepo(REPO_TYPE.PRODUCT);
+    private final IWareHouseRepo wareHouseRepo = RepoFactory.getInstance().getRepo(REPO_TYPE.WAREHOUSE);
+    List<PricePolicy> listPricePolicy = productRepo.getListPricePolicy(1,20,"");
+    List<Inventory> inventoryList = productRepo.getListInventory(1,20,"");
     @FXML
     private MFXButton btnSaveProduct;
-    @FXML
-    private MFXDatePicker txtDateInputProduct;
-    @FXML
-    private MFXTextField txtOutputPrice;
-    @FXML
-    private MFXComboBox<Unit> txtInitProduct;
 
     @FXML
-    private MFXTextField txtInputPrice;
-    @FXML
-    private MFXTextField txtNameProduct;
-    @FXML
-    private MFXTextField txtQuantityProduct;
+    private DatePicker txtDateInputProduct;
 
     @FXML
-    private MFXTextField txtUserInputProduct;
+    private ComboBox<Unit> txtInitProduct;
+
+    @FXML
+    private TextField txtInputPrice;
+
+    @FXML
+    private TextField txtNameProduct;
+
+    @FXML
+    private TextField txtOutputPrice;
+
+    @FXML
+    private TextField txtQuantityProduct;
+
+    @FXML
+    private TextField txtUserInputProduct;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        ObservableList<Unit>list = FXCollections.observableArrayList(Unit.Lon,Unit.Vé,Unit.Bao,Unit.Lượt);
+        ObservableList<Unit>list = FXCollections.observableArrayList(Unit.Lon,Unit.Vé,Unit.Bao,Unit.Chai,Unit.Gói);
         txtInitProduct.setItems(list);
         if(WarehouseController.isSelectedImportProductInWareHouse){
             Product product = new Product();
             product = WarehouseController.selectedProductInTable;
             txtNameProduct.setText(product.getName());
-            txtInitProduct.setText(String.valueOf(product.getUnit()));
+            txtInitProduct.setValue(Unit.valueOf(product.getUnit()));
             txtInputPrice.setText(String.valueOf(product.getPricePolicy().getInitPrice()));
             txtOutputPrice.setText(String.valueOf(product.getPricePolicy().getCostPrice()));
         }
     }
-    Connection connection;
-
-    public void saveProduct(ActionEvent event) throws SQLException {
-        IProductRepo productRepo = RepoFactory.getInstance().getRepo(REPO_TYPE.PRODUCT);
-        List<PricePolicy> listPricePolicy = productRepo.getListPricePolicy(1,20,"");
-        List<Inventory> inventoryList = productRepo.getListInventory(1,20,"");
-
-        PreparedStatement prepared;
-        IProductRepo iProductRepo = RepoFactory.getInstance().getRepo(REPO_TYPE.PRODUCT);
+    public void saveProduct(ActionEvent event) throws Exception {
         if(!WarehouseController.isSelectedImportProductInWareHouse){
-            SimpleDateFormat formatter1 = new SimpleDateFormat("dd-MM-yyyy");
-            Product productWareHouse = new Product();
-            String unit =  txtInitProduct.getSelectionModel().getSelectedItem().toString();
-            productWareHouse.setName(txtNameProduct.getText());
-
-            PricePolicy pricePolicy = new PricePolicy();
-            pricePolicy.setInitPrice(Integer.parseInt(txtInputPrice.getText()));
-            pricePolicy.setCostPrice(Integer.parseInt(txtOutputPrice.getText()));
-
-            Inventory inventory = new Inventory();
-            inventory.setAvailableQuantity(Double.parseDouble(txtQuantityProduct.getText()));
-            productWareHouse.setUnit(String.valueOf(Unit.valueOf(unit)));
-            try {
-                productWareHouse.setDateInput(formatter1.parse(txtDateInputProduct.getValue().toString()));
-            } catch (ParseException e) {
-                throw new RuntimeException(e);
-            }
-            productWareHouse.setUserImport(txtUserInputProduct.getText());
-            //WarehouseController.productWareHouses.add(productWareHouse);
-
-            try {
-                String sqlPricePolicy = "INSERT INTO price_policies(init_price,cost_price) VALUES (?,?)";
-                String sqlProduct = "INSERT INTO `products`(name,unit,price_policy_id,inventory_id) VALUES (?,?,?,?)";
-                String sqlInventory = "INSERT INTO `inventories`(available_quantity) VALUES(?)";
-                connection = DBConnection.getInstance().getConnection();
-                // insert in db
-                prepared = connection.prepareStatement(sqlPricePolicy);
-                prepared.setDouble(1,pricePolicy.getInitPrice());
-                prepared.setDouble(2,pricePolicy.getCostPrice());
-                prepared.executeUpdate();
-                prepared.close();
-
-                //insert inventory
-                prepared = connection.prepareStatement(sqlInventory);
-                prepared.setDouble(1,inventory.getAvailableQuantity());
-                prepared.executeUpdate();
-                prepared.close();
-
-                long maxIdPricePolicy = listPricePolicy.get(0).getId();
-                for (int i = 0;i<listPricePolicy.size();i++){
-                    if(listPricePolicy.get(i).getId()>maxIdPricePolicy){
-                        maxIdPricePolicy = listPricePolicy.get(i).getId();
-                    }
-                }
-
-                long maxIdInventory = inventoryList.get(0).getId();
-                for (int i = 0;i<inventoryList.size();i++){
-                    if(inventoryList.get(i).getId()>maxIdInventory){
-                        maxIdInventory = inventoryList.get(i).getId();
-                    }
-                }
-                System.out.println("inventorymaxid"+ maxIdInventory + " maxPrice" + maxIdPricePolicy);
-
-                // insert product
-                prepared = connection.prepareStatement(sqlProduct);
-                prepared.setString(1,productWareHouse.getName());
-                prepared.setString(2,productWareHouse.getUnit());
-                prepared.setLong(3,maxIdPricePolicy+1);
-                prepared.setLong(4,maxIdInventory+1);
-                prepared.executeUpdate();
-                prepared.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            insertProduct();
         }else {
-            //sql
-            System.out.println("choose product"+ WarehouseController.selectedProductInTable);
-            String updateQuanity = "UPDATE `inventories` SET `available_quantity`= ? WHERE id = ?";
-            connection = DBConnection.getInstance().getConnection();
-            prepared = connection.prepareStatement(updateQuanity);
-            prepared.setDouble(2,WarehouseController.selectedProductInTable.getInventory().getId());
-            prepared.setDouble(1,WarehouseController.selectedProductInTable.getInventory().getAvailableQuantity()+Double.parseDouble(txtQuantityProduct.getText()));
-            prepared.executeUpdate();
-            prepared.close();
+            //sql upvdate
+            Double quantityUpdate =WarehouseController.selectedProductInTable.getInventory().getAvailableQuantity()+Double.parseDouble(txtQuantityProduct.getText());
+            System.out.println("Befor update warehouse: "+ WarehouseController.selectedProductInTable.getInventory().getAvailableQuantity());
+            long idUpdate =WarehouseController.selectedProductInTable.getInventory().getId();
+            productRepo.updateProductInWareHouse(quantityUpdate,idUpdate);
+            System.out.println("After update"+ WarehouseController.selectedProductInTable.getInventory().getAvailableQuantity());
+
             SimpleDateFormat formatter1 = new SimpleDateFormat("dd-MM-yyyy");
             Product spTangSl = WarehouseController.selectedProductInTable;
             spTangSl.getInventory().setAvailableQuantity(WarehouseController.selectedProductInTable.getQuantityAvailable()+ Integer.parseInt(txtQuantityProduct.getText()));
@@ -155,21 +89,60 @@ public class ProductController implements Initializable {
             } catch (ParseException e) {
                 throw new RuntimeException(e);
             }
-            //WarehouseController.productWareHousesReceipt.add(spTangSl);
+
         }
+        addReceiptInDb();
     }
-    private boolean checkIfContains(ObservableList<Product> wareHouses, long id) {
-        for(Product p: wareHouses){
-            if(p.getId()==id){
-                return true;
+    private void  insertProduct() throws Exception {
+        PricePolicy pricePolicy = new PricePolicy();
+        pricePolicy.setInitPrice(Integer.parseInt(txtInputPrice.getText()));
+        pricePolicy.setCostPrice(Integer.parseInt(txtOutputPrice.getText()));
+        productRepo.insertPricePolicy(pricePolicy);
+
+        Inventory inventory = new Inventory();
+        inventory.setAvailableQuantity(Double.parseDouble(txtQuantityProduct.getText()));
+        productRepo.insertInventory(inventory);
+
+        // get id inven,policy
+        long maxIdPricePolicy = listPricePolicy.get(0).getId();
+        for (int i = 0;i<listPricePolicy.size();i++){
+            if(listPricePolicy.get(i).getId()>maxIdPricePolicy){
+                maxIdPricePolicy = listPricePolicy.get(i).getId();
             }
         }
-        return false;
+        long maxIdInventory = inventoryList.get(0).getId();
+        for (int i = 0;i<inventoryList.size();i++){
+            if(inventoryList.get(i).getId()>maxIdInventory){
+                maxIdInventory = inventoryList.get(i).getId();
+            }
+        }
+        Product product = new Product();
+        String unit =  txtInitProduct.getSelectionModel().getSelectedItem().toString();
+        product.setName(txtNameProduct.getText());
+        product.setUnit(String.valueOf(Unit.valueOf(unit)));
+        PricePolicy pricePolicy1 = new PricePolicy();
+        pricePolicy1.setId(maxIdPricePolicy+1);
+        product.setPricePolicy(pricePolicy1);
+        Inventory inventory1 = new Inventory();
+        inventory1.setId(maxIdInventory+1);
+        product.setInventory(inventory1);
+        product.setStatus(1);
+        productRepo.insertProducts(product);
     }
-    public void showReceiptInTable(){
-        // insert into db
-       // String  insertSql = ""
-
-
+    private void addReceiptInDb() throws Exception {
+        Receipt receipt = new Receipt();
+        ReceiptType receiptType = new ReceiptType();
+        receiptType.setId(1);
+        receiptType.setName("Hoá đơn nhập");
+        receipt.setType(receiptType);
+        receipt.setImporter(txtUserInputProduct.getText());
+        receipt.setCreateAt(String.valueOf(txtDateInputProduct.getValue()));
+        receipt.setQuantityImport(Integer.parseInt(txtQuantityProduct.getText()));
+        receipt.setInputPrice(Double.parseDouble(txtInputPrice.getText()));
+        receipt.setOutputPrice(Double.parseDouble(txtOutputPrice.getText()));
+        receipt.setUnit(String.valueOf(txtInitProduct.getValue()));
+        receipt.setProductName(txtNameProduct.getText());
+        receipt.setStatus(1);
+        wareHouseRepo.insertReceiptWareHouse(receipt);
     }
 }

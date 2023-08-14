@@ -32,7 +32,7 @@ public class ReceiptProductController implements Initializable {
     }
     private void setupTable() {
         MFXTableColumn<Product> idColumnOfBill = new MFXTableColumn<>("Id", true);
-        MFXTableColumn<Product> nameColumnOfBill = new MFXTableColumn<>("Ten", true);
+        MFXTableColumn<Product> nameColumnOfBill = new MFXTableColumn<>("Name", true);
         MFXTableColumn<Product> quantityColumnOfBill = new MFXTableColumn<>("Quantity", true);
         MFXTableColumn<Product> priceColumnOfBill = new MFXTableColumn<>("Price", true);
 

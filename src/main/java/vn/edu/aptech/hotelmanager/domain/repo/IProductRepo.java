@@ -11,7 +11,10 @@ public interface IProductRepo extends IRepo {
     //ProductDTO createOrUpdate(ProductDTO productDTO) throws Exception;
    List<PricePolicy> getListPricePolicy(int page,int pageSize,String searchKey);
    List<Inventory> getListInventory(int page,int paSize,String searchKey);
-   List<ReceiptType> getListReceiptType();
-   List<Receipt> getListReceiptCustomer(int paga,int pageSize,String searchKey);
-    List<Receipt> getListReceiptImportInWareHouse(int paga,int pageSize,String searchKey);
+   void insertPricePolicy(PricePolicy pricePolicy) throws Exception;
+   void insertProducts(Product product) throws Exception;
+   void insertInventory(Inventory inventory) throws Exception;
+   void updateProductInWareHouse(Double quatity,long id) throws Exception;
+    void updateProductInSales(Double quatity,long id) throws Exception;
+    void deleteProduct(Long selected) throws Exception;
 }

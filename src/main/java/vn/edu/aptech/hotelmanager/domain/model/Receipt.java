@@ -19,5 +19,5 @@ public class Receipt {
     private Double outputPrice;
     private String unit;
     private int receiptCode;
-
+    private  int status;
 }

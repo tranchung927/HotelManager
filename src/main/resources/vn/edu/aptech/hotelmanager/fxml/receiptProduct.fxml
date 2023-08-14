@@ -10,11 +10,11 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="399.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vn.edu.aptech.hotelmanager.controllers.ReceiptProductController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="399.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vn.edu.aptech.hotelmanager.controllers.ReceiptProductController">
    <top>
       <FlowPane alignment="CENTER" prefHeight="50.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <Label style="-fx-font-weight: bold;" styleClass="title" stylesheets="@../css/Sales.css" text="Thanh toán thành công">
+            <Label style="-fx-font-weight: bold;" styleClass="title" stylesheets="@../css/Sales.css" text="Payment success">
                <font>
                   <Font name="Arial Bold" size="13.0" />
                </font>
@@ -38,7 +38,7 @@
    <bottom>
       <HBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="66.0" prefWidth="580.0" style="-fx-border-color: #ccc;" BorderPane.alignment="CENTER_RIGHT">
          <children>
-            <Label alignment="CENTER" prefHeight="47.0" prefWidth="180.0" text="Tổng cộng : ">
+            <Label alignment="CENTER" prefHeight="47.0" prefWidth="180.0" text="Total : ">
                <font>
                   <Font name="Arial Bold" size="18.0" />
                </font>

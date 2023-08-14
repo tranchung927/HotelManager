@@ -14,6 +14,7 @@ public class ReceiptEntityToCustomerAndInputProduct implements  IEntityConverter
       Receipt receipt = new Receipt();
       try{
           receipt.setId(source.getLong("id"));
+          receipt.setImporter(source.getString("user_name_import"));
          receipt.setCreateAt(source.getString("create_at"));
          receipt.setTotalPayment(source.getDouble("total_payment"));
          receipt.setQuantityImport(source.getInt("quantity_import"));

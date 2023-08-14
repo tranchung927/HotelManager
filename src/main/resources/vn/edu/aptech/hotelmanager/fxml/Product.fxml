@@ -1,76 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
-<?import io.github.palexdev.materialfx.controls.MFXComboBox?>
-<?import io.github.palexdev.materialfx.controls.MFXDatePicker?>
-<?import io.github.palexdev.materialfx.controls.MFXTextField?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="532.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vn.edu.aptech.hotelmanager.controllers.ProductController">
-   <children>
-      <VBox layoutY="14.0" prefHeight="482.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <FlowPane alignment="CENTER" prefHeight="47.0" prefWidth="600.0">
-               <children>
-                  <Label text="Thông tin sản phẩm">
-                     <font>
-                        <Font name="System Bold" size="18.0" />
-                     </font>
-                  </Label>
-               </children>
-            </FlowPane>
-            <FlowPane alignment="CENTER_LEFT" layoutX="10.0" layoutY="42.0" prefHeight="63.0" prefWidth="600.0">
-               <children>
-                  <Label alignment="CENTER" prefHeight="31.0" prefWidth="89.0" text="Tên " />
-                  <MFXTextField fx:id="txtNameProduct" floatMode="ABOVE" prefHeight="30.0" prefWidth="457.0" />
-               </children>
-            </FlowPane>
-            <FlowPane alignment="CENTER_LEFT" layoutX="10.0" layoutY="57.0" prefHeight="63.0" prefWidth="600.0">
-               <children>
-                  <Label alignment="CENTER" prefHeight="31.0" prefWidth="89.0" text="Số lượng" />
-                  <MFXTextField fx:id="txtQuantityProduct" floatMode="ABOVE" prefHeight="30.0" prefWidth="457.0" />
-               </children>
-            </FlowPane>
-            <FlowPane alignment="CENTER_LEFT" layoutX="10.0" layoutY="120.0" prefHeight="63.0" prefWidth="600.0">
-               <children>
-                  <Label alignment="CENTER" prefHeight="31.0" prefWidth="89.0" text="Người nhập" />
-                  <MFXTextField fx:id="txtUserInputProduct" floatMode="ABOVE" prefHeight="30.0" prefWidth="457.0" />
-               </children>
-            </FlowPane>
-            <FlowPane alignment="CENTER_LEFT" layoutX="10.0" layoutY="183.0" prefHeight="63.0" prefWidth="600.0">
-               <children>
-                  <Label alignment="CENTER" prefHeight="31.0" prefWidth="89.0" text="Giá nhập" />
-                  <MFXTextField fx:id="txtInputPrice" floatMode="ABOVE" prefHeight="30.0" prefWidth="457.0" />
-               </children>
-            </FlowPane>
-            <FlowPane alignment="CENTER_LEFT" layoutX="10.0" layoutY="246.0" prefHeight="63.0" prefWidth="600.0">
-               <children>
-                  <Label alignment="CENTER" prefHeight="31.0" prefWidth="89.0" text="Giá xuất" />
-                  <MFXTextField fx:id="txtOutputPrice" floatMode="ABOVE" prefHeight="30.0" prefWidth="457.0" />
-               </children>
-            </FlowPane>
-            <FlowPane alignment="CENTER_LEFT" layoutX="10.0" layoutY="246.0" prefHeight="63.0" prefWidth="600.0">
-               <children>
-                  <Label alignment="CENTER" prefHeight="31.0" prefWidth="89.0" text="Ngày nhập" />
-                  <MFXDatePicker fx:id="txtDateInputProduct" prefHeight="24.0" />
-               </children>
-            </FlowPane>
-            <FlowPane alignment="CENTER_LEFT" layoutX="10.0" layoutY="309.0" prefHeight="63.0" prefWidth="600.0">
-               <children>
-                  <Label alignment="CENTER" prefHeight="31.0" prefWidth="89.0" text="Đơn vị tính" />
-                  <MFXComboBox fx:id="txtInitProduct" alignment="CENTER" floatMode="ABOVE" prefHeight="32.0" prefWidth="202.0" />
-               </children>
-            </FlowPane>
-            <FlowPane alignment="CENTER" prefHeight="55.0" prefWidth="600.0">
-               <children>
-                  <MFXButton fx:id="btnSaveProduct" buttonType="RAISED" onAction="#saveProduct" prefHeight="38.0" prefWidth="138.0" text="Lưu sản phẩm" />
-               </children>
-            </FlowPane>
-         </children>
-      </VBox>
-   </children>
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="532.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vn.edu.aptech.hotelmanager.controllers.ProductController">
+    <children>
+        <VBox layoutY="14.0" prefHeight="482.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <FlowPane alignment="CENTER" prefHeight="47.0" prefWidth="600.0">
+                    <children>
+                        <Label text="Product Infomation">
+                            <font>
+                                <Font name="System Bold" size="18.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </FlowPane>
+                <FlowPane alignment="CENTER_LEFT" layoutX="10.0" layoutY="42.0" prefHeight="63.0" prefWidth="600.0">
+                    <children>
+                        <Label alignment="CENTER" prefHeight="31.0" prefWidth="89.0" text="Name" />
+                  <TextField fx:id="txtNameProduct" prefHeight="42.0" prefWidth="444.0" />
+                    </children>
+                </FlowPane>
+                <FlowPane alignment="CENTER_LEFT" layoutX="10.0" layoutY="57.0" prefHeight="63.0" prefWidth="600.0">
+                    <children>
+                        <Label alignment="CENTER" prefHeight="31.0" prefWidth="89.0" text="Quantity" />
+                  <TextField fx:id="txtQuantityProduct" prefHeight="42.0" prefWidth="444.0" />
+                    </children>
+                </FlowPane>
+                <FlowPane alignment="CENTER_LEFT" layoutX="10.0" layoutY="120.0" prefHeight="63.0" prefWidth="600.0">
+                    <children>
+                        <Label alignment="CENTER" prefHeight="31.0" prefWidth="89.0" text="Importer" />
+                  <TextField fx:id="txtUserInputProduct" prefHeight="42.0" prefWidth="444.0" />
+                    </children>
+                </FlowPane>
+                <FlowPane alignment="CENTER_LEFT" layoutX="10.0" layoutY="183.0" prefHeight="63.0" prefWidth="600.0">
+                    <children>
+                        <Label alignment="CENTER" prefHeight="31.0" prefWidth="89.0" text="Input price" />
+                  <TextField fx:id="txtInputPrice" prefHeight="42.0" prefWidth="444.0" />
+                    </children>
+                </FlowPane>
+                <FlowPane alignment="CENTER_LEFT" layoutX="10.0" layoutY="246.0" prefHeight="63.0" prefWidth="600.0">
+                    <children>
+                        <Label alignment="CENTER" prefHeight="31.0" prefWidth="89.0" text="Cost price" />
+                  <TextField fx:id="txtOutputPrice" prefHeight="42.0" prefWidth="444.0" />
+                    </children>
+                </FlowPane>
+                <FlowPane alignment="CENTER_LEFT" layoutX="10.0" layoutY="246.0" prefHeight="63.0" prefWidth="600.0">
+                    <children>
+                        <Label alignment="CENTER" prefHeight="31.0" prefWidth="89.0" text="Date input" />
+                  <DatePicker fx:id="txtDateInputProduct" prefHeight="42.0" prefWidth="186.0" />
+                    </children>
+                </FlowPane>
+                <FlowPane alignment="CENTER_LEFT" layoutX="10.0" layoutY="309.0" prefHeight="63.0" prefWidth="600.0">
+                    <children>
+                        <Label alignment="CENTER" prefHeight="31.0" prefWidth="89.0" text="Unit" />
+                  <ComboBox fx:id="txtInitProduct" prefHeight="42.0" prefWidth="186.0" promptText="Unit" />
+                    </children>
+                </FlowPane>
+                <FlowPane alignment="CENTER" prefHeight="99.0" prefWidth="600.0">
+                    <children>
+                        <MFXButton fx:id="btnSaveProduct" buttonType="RAISED" onAction="#saveProduct" prefHeight="38.0" prefWidth="138.0" text="Save" />
+                    </children>
+                </FlowPane>
+            </children>
+        </VBox>
+    </children>
 </AnchorPane>

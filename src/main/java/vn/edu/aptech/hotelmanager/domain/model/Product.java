@@ -19,6 +19,7 @@ public class Product {
     private Inventory inventory;
     private Date dateInput;
     private String UserImport;
+    private int status;
     public Double getPriceInit(){
         return pricePolicy.getInitPrice();
     }

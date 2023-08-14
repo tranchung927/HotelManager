@@ -5,6 +5,7 @@ import io.github.palexdev.materialfx.controls.MFXTableColumn;
 import io.github.palexdev.materialfx.controls.MFXTableView;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
+import io.github.palexdev.virtualizedfx.utils.VSPUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -27,8 +28,13 @@ import vn.edu.aptech.hotelmanager.common.entity.MyListener;
 import vn.edu.aptech.hotelmanager.domain.REPO_TYPE;
 import vn.edu.aptech.hotelmanager.domain.RepoFactory;
 import vn.edu.aptech.hotelmanager.domain.dto.ProductDTO;
+import vn.edu.aptech.hotelmanager.domain.model.Inventory;
 import vn.edu.aptech.hotelmanager.domain.model.Product;
+import vn.edu.aptech.hotelmanager.domain.model.Receipt;
+import vn.edu.aptech.hotelmanager.domain.model.ReceiptType;
 import vn.edu.aptech.hotelmanager.domain.repo.IProductRepo;
+import vn.edu.aptech.hotelmanager.domain.repo.IRoomRepo;
+import vn.edu.aptech.hotelmanager.domain.repo.IWareHouseRepo;
 import vn.edu.aptech.hotelmanager.repo.db.DBConnection;
 
 import java.io.IOException;
@@ -38,20 +44,15 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 public class SalesController implements Initializable {
+   private final IWareHouseRepo wareHouseRepo = RepoFactory.getInstance().getRepo(REPO_TYPE.WAREHOUSE);
+    private final IProductRepo productRepo = RepoFactory.getInstance().getRepo(REPO_TYPE.PRODUCT);
     private Stage stage;
     @FXML
     private MFXTableView billTableView;
-    @FXML
-    private TableColumn<Product, Integer> idProductCol;
-    @FXML
-    private TableColumn<Product, String> ProductNameCol;
-    @FXML
-    private TableColumn<Product, Integer> quantityCol;
-    @FXML
-    private TableColumn<Product, Double> priceCol;
     @FXML
     private GridPane grid;
     @FXML
@@ -76,16 +77,17 @@ public class SalesController implements Initializable {
     private List<Product> listProductShows = new ArrayList<>();
     private List<Product> getDataInTableShow;
     int maHd = 1;
+    boolean isClickRefesh = false;
 
     // code lại
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        Random random = new Random();
+        lblMaRandom.setText(random.nextInt(99999)+ "");
         setupTable();
         listProductShows.addAll(getData());
         dataOfTableReceipt = FXCollections.observableArrayList(
-
         );
-        setChosenProduct(listProductShows.get(1));
         if (listProductShows.size() > 0) {
             myListener = new MyListener() {
                 @Override
@@ -93,35 +95,37 @@ public class SalesController implements Initializable {
                     setChosenProduct(productBill);
                 }
             };
-            billTableView.setItems(dataOfTableReceipt);
-            int column = 0;
-            int row = 1;
-            try {
-                for (int i = 0; i < listProductShows.size(); i++) {
-                    FXMLLoader fxmlLoader = new FXMLLoader(HMResourcesLoader.loadURL("fxml/item.fxml"));
-                    AnchorPane anchorPane = fxmlLoader.load();
-                    ItemController itemController = fxmlLoader.getController();
-                    itemController.setData(listProductShows.get(i), myListener);
-                    if (column == 3) {
-                        column = 0;
-                        row++;
-                    }
-                    grid.add(anchorPane, column++, row); // (child,column,row)
-                    //set grid with
-                    grid.setMaxWidth(Region.USE_COMPUTED_SIZE);
-                    grid.setMaxWidth(Region.USE_COMPUTED_SIZE);
-                    grid.setPrefWidth(Region.USE_COMPUTED_SIZE);
-
-                    // set grid height
-                    grid.setMaxHeight(Region.USE_COMPUTED_SIZE);
-                    grid.setMaxHeight(Region.USE_COMPUTED_SIZE);
-                    grid.setPrefHeight(Region.USE_COMPUTED_SIZE);
-
-                    GridPane.setMargin(anchorPane, new Insets(10));
+        }
+        showProduct();
+    }
+    public  void showProduct(){
+        int column = 0;
+        int row = 1;
+        try {
+            for (int i = 0; i < listProductShows.size(); i++) {
+                FXMLLoader fxmlLoader = new FXMLLoader(HMResourcesLoader.loadURL("fxml/item.fxml"));
+                AnchorPane anchorPane = fxmlLoader.load();
+                ItemController itemController = fxmlLoader.getController();
+                itemController.setData(listProductShows.get(i), myListener);
+                if (column == 3) {
+                    column = 0;
+                    row++;
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
+                grid.add(anchorPane, column++, row); // (child,column,row)
+                //set grid with
+                grid.setMaxWidth(Region.USE_COMPUTED_SIZE);
+                grid.setMaxWidth(Region.USE_COMPUTED_SIZE);
+                grid.setPrefWidth(Region.USE_COMPUTED_SIZE);
+
+                // set grid height
+                grid.setMaxHeight(Region.USE_COMPUTED_SIZE);
+                grid.setMaxHeight(Region.USE_COMPUTED_SIZE);
+                grid.setPrefHeight(Region.USE_COMPUTED_SIZE);
+
+                GridPane.setMargin(anchorPane, new Insets(10));
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -141,7 +145,6 @@ public class SalesController implements Initializable {
 
     //-----------------------------------------
     private List<Product> getData() {
-        IProductRepo productRepo = RepoFactory.getInstance().getRepo(REPO_TYPE.PRODUCT);
         List<Product> listProduct = productRepo.getListProduct(1, 20, "")
                 .stream().map((ProductDTO::getProduct)).toList();
         return listProduct;
@@ -169,6 +172,7 @@ public class SalesController implements Initializable {
                 dataOfTableReceipt.set(dataOfTableReceipt.indexOf(monTangSl), monTangSl);
             }
         }
+        billTableView.setItems(dataOfTableReceipt);
         Double total = 0.0;
         for (Product p : dataOfTableReceipt) {
             total += p.getQuantity() * p.getInputPrice();
@@ -195,7 +199,7 @@ public class SalesController implements Initializable {
         return null;
     }
 
-    public void showReceipt(ActionEvent event) throws SQLException {
+    public void showReceipt(ActionEvent event) throws Exception {
         FXMLLoader loader = new FXMLLoader(HMResourcesLoader.loadURL("fxml/receiptProduct.fxml"));
         loader.setControllerFactory(c -> new ReceiptProductController());
         Parent root = null;
@@ -208,39 +212,48 @@ public class SalesController implements Initializable {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-
-        // set data
-        Connection connection;
-        String sqlReceipt = "INSERT INTO `product_receipts`" +
-                "(`receipt_code`,`type`,`create_at`, `total_payment`,`user_name_import`)" +
-                "VALUES (?,?,?,?,?)";
-       connection = DBConnection.getInstance().getConnection();
-        PreparedStatement prepared = connection.prepareStatement(sqlReceipt);
-        prepared.setInt(1,Integer.parseInt(lblMaRandom.getText()));
-        prepared.setInt(2,2);
-        prepared.setString(3, txtDateReceipt.getText());
-        prepared.setDouble(4,totalReceipt);
-        prepared.setString(5,txtUserWriteReceipt.getText());
-        prepared.executeUpdate();
-        prepared.close();
-
-        String updateQuantityAfterpayment = "UPDATE inventories SET available_quantity= ? WHERE id = ?";
-        connection = DBConnection.getInstance().getConnection();
-        for(Product p :dataOfTableReceipt){
-            //System.out.println("data"+ p);
-            prepared = connection.prepareStatement(updateQuantityAfterpayment);
-            if(p.getInventory().getAvailableQuantity() < p.getQuantity())return;
-            prepared.setDouble(1,p.getInventory().getAvailableQuantity()-p.getQuantity());
-            prepared.setDouble(2,p.getInventory().getId());
-            prepared.executeUpdate();
+        Random random = new Random();
+        lblMaRandom.setText(random.nextInt(99999)+ "");
+        Receipt receipt = new Receipt();
+        ReceiptType receiptType = new ReceiptType();
+        receiptType.setId(2);
+        receiptType.setName("Hoá đơn khách");
+        receipt.setType(receiptType);
+        receipt.setImporter(txtUserWriteReceipt.getText());
+        receipt.setCreateAt(txtDateReceipt.getText());
+        receipt.setTotalPayment(totalReceipt);
+        List<Receipt> receipts = wareHouseRepo.getListReceiptCustomer(1,2,"");
+        for(Receipt r: receipts){
+            if (r.getReceiptCode() == Integer.parseInt(lblMaRandom.getText())){
+                lblMaRandom.setText(random.nextInt(99999)+ "");
+            }else {
+                receipt.setReceiptCode(Integer.parseInt(lblMaRandom.getText()));
+            }
         }
-        prepared.close();
+        receipt.setStatus(1);
+        wareHouseRepo.insertReceiptCustomer(receipt);
+       
+        // set data
+        for(Product p :dataOfTableReceipt){
+
+            getData();
+            Double quantityUpdate = null;
+            long id = p.getInventory().getId();
+            for(Product a: getData()){
+                if(a.getInventory().getId()== id){
+                    quantityUpdate  = a.getInventory().getAvailableQuantity() - p.getQuantity();
+                }            }
+            productRepo.updateProductInSales(quantityUpdate,id);
+        }
     }
 
     public void refeshReceipt(ActionEvent event) {
+        Random random = new Random();
+        lblMaRandom.setText(random.nextInt(99999)+ "");
         billTableView.getItems().clear();
-        lblMaRandom.setText(maHd++ + "");
         totalReceipt = 0.0;
+        txtUserWriteReceipt.setText("");
+        txtDateReceipt.setText("");
         totalPriceTextField.setText(totalReceipt + " VNĐ");
     }
 
@@ -258,7 +271,4 @@ public class SalesController implements Initializable {
         billTableView.getTableColumns().addAll(idColumnOfBill, nameColumnOfBill, quantityColumnOfBill, priceColumnOfBill);
     }
 
-    public void refeshShowProduct(ActionEvent event) {
-        listProductShows.addAll(getData());
-    }
 }

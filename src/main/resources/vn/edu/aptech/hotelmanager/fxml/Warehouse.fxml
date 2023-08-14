@@ -9,35 +9,35 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vn.edu.aptech.hotelmanager.controllers.WarehouseController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vn.edu.aptech.hotelmanager.controllers.WarehouseController">
    <children>
       <BorderPane layoutX="200.0" layoutY="100.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
             <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
               <tabs>
-                <Tab text="Danh sách sản phẩm">
+                <Tab text="List product">
                   <content>
                     <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <MFXTableView fx:id="tableProduct" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="321.0" prefWidth="590.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                              <MFXTableView fx:id="tableProduct" layoutX="6.0" layoutY="8.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                            </children>
                         </AnchorPane>
                   </content>
                 </Tab>
-                <Tab text="Thông tin phiếu nhập">
+                <Tab text="Receipt">
                   <content>
                     <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <MFXTableView fx:id="infoImportProduct" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                              <MFXTableView fx:id="infoImportProduct" layoutX="93.0" layoutY="14.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                            </children>
                         </AnchorPane>
                   </content>
                 </Tab>
-                  <Tab text="Thông tin hoá đơn ">
+                  <Tab text="Customer invoice">
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <MFXTableView fx:id="infoReceipt" layoutX="230.0" layoutY="87.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                              <MFXTableView fx:id="infoReceipt" layoutX="115.0" layoutY="55.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                            </children>
                         </AnchorPane>
                     </content>
@@ -48,22 +48,22 @@
          <bottom>
             <HBox alignment="CENTER_LEFT" prefHeight="53.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                <children>
-                  <MFXButton buttonType="RAISED" onAction="#addProduct" prefHeight="40.0" prefWidth="135.0" text="Thêm sản phẩm">
+                  <MFXButton buttonType="RAISED" onAction="#addProduct" prefHeight="40.0" prefWidth="135.0" text="Add product">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
                   </MFXButton>
-                  <MFXButton buttonType="RAISED" layoutX="30.0" layoutY="17.0" onAction="#importProductInWareHouse" prefHeight="40.0" prefWidth="135.0" text="Nhập sản phẩm">
+                  <MFXButton buttonType="RAISED" layoutX="30.0" layoutY="17.0" onAction="#importProductInWareHouse" prefHeight="40.0" prefWidth="135.0" text="Import product">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
                   </MFXButton>
-                  <MFXButton buttonType="RAISED" layoutX="185.0" layoutY="17.0" onAction="#deleteProductInWareHouse" prefHeight="40.0" prefWidth="133.0" text="Xoá sản phẩm">
+                  <MFXButton buttonType="RAISED" layoutX="185.0" layoutY="17.0" onAction="#deleteProductInWareHouse" prefHeight="40.0" prefWidth="133.0" text="Delete">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
                   </MFXButton>
-                  <MFXButton buttonType="RAISED" layoutX="340.0" layoutY="17.0" onAction="#refeshData" prefHeight="40.0" prefWidth="134.0" text="Làm mới">
+                  <MFXButton buttonType="RAISED" layoutX="340.0" layoutY="17.0" onAction="#refeshData" prefHeight="40.0" prefWidth="134.0" text="Refresh">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
