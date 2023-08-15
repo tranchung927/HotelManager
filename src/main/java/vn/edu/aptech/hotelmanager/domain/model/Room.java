@@ -11,7 +11,7 @@ public class Room {
     private double price;
     private long categoryId;
 
-    public  String getStatus(){
+    public String getStatus(){
         return status.getStatus();
     }
 }

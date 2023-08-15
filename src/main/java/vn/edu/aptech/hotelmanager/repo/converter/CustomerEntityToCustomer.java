@@ -22,9 +22,9 @@ public class CustomerEntityToCustomer implements IEntityConverter<Customer> {
             customer.setGender(GENDER_TYPE.valueOfStatus(source.getInt("sex")));
             customer.setDescription(source.getString("description"));
             customer.setStatus(source.getInt("status"));
-            customer.setCreatedAt(source.getDate("created_at"));
-            customer.setModifiedAt(source.getDate("modified_at"));
-            customer.setDefaultAddressId(source.getLong("default_address_id"));
+            customer.setCreatedAt(source.getTime("created_at"));
+            customer.setModifiedAt(source.getTime("modified_at"));
+            customer.setAssigneeId(source.getLong("address_id"));
         } catch (Exception e) {
             e.printStackTrace();
         }

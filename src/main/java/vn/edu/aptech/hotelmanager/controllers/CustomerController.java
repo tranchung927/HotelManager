@@ -14,6 +14,7 @@ import javafx.beans.binding.DoubleBinding;
 import javafx.collections.FXCollections;
 import javafx.collections.MapChangeListener;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -27,6 +28,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import vn.edu.aptech.hotelmanager.HMResourcesLoader;
+import vn.edu.aptech.hotelmanager.common.BaseController;
 import vn.edu.aptech.hotelmanager.domain.REPO_TYPE;
 import vn.edu.aptech.hotelmanager.domain.RepoFactory;
 import vn.edu.aptech.hotelmanager.domain.dto.CustomerDTO;
@@ -37,7 +39,11 @@ import java.net.URL;
 import java.util.*;
 import java.util.function.Function;
 
-public class CustomerController implements Initializable {
+public class CustomerController extends BaseController implements Initializable {
+
+    @FXML
+    private MFXButton addNewButton;
+
     @FXML
     private AnchorPane rootAnchorPane;
 
@@ -45,13 +51,13 @@ public class CustomerController implements Initializable {
     private MFXPaginatedTableView<CustomerDTO> customerTableView;
     private MFXGenericDialog dialogContent;
     private MFXStageDialog dialog;
-    private final Stage stage;
     private Integer selectedIndex;
     public CustomerController(Stage stage) {
         this.stage = stage;
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        this.ownerNode = rootAnchorPane;
         setupUI();
         customerTableView.autosizeColumnsOnInitialization();
         When.onChanged(customerTableView.currentPageProperty())
@@ -130,11 +136,21 @@ public class CustomerController implements Initializable {
         customerTableView.setRowsPerPage(15);
         customerTableView.setItems(customers);
     }
+
+    private void saveCustomer(CustomerDTO customerDTO) {
+        boolean isUpdate = customerDTO.getCustomer().getId() > 0;
+        if (isUpdate) {
+
+        }
+        customerTableView.getItems().add(customerDTO);
+        hiddenCustomerDialog();
+    }
     private void showCustomerDetail(CustomerDTO customerDTO) {
         Parent root = null;
+        CustomerDetailController customerDetailController = new CustomerDetailController(customerDTO);
         try {
             FXMLLoader loader = new FXMLLoader(HMResourcesLoader.loadURL("fxml/CustomerDetail.fxml"));
-            loader.setControllerFactory(c -> new CustomerDetailController(customerDTO));
+            loader.setControllerFactory(c -> customerDetailController);
             root = loader.load();
         } catch (Exception e) {
             e.printStackTrace();
@@ -142,19 +158,20 @@ public class CustomerController implements Initializable {
         if (root == null) {
             return;
         }
+        boolean isUpdate = customerDTO.getCustomer().getId() > 0;
         this.dialogContent = MFXGenericDialogBuilder.build()
                 .makeScrollable(true)
                 .setHeaderIcon(null)
                 .setShowAlwaysOnTop(false)
-                .setHeaderText("Customer Info")
+                .setHeaderText(isUpdate ? "Customer Detail" : "Add New Customer")
                 .setContent(root)
                 .get();
         dialogContent.addActions(
-                Map.entry(new MFXButton("Confirm"), event -> {
-                    hiddenDialog();
+                Map.entry(new MFXButton(isUpdate ? "Update" : "Create"), event -> {
+                    saveCustomer(customerDetailController.getCustomerDTO());
                 }),
                 Map.entry(new MFXButton("Cancel"), event -> {
-                    hiddenDialog();
+                    hiddenCustomerDialog();
                 })
         );
         this.dialogContent.setMaxSize(800, 800);
@@ -170,7 +187,7 @@ public class CustomerController implements Initializable {
                 .get();
         this.dialog.showDialog();
     }
-    private void hiddenDialog() {
+    private void hiddenCustomerDialog() {
         if (this.dialogContent == null || this.dialog == null) {
             return;
         }
@@ -181,5 +198,10 @@ public class CustomerController implements Initializable {
             this.dialogContent = null;
         });
         this.dialog.close();
+    }
+
+    @FXML
+    private void onClickedAddNewCustomer(ActionEvent event) {
+        showCustomerDetail(new CustomerDTO());
     }
 }
