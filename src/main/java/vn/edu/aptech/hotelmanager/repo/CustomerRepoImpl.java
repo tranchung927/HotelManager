@@ -24,6 +24,8 @@ public class CustomerRepoImpl implements ICustomerRepo {
                 Customer customer = new CustomerEntityToCustomer().convert(resultSet);
                 CustomerDTO customerDTO = new CustomerDTO();
                 customerDTO.setCustomer(customer);
+                customerDTO.getDocument().setId(customer.getDocumentId());
+                customerDTO.getAddress().setId(customer.getAddressId());
                 customers.add(customerDTO);
             }
         } catch (Exception e) {
@@ -37,11 +39,11 @@ public class CustomerRepoImpl implements ICustomerRepo {
         Address address = customerDTO.getAddress();
         ResultSet addressRst = CrudUtil.execute("SELECT * FROM addresses WHERE id=?", address.getId());
         if (addressRst.next()) {
-            String sql = "UPDATE addresses SET city_id = ?, district_id = ?, full_address = ? WHERE addresses.id = ?";
-            CrudUtil.execute(sql, address.getCity().getId(), address.getDistrict().getId(), address.getFullAddress(), address.getId());
+            String sql = "UPDATE addresses SET country_id =?, city_id = ?, district_id = ?, full_address = ? WHERE addresses.id = ?";
+            CrudUtil.execute(sql, address.getCountry().getId(),address.getCity().getId(), address.getDistrict().getId(), address.getFullAddress(), address.getId());
         } else {
-            String sql = "INSERT INTO addresses(city_id,district_id,full_address) VALUES (?,?,?)";
-            CrudUtil.execute(sql, address.getCity().getId(), address.getDistrict().getId(), address.getFullAddress());
+            String sql = "INSERT INTO addresses(country_id,city_id,district_id,full_address) VALUES (?,?,?,?)";
+            CrudUtil.execute(sql, address.getCountry().getId(), address.getCity().getId(), address.getDistrict().getId(), address.getFullAddress());
             ResultSet newAddressRst = CrudUtil.execute("SELECT * FROM addresses ORDER BY id DESC LIMIT 1");
             if (newAddressRst.next()) {
                 customerDTO.getCustomer().setAddressId(newAddressRst.getLong("id"));

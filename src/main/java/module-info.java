@@ -12,6 +12,7 @@ module vn.edu.aptech.hotelmanager {
     requires org.kordamp.ikonli.fontawesome5;
     requires mysql.connector.j;
     requires lombok;
+    requires org.apache.commons.lang3;
 
     exports vn.edu.aptech.hotelmanager.controllers;
     opens vn.edu.aptech.hotelmanager.controllers to javafx.fxml;

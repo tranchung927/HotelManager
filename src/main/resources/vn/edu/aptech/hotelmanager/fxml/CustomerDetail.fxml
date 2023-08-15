@@ -21,16 +21,16 @@
     <padding>
         <Insets bottom="20.0" left="30.0" right="30.0" top="20.0"/>
     </padding>
-    <MFXTextField prefWidth="300" fx:id="firstNameTextField" promptText="Enter first name" floatingText="First Name"/>
-    <MFXTextField prefWidth="300" fx:id="lastNameTextField" promptText="Enter last name" floatingText="Last Name" GridPane.columnIndex="1"/>
-    <MFXTextField prefWidth="300" fx:id="emailTextField" promptText="Enter email" floatingText="Email" GridPane.rowIndex="1"/>
-    <MFXTextField prefWidth="300" fx:id="phoneTextField" promptText="Enter phone number" floatingText="Phone" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-    <MFXDatePicker prefWidth="300" fx:id="birthDayPicker" promptText="yyyy-MM-dd" floatingText="BirthDay" GridPane.rowIndex="2"/>
+    <MFXTextField prefWidth="300" id="validatedField" fx:id="firstNameTextField" promptText="Enter first name" floatingText="First Name"/>
+    <MFXTextField prefWidth="300" id="validatedField" fx:id="lastNameTextField" promptText="Enter last name" floatingText="Last Name" GridPane.columnIndex="1"/>
+    <MFXTextField prefWidth="300" id="validatedField" fx:id="emailTextField" promptText="Enter email" floatingText="Email" GridPane.rowIndex="1"/>
+    <MFXTextField prefWidth="300" id="validatedField" fx:id="phoneTextField" promptText="Enter phone number" floatingText="Phone" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+    <MFXDatePicker prefWidth="300" id="validatedField" fx:id="birthDayPicker" promptText="yyyy-MM-dd" floatingText="BirthDay" GridPane.rowIndex="2"/>
     <MFXComboBox prefWidth="300" prefHeight="44.0" fx:id="genderComboBox" promptText="Select gender" floatingText="Gender" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
-    <MFXTextField prefWidth="300" fx:id="docValueTextField" promptText="Enter document value" floatingText="Document Value" GridPane.rowIndex="3"/>
+    <MFXTextField prefWidth="300" id="validatedField" fx:id="docValueTextField" promptText="Enter document value" floatingText="Document Value" GridPane.rowIndex="3"/>
     <MFXComboBox prefWidth="300" prefHeight="44.0" fx:id="docTypeComboBox" promptText="Select document type" floatingText="Document Type" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
-    <MFXFilterComboBox prefWidth="300" prefHeight="44.0" fx:id="countryComboBox" promptText="Select country" floatingText="Country" GridPane.rowIndex="4"/>
+    <MFXFilterComboBox prefWidth="300" id="validatedField" prefHeight="44.0" fx:id="countryComboBox" promptText="Select country" floatingText="Country" GridPane.rowIndex="4"/>
     <MFXFilterComboBox prefWidth="300" prefHeight="44.0" fx:id="cityComboBox" promptText="Select city" floatingText="City" GridPane.rowIndex="5"/>
     <MFXFilterComboBox prefWidth="300" prefHeight="44.0" fx:id="districtComboBox" promptText="Select district" floatingText="District" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
-    <MFXTextField prefWidth="300" id="validatedField" fx:id="addressTextField" promptText="Enter address" floatingText="Address" GridPane.rowIndex="6"/>
+    <MFXTextField prefWidth="300" fx:id="addressTextField" promptText="Enter address" floatingText="Address" GridPane.rowIndex="6"/>
 </GridPane>

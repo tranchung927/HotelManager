@@ -67,7 +67,7 @@ public class LocationRepoImpl implements ILocationRepo {
                     "D.id AS district_id, D.name AS district_name" +
                     " FROM addresses AS A" +
                     " INNER JOIN cities AS C ON A.city_id = C.id" +
-                    " INNER JOIN countries AS B ON C.country_id = B.id" +
+                    " INNER JOIN countries AS B ON A.country_id = B.id" +
                     " INNER JOIN districts AS D ON A.district_id = D.id" +
                     " WHERE A.id=?";
             ResultSet resultSet = CrudUtil.execute(sql, id);

@@ -24,7 +24,7 @@ public class CustomerEntityToCustomer implements IEntityConverter<Customer> {
             customer.setStatus(source.getInt("status"));
             customer.setCreatedAt(source.getTime("created_at"));
             customer.setModifiedAt(source.getTime("modified_at"));
-            customer.setAssigneeId(source.getLong("address_id"));
+            customer.setAddressId(source.getLong("address_id"));
         } catch (Exception e) {
             e.printStackTrace();
         }

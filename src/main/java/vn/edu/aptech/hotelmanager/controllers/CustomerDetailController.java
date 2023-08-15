@@ -4,10 +4,12 @@ import io.github.palexdev.materialfx.controls.MFXComboBox;
 import io.github.palexdev.materialfx.controls.MFXDatePicker;
 import io.github.palexdev.materialfx.controls.MFXFilterComboBox;
 import io.github.palexdev.materialfx.controls.MFXTextField;
+import io.github.palexdev.materialfx.controls.cell.MFXDateCell;
 import io.github.palexdev.materialfx.utils.DateTimeUtils;
 import io.github.palexdev.materialfx.utils.StringUtils;
 import io.github.palexdev.materialfx.utils.others.FunctionalStringConverter;
 import io.github.palexdev.materialfx.utils.others.dates.DateStringConverter;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -15,6 +17,7 @@ import javafx.collections.ObservableList;
 import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.DateCell;
 import javafx.util.StringConverter;
 import vn.edu.aptech.hotelmanager.domain.REPO_TYPE;
 import vn.edu.aptech.hotelmanager.domain.RepoFactory;
@@ -25,51 +28,41 @@ import vn.edu.aptech.hotelmanager.domain.repo.ILocationRepo;
 import vn.edu.aptech.hotelmanager.utils.DateUtils;
 
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.regex.Pattern;
 
 public class CustomerDetailController implements Initializable {
     private static final PseudoClass INVALID_PSEUDO_CLASS = PseudoClass.getPseudoClass("invalid");
     @FXML
-    public MFXTextField firstNameTextField;
-
+    private MFXTextField firstNameTextField;
     @FXML
-    public MFXTextField lastNameTextField;
-
+    private MFXTextField lastNameTextField;
     @FXML
-    public MFXTextField emailTextField;
-
+    private MFXTextField emailTextField;
     @FXML
-    public MFXTextField phoneTextField;
-
+    private MFXTextField phoneTextField;
     @FXML
-    public MFXTextField docValueTextField;
-
+    private MFXTextField docValueTextField;
     @FXML
-    public MFXComboBox<DOCUMENT_TYPE> docTypeComboBox;
-
+    private MFXComboBox<DOCUMENT_TYPE> docTypeComboBox;
     @FXML
-    public MFXFilterComboBox<Country> countryComboBox;
-
+    private MFXFilterComboBox<Country> countryComboBox;
     @FXML
-    public MFXFilterComboBox<City> cityComboBox;
-
+    private MFXFilterComboBox<City> cityComboBox;
     @FXML
-    public MFXFilterComboBox<District> districtComboBox;
-
+    private MFXFilterComboBox<District> districtComboBox;
     @FXML
     private MFXComboBox<GENDER_TYPE> genderComboBox;
-
     @FXML
-    public MFXTextField addressTextField;
-
+    private MFXTextField addressTextField;
     @FXML
-    public MFXDatePicker birthDayPicker;
-
+    private MFXDatePicker birthDayPicker;
     private final CustomerDTO customerDTO;
     private final ILocationRepo locationRepo;
 
@@ -84,10 +77,54 @@ public class CustomerDetailController implements Initializable {
         getAddressAndUpdateUI();
         getDocumentAndUpdateUI();
     }
+
+    public boolean validate() {
+        boolean isValidEmail = false;
+        boolean isValidDoc = false;
+        boolean isValidPhone = false;
+        if (emailTextField.getText() != null && !emailTextField.getText().isBlank()) {
+            Pattern validEmailPattern = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+            isValidEmail = validEmailPattern.matcher(emailTextField.getText()).matches();
+        }
+        emailTextField.pseudoClassStateChanged(INVALID_PSEUDO_CLASS, !isValidEmail);
+        if (docValueTextField.getText() != null && !docValueTextField.getText().isBlank()) {
+            isValidDoc = docValueTextField.getText().length() >= 10;
+        }
+        docValueTextField.pseudoClassStateChanged(INVALID_PSEUDO_CLASS, !isValidDoc);
+
+        boolean isValidFirstName = firstNameTextField.getText() != null && !firstNameTextField.getText().isBlank();
+        firstNameTextField.pseudoClassStateChanged(INVALID_PSEUDO_CLASS, !isValidFirstName);
+
+        boolean isValidLastName = lastNameTextField.getText() != null && !lastNameTextField.getText().isBlank();
+        lastNameTextField.pseudoClassStateChanged(INVALID_PSEUDO_CLASS, !isValidLastName);
+
+        if (phoneTextField.getText() != null && !phoneTextField.getText().isBlank()) {
+            Pattern validPhonePattern = Pattern.compile("^0\\d{9,11}$", Pattern.CASE_INSENSITIVE);
+            isValidPhone = validPhonePattern.matcher(phoneTextField.getText()).matches();
+        }
+        phoneTextField.pseudoClassStateChanged(INVALID_PSEUDO_CLASS, !isValidPhone);
+        boolean isValidDob = birthDayPicker.getValue() != null;
+        birthDayPicker.pseudoClassStateChanged(INVALID_PSEUDO_CLASS, !isValidDob);
+        boolean isValidCountry = countryComboBox.getSelectedItem() != null;
+        countryComboBox.pseudoClassStateChanged(INVALID_PSEUDO_CLASS, !isValidCountry);
+        return isValidEmail && isValidDoc && isValidFirstName && isValidLastName && isValidPhone && isValidDob && isValidCountry;
+    }
     private void setupUI() {
         birthDayPicker.setGridAlgorithm(DateTimeUtils::partialIntMonthMatrix);
         birthDayPicker.setConverterSupplier(() -> new DateStringConverter("yyyy-MM-dd", birthDayPicker.getLocale()));
-
+        LocalDate nowDate = LocalDate.now();
+        LocalDate minDate = LocalDate.of(nowDate.getYear() - 120, nowDate.getMonth(), nowDate.getDayOfMonth());
+        birthDayPicker.setCellFactory(d ->
+                new MFXDateCell(birthDayPicker, d) {
+                    @Override
+                    public void updateItem(LocalDate date) {
+                        super.updateItem(date);
+                        if (date != null) {
+                            setDisable(date.isBefore(minDate));
+                        }
+                    }
+                }
+                );
         StringConverter<GENDER_TYPE> genderConverter = FunctionalStringConverter.to(GENDER_TYPE::toString);
         genderComboBox.setConverter(genderConverter);
         List<GENDER_TYPE> genderList = new ArrayList<>();
@@ -115,13 +152,17 @@ public class CustomerDetailController implements Initializable {
                 customerDTO.getDocument().setType(newValue);
             }
         });
-        firstNameTextField.setTextLimit(50);
         lastNameTextField.setTextLimit(50);
-        emailTextField.setTextLimit(250);
+        emailTextField.setTextLimit(100);
         phoneTextField.setTextLimit(11);
         docValueTextField.setTextLimit(20);
-        addressTextField.setTextLimit(250);
-
+        addressTextField.setTextLimit(100);
+        firstNameTextField.setTextLimit(50);
+        emailTextField
+                .textProperty()
+                .addListener((observable, oldValue, newValue) ->
+                        customerDTO.getCustomer().setEmail(newValue)
+                );
         firstNameTextField
                 .textProperty()
                 .addListener((observable, oldValue, newValue) ->
@@ -131,11 +172,6 @@ public class CustomerDetailController implements Initializable {
                 .textProperty()
                 .addListener((observable, oldValue, newValue) ->
                         customerDTO.getCustomer().setLastName(newValue)
-                );
-        emailTextField
-                .textProperty()
-                .addListener((observable, oldValue, newValue) ->
-                        customerDTO.getCustomer().setEmail(newValue)
                 );
         phoneTextField
                 .textProperty()
@@ -157,6 +193,7 @@ public class CustomerDetailController implements Initializable {
                 customerDTO.getCustomer().setDob(DateUtils.convertToDate(birthDayPicker.getValue()))
         );
     }
+
     private void updateUI() {
         genderComboBox.selectItem(customerDTO.getCustomer().getGender());
         firstNameTextField.setText(customerDTO.getCustomer().getFirstName());
@@ -165,6 +202,11 @@ public class CustomerDetailController implements Initializable {
         phoneTextField.setText(customerDTO.getCustomer().getPhoneNumber());
         if (customerDTO.getCustomer().getDob() != null) {
             birthDayPicker.setValue(DateUtils.convertToLocalDate(customerDTO.getCustomer().getDob()));
+        } else {
+            LocalDate nowDate = LocalDate.now();
+            LocalDate defaultValue = LocalDate.of(nowDate.getYear() - 18, nowDate.getMonth(), nowDate.getDayOfMonth());
+            customerDTO.getCustomer().setDob(DateUtils.convertToDate(defaultValue));
+            birthDayPicker.setValue(defaultValue);
         }
     }
 
@@ -190,12 +232,17 @@ public class CustomerDetailController implements Initializable {
         if (customerDTO.getAddress().getId() > 0) {
             try {
                 Address address = locationRepo.getAddressById(customerDTO.getAddress().getId());
-                getCountries();
-                countryComboBox.selectItem(address.getCountry());
-                getCities();
-                cityComboBox.selectItem(address.getCity());
-                getDistricts();
-                districtComboBox.selectItem(address.getDistrict());
+                if (address != null) {
+                    customerDTO.setAddress(address);
+                    getCountries();
+                    countryComboBox.selectItem(address.getCountry());
+                    getCities();
+                    cityComboBox.selectItem(address.getCity());
+                    getDistricts();
+                    districtComboBox.selectItem(address.getDistrict());
+                } else {
+                    getCountries();
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }

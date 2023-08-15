@@ -138,9 +138,6 @@ public class CustomerController extends BaseController implements Initializable 
     }
 
     private void saveCustomer(CustomerDTO customerDTO) {
-        if (customerDTO.getCustomer().getFirstName().isBlank()) {
-
-        }
         boolean isUpdate = customerDTO.getCustomer().getId() > 0;
         ICustomerRepo customerRepo = RepoFactory.getInstance().getRepo(REPO_TYPE.CUSTOMER);
         try {
@@ -180,7 +177,9 @@ public class CustomerController extends BaseController implements Initializable 
                 .get();
         dialogContent.addActions(
                 Map.entry(new MFXButton(isUpdate ? "Update" : "Create"), event -> {
-                    saveCustomer(customerDTO);
+                    if (customerDetailController.validate()) {
+                        saveCustomer(customerDTO);
+                    }
                 }),
                 Map.entry(new MFXButton("Cancel"), event -> {
                     hiddenCustomerDialog();
