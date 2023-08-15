@@ -22,6 +22,7 @@ import vn.edu.aptech.hotelmanager.domain.dto.CustomerDTO;
 import vn.edu.aptech.hotelmanager.domain.model.*;
 import vn.edu.aptech.hotelmanager.domain.repo.ICustomerRepo;
 import vn.edu.aptech.hotelmanager.domain.repo.ILocationRepo;
+import vn.edu.aptech.hotelmanager.utils.DateUtils;
 
 import java.net.URL;
 import java.time.LocalDate;
@@ -151,9 +152,10 @@ public class CustomerDetailController implements Initializable {
                 .addListener((observable, oldValue, newValue) ->
                         customerDTO.getAddress().setFullAddress(newValue)
                 );
-    }
-    public CustomerDTO getCustomerDTO() {
-        return customerDTO;
+        birthDayPicker.setAllowEdit(false);
+        birthDayPicker.setOnAction(actionEvent ->
+                customerDTO.getCustomer().setDob(DateUtils.convertToDate(birthDayPicker.getValue()))
+        );
     }
     private void updateUI() {
         genderComboBox.selectItem(customerDTO.getCustomer().getGender());
@@ -162,7 +164,7 @@ public class CustomerDetailController implements Initializable {
         emailTextField.setText(customerDTO.getCustomer().getEmail());
         phoneTextField.setText(customerDTO.getCustomer().getPhoneNumber());
         if (customerDTO.getCustomer().getDob() != null) {
-            birthDayPicker.setValue(LocalDate.);
+            birthDayPicker.setValue(DateUtils.convertToLocalDate(customerDTO.getCustomer().getDob()));
         }
     }
 

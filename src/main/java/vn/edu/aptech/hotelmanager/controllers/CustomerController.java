@@ -138,12 +138,24 @@ public class CustomerController extends BaseController implements Initializable 
     }
 
     private void saveCustomer(CustomerDTO customerDTO) {
-        boolean isUpdate = customerDTO.getCustomer().getId() > 0;
-        if (isUpdate) {
+        if (customerDTO.getCustomer().getFirstName().isBlank()) {
 
         }
-        customerTableView.getItems().add(customerDTO);
-        hiddenCustomerDialog();
+        boolean isUpdate = customerDTO.getCustomer().getId() > 0;
+        ICustomerRepo customerRepo = RepoFactory.getInstance().getRepo(REPO_TYPE.CUSTOMER);
+        try {
+            CustomerDTO result = customerRepo.createOrUpdate(customerDTO);
+            if (isUpdate) {
+                customerTableView.getItems().set(selectedIndex, result);
+            } else {
+                customerTableView.getItems().add(result);
+            }
+            customerTableView.update();
+            hiddenCustomerDialog();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
     private void showCustomerDetail(CustomerDTO customerDTO) {
         Parent root = null;
@@ -168,7 +180,7 @@ public class CustomerController extends BaseController implements Initializable 
                 .get();
         dialogContent.addActions(
                 Map.entry(new MFXButton(isUpdate ? "Update" : "Create"), event -> {
-                    saveCustomer(customerDetailController.getCustomerDTO());
+                    saveCustomer(customerDTO);
                 }),
                 Map.entry(new MFXButton("Cancel"), event -> {
                     hiddenCustomerDialog();
@@ -185,18 +197,18 @@ public class CustomerController extends BaseController implements Initializable 
                 .setScrimPriority(ScrimPriority.WINDOW)
                 .setScrimOwner(true)
                 .get();
+        this.dialog.setOnHidden(e -> {
+            this.dialog = null;
+            this.dialogContent = null;
+            this.customerTableView.getSelectionModel().clearSelection();
+            this.selectedIndex = null;
+        });
         this.dialog.showDialog();
     }
     private void hiddenCustomerDialog() {
         if (this.dialogContent == null || this.dialog == null) {
             return;
         }
-        customerTableView.getSelectionModel().clearSelection();
-        selectedIndex = null;
-        this.dialog.setOnHidden(e -> {
-            this.dialog = null;
-            this.dialogContent = null;
-        });
         this.dialog.close();
     }
 

@@ -42,9 +42,11 @@ public class CustomerRepoImpl implements ICustomerRepo {
         } else {
             String sql = "INSERT INTO addresses(city_id,district_id,full_address) VALUES (?,?,?)";
             CrudUtil.execute(sql, address.getCity().getId(), address.getDistrict().getId(), address.getFullAddress());
-            addressRst = CrudUtil.execute("SELECT * FROM addresses ORDER BY id DESC LIMIT 1");
-            customerDTO.getCustomer().setAddressId(addressRst.getLong("id"));
-            customerDTO.getAddress().setId(addressRst.getLong("id"));
+            ResultSet newAddressRst = CrudUtil.execute("SELECT * FROM addresses ORDER BY id DESC LIMIT 1");
+            if (newAddressRst.next()) {
+                customerDTO.getCustomer().setAddressId(newAddressRst.getLong("id"));
+                customerDTO.getAddress().setId(newAddressRst.getLong("id"));
+            }
         }
 
         Document document = customerDTO.getDocument();
@@ -55,9 +57,11 @@ public class CustomerRepoImpl implements ICustomerRepo {
         } else {
             String sql = "INSERT INTO documents(type,value) VALUES (?,?)";
             CrudUtil.execute(sql, document.getType().toStatus(), document.getValue());
-            documentRst = CrudUtil.execute("SELECT * FROM documents ORDER BY id DESC LIMIT 1");
-            customerDTO.getCustomer().setDocumentId(documentRst.getLong("id"));
-            customerDTO.getDocument().setId(documentRst.getLong("id"));
+            ResultSet newDocumentRst = CrudUtil.execute("SELECT * FROM documents ORDER BY id DESC LIMIT 1");
+            if (newDocumentRst.next()) {
+                customerDTO.getCustomer().setDocumentId(newDocumentRst.getLong("id"));
+                customerDTO.getDocument().setId(newDocumentRst.getLong("id"));
+            }
         }
 
         ResultSet customerRst = CrudUtil.execute("SELECT * FROM customers WHERE id=?", customerDTO.getCustomer().getId());
@@ -77,18 +81,20 @@ public class CustomerRepoImpl implements ICustomerRepo {
                     customerDTO.getCustomer().getAddressId(),
                     customerDTO.getCustomer().getId());
         } else {
-            String sql = "INSERT INTO accounts(first_name,last_name,email,phone_number,dob,sex,document_id,address_id)" +
+            String sql = "INSERT INTO customers(first_name,last_name,email,phone_number,dob,sex,document_id,address_id)" +
                     " VALUES (?,?,?,?,?,?,?,?)";
             CrudUtil.execute(sql, customerDTO.getCustomer().getFirstName(),
                     customerDTO.getCustomer().getLastName(),
                     customerDTO.getCustomer().getEmail(),
                     customerDTO.getCustomer().getPhoneNumber(),
-                    java.sql.Time.valueOf(format.format(customerDTO.getCustomer().getDob())),
+                    java.sql.Date.valueOf(format.format(customerDTO.getCustomer().getDob())),
                     customerDTO.getCustomer().getGender().toStatus(),
                     customerDTO.getCustomer().getDocumentId(),
                     customerDTO.getCustomer().getAddressId());
-            customerRst = CrudUtil.execute("SELECT * FROM accounts ORDER BY id DESC LIMIT 1");
-            customerDTO.getCustomer().setId(customerRst.getLong("id"));
+            ResultSet newCustomerRst = CrudUtil.execute("SELECT * FROM accounts ORDER BY id DESC LIMIT 1");
+            if (newCustomerRst.next()) {
+                customerDTO.getCustomer().setId(newCustomerRst.getLong("id"));
+            }
         }
 
         return customerDTO;
