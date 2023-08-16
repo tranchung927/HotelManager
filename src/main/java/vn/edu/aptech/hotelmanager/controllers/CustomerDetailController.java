@@ -28,7 +28,6 @@ import vn.edu.aptech.hotelmanager.domain.repo.ILocationRepo;
 import vn.edu.aptech.hotelmanager.utils.DateUtils;
 
 import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;

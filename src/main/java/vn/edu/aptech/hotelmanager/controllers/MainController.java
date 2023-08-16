@@ -29,39 +29,28 @@ import java.util.ResourceBundle;
 import static vn.edu.aptech.hotelmanager.HMResourcesLoader.loadURL;
 
 public class MainController implements Initializable {
-
     private final Stage stage;
     private double xOffset;
     private double yOffset;
     private final ToggleGroup toggleGroup;
-
     @FXML
     private HBox windowHeader;
-
     @FXML
     private MFXFontIcon closeIcon;
-
     @FXML
     private MFXFontIcon minimizeIcon;
-
     @FXML
     private MFXFontIcon alwaysOnTopIcon;
-
     @FXML
     private AnchorPane rootPane;
-
     @FXML
     private MFXScrollPane scrollPane;
-
     @FXML
     private VBox navBar;
-
     @FXML
     private StackPane contentPane;
-
     @FXML
     private StackPane logoContainer;
-
     public MainController(Stage stage) {
         this.stage = stage;
         this.toggleGroup = new ToggleGroup();

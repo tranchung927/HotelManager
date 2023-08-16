@@ -27,6 +27,7 @@ import vn.edu.aptech.hotelmanager.common.BaseController;
 import vn.edu.aptech.hotelmanager.domain.REPO_TYPE;
 import vn.edu.aptech.hotelmanager.domain.RepoFactory;
 import vn.edu.aptech.hotelmanager.domain.dto.CustomerDTO;
+import vn.edu.aptech.hotelmanager.domain.dto.RoomDTO;
 import vn.edu.aptech.hotelmanager.domain.model.Account;
 import vn.edu.aptech.hotelmanager.domain.model.ROOM_STATUS_TYPE;
 import vn.edu.aptech.hotelmanager.domain.model.Room;
@@ -146,7 +147,9 @@ public class RoomController extends BaseController implements Initializable {
 
             Room room1 = null;
             try {
-                room1 = roomRepo.creatOrUpdate(room);
+                RoomDTO roomDTO = new RoomDTO();
+                roomDTO.setRoom(room);
+                room1 = roomRepo.createOrUpdate(roomDTO).getRoom();
                 if (room.getId() > 0) {
                     listener.updateRoom(room1);
                 } else {

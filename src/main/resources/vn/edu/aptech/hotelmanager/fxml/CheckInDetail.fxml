@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            stylesheets="@../css/Common.css"
+            xmlns="http://javafx.com/javafx/20.0.0"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="vn.edu.aptech.hotelmanager.controllers.CheckInDetailController">
+
+</AnchorPane>

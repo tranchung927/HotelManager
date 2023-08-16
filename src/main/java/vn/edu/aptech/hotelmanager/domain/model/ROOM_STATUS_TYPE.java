@@ -23,7 +23,8 @@ public enum ROOM_STATUS_TYPE {
         }
     }
 
-    public String getName() {
+    @Override
+    public String toString() {
         switch (this) {
             case AVAILABLE -> {
                 return "Available";
@@ -39,6 +40,45 @@ public enum ROOM_STATUS_TYPE {
             }
             default -> {
                 return "Reserve";
+            }
+        }
+    }
+    public String toColor() {
+        switch (this) {
+            case AVAILABLE -> {
+                return "#4A9F4F";
+            }
+            case OCCUPIED -> {
+                return "#ED525D";
+            }
+            case REPAIR -> {
+                return "#627D86";
+            }
+            case DIRTY -> {
+                return "#D1B28E";
+            }
+            default -> {
+                return "#FC572F";
+            }
+        }
+    }
+
+    public String toSecondColor() {
+        switch (this) {
+            case AVAILABLE -> {
+                return "#dbecdc";
+            }
+            case OCCUPIED -> {
+                return "#fbdcdf";
+            }
+            case REPAIR -> {
+                return "#e0e5e7";
+            }
+            case DIRTY -> {
+                return "#f6f0e8";
+            }
+            default -> {
+                return "#feddd5";
             }
         }
     }

@@ -23,6 +23,7 @@ import lombok.val;
 import vn.edu.aptech.hotelmanager.HMResourcesLoader;
 import vn.edu.aptech.hotelmanager.domain.REPO_TYPE;
 import vn.edu.aptech.hotelmanager.domain.RepoFactory;
+import vn.edu.aptech.hotelmanager.domain.dto.RoomDTO;
 import vn.edu.aptech.hotelmanager.domain.model.Account;
 import vn.edu.aptech.hotelmanager.domain.model.Room;
 import vn.edu.aptech.hotelmanager.domain.repo.IAccountRepo;
@@ -359,7 +360,7 @@ public class AdminController implements Initializable {
     private void getRoomData() {
 
         IRoomRepo repo = RepoFactory.getInstance().getRepo(REPO_TYPE.ROOM);
-        rooms.addAll(repo.getListRoom(1, 30));
+        rooms.addAll(repo.getListRoom(1, 30).stream().map(RoomDTO::getRoom).toList());
         roomTableView.setItems(rooms);
     }
 

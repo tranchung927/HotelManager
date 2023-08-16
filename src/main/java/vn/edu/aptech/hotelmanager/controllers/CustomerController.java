@@ -40,13 +40,10 @@ import java.util.*;
 import java.util.function.Function;
 
 public class CustomerController extends BaseController implements Initializable {
-
     @FXML
     private MFXButton addNewButton;
-
     @FXML
     private AnchorPane rootAnchorPane;
-
     @FXML
     private MFXPaginatedTableView<CustomerDTO> customerTableView;
     private MFXGenericDialog dialogContent;

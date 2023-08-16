@@ -1,10 +1,12 @@
 package vn.edu.aptech.hotelmanager.domain.dto;
 
-import vn.edu.aptech.hotelmanager.domain.model.Customer;
-import vn.edu.aptech.hotelmanager.domain.model.Room;
-import vn.edu.aptech.hotelmanager.domain.model.User;
+import lombok.Data;
+import vn.edu.aptech.hotelmanager.domain.model.*;
 
+@Data
 public class RoomDTO {
-    Customer customer;
-    Room room;
+    private Customer customer;
+    private Room room;
+    private Category category;
+    private CheckIn checkIn;
 }

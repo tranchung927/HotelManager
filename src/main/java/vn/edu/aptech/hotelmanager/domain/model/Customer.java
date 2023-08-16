@@ -22,4 +22,8 @@ public class Customer {
     private Date createdAt;
     private Date modifiedAt;
     private long addressId = -1;
+
+    public String getFullName() {
+        return this.firstName + " " + this.lastName;
+    }
 }
