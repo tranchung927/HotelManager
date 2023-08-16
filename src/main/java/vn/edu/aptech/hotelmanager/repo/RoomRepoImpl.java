@@ -1,7 +1,5 @@
 package vn.edu.aptech.hotelmanager.repo;
 
-import javafx.scene.control.Alert;
-import vn.edu.aptech.hotelmanager.domain.model.ROOM_STATUS_TYPE;
 import vn.edu.aptech.hotelmanager.domain.model.Room;
 import vn.edu.aptech.hotelmanager.domain.repo.IRoomRepo;
 import vn.edu.aptech.hotelmanager.repo.converter.RoomEntityToRoom;
@@ -28,38 +26,24 @@ public class RoomRepoImpl implements IRoomRepo {
         return roomList;
     }
 
-
     @Override
-    public void insertRoom(Room room) {
-        String url = "INSERT INTO rooms (name,`status`,number_of_beds,price,category_id)VALUES" +
-                " ('"+room.getName()+"'" +
-                ",'"+room.getStatus()+"'" +
-                ",'"+room.getNumberOfBeds()+"'" +
-                ",'"+room.getPrice()+"'" +
-                ",'"+room.getCategoryId()+"')";
-        Alert alert;
-        try {
-            int a = CrudUtil.execute(url);
-            if(a>0){
+    public Room creatOrUpdate(Room room) throws Exception {
+        ResultSet resultSet = CrudUtil.execute("SELECT * FROM rooms WHERE id = ?",room.getId());
+        String sql;
+        if (resultSet.next()){
+            sql = "UPDATE rooms SET name = ? , status = ? , number_of_beds = ? , price = ? , category_id = ? WHERE is =?";
+        }else {
+            sql = "INSERT INTO rooms(name,status,number_of_beds,price,category_id) VALUES (?,?,?,?,?)";
+            ResultSet set = CrudUtil.execute("SELECT * FROM rooms ODER BY id DESC LIMIT 1");
+            room.setId(set.getLong("id"));
 
-                alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Information Message");
-                alert.setHeaderText(null);
-                alert.setContentText("Add Successfully");
-                alert.showAndWait();
-            }else {
-                alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error Message");
-                alert.setHeaderText(null);
-                alert.setContentText("Please fill all blank fields");
-                alert.showAndWait();
-
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
         }
-
+        CrudUtil.execute(sql,room.getName(),room.getStatus(),room.getNumberOfBeds(),room.getPrice(),room.getId());
+            return room;
     }
+
+
+
 
     @Override
     public String getLastRoomId(){
@@ -76,6 +60,15 @@ public class RoomRepoImpl implements IRoomRepo {
         }
 
 
+
     }
+
+    @Override
+    public Boolean deleteRoom(Long id) throws Exception {
+        String url = "DELETE FROM rooms WHERE id = ?";
+        CrudUtil.execute(url, id);
+        return true;
+    }
+
 
 }
