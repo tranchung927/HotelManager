@@ -17,7 +17,9 @@
                            AnchorPane.rightAnchor="0"/>
     <MFXButton AnchorPane.rightAnchor="12"
                AnchorPane.bottomAnchor="12"
+               fx:id="addNewButton"
                minHeight="44.0" minWidth="76.0"
                buttonType="RAISED"
-               text="Thêm mới"/>
+               onAction="#onClickedAddNewCustomer"
+               text="Add New"/>
 </AnchorPane>

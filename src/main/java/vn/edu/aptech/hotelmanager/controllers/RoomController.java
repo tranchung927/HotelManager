@@ -40,7 +40,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-public class RoomController implements Initializable {
+public class RoomController extends BaseController implements Initializable {
     private final IRoomRepo roomRepo = RepoFactory.getInstance().getRepo(REPO_TYPE.ROOM);
     private MFXGenericDialog dialogContent;
     private MFXStageDialog dialog;
@@ -108,13 +108,6 @@ public class RoomController implements Initializable {
         categoryTextField.setText(String.valueOf(room.getCategoryId()));
         nobTextField.setText(String.valueOf(room.getNumberOfBeds()));
     }
-
-    public IRoomRepo getRoomRepo() {
-        return roomRepo;
-    }
-
-    public BaseController baseController;
-
     @FXML
     private void deleteRoom() {
         Boolean isSuccess = false;
@@ -126,19 +119,19 @@ public class RoomController implements Initializable {
 
         if (isSuccess) {
             this.listener.deleteRoom(room);
-            baseController.showInfoDialog("Success", "Delete Successfully!", event -> {
-                baseController.hiddenDialog();
+            this.showInfoDialog("Success", "Delete Successfully!", event -> {
+                this.hiddenDialog();
                 // Đóng màn account
             });
             return;
         }
-        baseController.showErrorDialog("Error", "An error occurred, please try again!");
+        this.showErrorDialog("Error", "An error occurred, please try again!");
     }
 
     @FXML
     private void onClickSaveOrUpdate() {
         room.setName(roomNameTextField.getText());
-        room.setStatus(ROOM_STATUS_TYPE.getStatusStr(String.valueOf(statusComboBox.getSelectionModel().getSelectedItem())));
+        room.setStatus(statusComboBox.getSelectionModel().getSelectedItem());
         room.setNumberOfBeds(Integer.parseInt(nobTextField.getText()));
         room.setPrice(Double.parseDouble(priceTextField.getText()));
         room.setCategoryId(Long.parseLong(categoryTextField.getText()));
@@ -148,7 +141,7 @@ public class RoomController implements Initializable {
                 || room.getNumberOfBeds() == 0
                 || room.getPrice() == 0
                 || room.getCategoryId() == 0) {
-            baseController.showErrorDialog("Error", "Please fill all blank fields");
+            this.showErrorDialog("Error", "Please fill all blank fields");
         } else {
 
             Room room1 = null;
@@ -159,12 +152,12 @@ public class RoomController implements Initializable {
                 } else {
                     listener.addNewRoom(room1);
                 }
-                baseController.showInfoDialog("Success", room.getId() > 0 ? "Updated Successfully!" : "Created Successfully!", event -> {
-                    baseController.hiddenDialog();
+                this.showInfoDialog("Success", room.getId() > 0 ? "Updated Successfully!" : "Created Successfully!", event -> {
+                    this.hiddenDialog();
                 });
             } catch (Exception e) {
                 e.printStackTrace();
-                baseController.showErrorDialog("Error", "An error occurred, please try again!");
+                this.showErrorDialog("Error", "An error occurred, please try again!");
             }
         }
     }
