@@ -87,22 +87,24 @@ public class WarehouseController implements Initializable {
     }
     public void deleteProductInWareHouse(ActionEvent event) throws Exception {
         Product selectedAllProductInWareHouse = (Product) tableProduct.getSelectionModel().getSelectedValue();
-
         Receipt selectedReceiptCustomer = infoReceipt.getSelectionModel().getSelectedValue();
         Receipt selectedReceiptWareHouse = infoImportProduct.getSelectionModel().getSelectedValue();
         if(selectedAllProductInWareHouse != null){
             productRepo.deleteProduct(selectedAllProductInWareHouse.getId());
             getData();
             selectedAllProductInWareHouse = null;
+            return;
         }
         if(selectedReceiptCustomer != null){
             receipt.deleteRececeipt(selectedReceiptCustomer.getId());
             getData();
             selectedReceiptCustomer = null;
+            return;
         }if(selectedReceiptWareHouse != null){
             receipt.deleteRececeipt(selectedReceiptWareHouse.getId());
             getData();
             selectedReceiptWareHouse = null;
+            return;
         }
     }
     private void getData(){

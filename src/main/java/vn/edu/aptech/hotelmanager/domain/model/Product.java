@@ -11,7 +11,7 @@ public class Product {
     private String name;
     private String description;
     private Date createdAt;
-    private String unit;
+    private UNIT unit;
     private Double quantity;
     private Double inputPrice;
     private Category category;

@@ -1,9 +1,6 @@
 package vn.edu.aptech.hotelmanager.controllers;
 
 import io.github.palexdev.materialfx.controls.MFXButton;
-import io.github.palexdev.materialfx.controls.MFXComboBox;
-import io.github.palexdev.materialfx.controls.MFXDatePicker;
-import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,12 +14,9 @@ import vn.edu.aptech.hotelmanager.domain.RepoFactory;
 import vn.edu.aptech.hotelmanager.domain.model.*;
 import vn.edu.aptech.hotelmanager.domain.repo.IProductRepo;
 import vn.edu.aptech.hotelmanager.domain.repo.IWareHouseRepo;
-import vn.edu.aptech.hotelmanager.repo.db.DBConnection;
-import vn.edu.aptech.hotelmanager.utils.Unit;
+import vn.edu.aptech.hotelmanager.domain.model.UNIT;
 
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -40,7 +34,7 @@ public class ProductController implements Initializable {
     private DatePicker txtDateInputProduct;
 
     @FXML
-    private ComboBox<Unit> txtInitProduct;
+    private ComboBox<UNIT> txtInitProduct;
 
     @FXML
     private TextField txtInputPrice;
@@ -59,13 +53,13 @@ public class ProductController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        ObservableList<Unit>list = FXCollections.observableArrayList(Unit.Lon,Unit.Vé,Unit.Bao,Unit.Chai,Unit.Gói);
+        ObservableList<UNIT>list = FXCollections.observableArrayList(UNIT.Lon, UNIT.Bao, UNIT.Chai, UNIT.Gói);
         txtInitProduct.setItems(list);
         if(WarehouseController.isSelectedImportProductInWareHouse){
             Product product = new Product();
             product = WarehouseController.selectedProductInTable;
             txtNameProduct.setText(product.getName());
-            txtInitProduct.setValue(Unit.valueOf(product.getUnit()));
+            txtInitProduct.setValue(product.getUnit());
             txtInputPrice.setText(String.valueOf(product.getPricePolicy().getInitPrice()));
             txtOutputPrice.setText(String.valueOf(product.getPricePolicy().getCostPrice()));
         }
@@ -76,11 +70,8 @@ public class ProductController implements Initializable {
         }else {
             //sql upvdate
             Double quantityUpdate =WarehouseController.selectedProductInTable.getInventory().getAvailableQuantity()+Double.parseDouble(txtQuantityProduct.getText());
-            System.out.println("Befor update warehouse: "+ WarehouseController.selectedProductInTable.getInventory().getAvailableQuantity());
             long idUpdate =WarehouseController.selectedProductInTable.getInventory().getId();
             productRepo.updateProductInWareHouse(quantityUpdate,idUpdate);
-            System.out.println("After update"+ WarehouseController.selectedProductInTable.getInventory().getAvailableQuantity());
-
             SimpleDateFormat formatter1 = new SimpleDateFormat("dd-MM-yyyy");
             Product spTangSl = WarehouseController.selectedProductInTable;
             spTangSl.getInventory().setAvailableQuantity(WarehouseController.selectedProductInTable.getQuantityAvailable()+ Integer.parseInt(txtQuantityProduct.getText()));
@@ -119,7 +110,7 @@ public class ProductController implements Initializable {
         Product product = new Product();
         String unit =  txtInitProduct.getSelectionModel().getSelectedItem().toString();
         product.setName(txtNameProduct.getText());
-        product.setUnit(String.valueOf(Unit.valueOf(unit)));
+        product.setUnit(UNIT.valueOfStatus(unit));
         PricePolicy pricePolicy1 = new PricePolicy();
         pricePolicy1.setId(maxIdPricePolicy+1);
         product.setPricePolicy(pricePolicy1);

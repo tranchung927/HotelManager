@@ -5,7 +5,6 @@ import io.github.palexdev.materialfx.controls.MFXTableColumn;
 import io.github.palexdev.materialfx.controls.MFXTableView;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
-import io.github.palexdev.virtualizedfx.utils.VSPUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,33 +14,23 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import vn.edu.aptech.hotelmanager.HMResourcesLoader;
-import vn.edu.aptech.hotelmanager.common.entity.MyListener;
 import vn.edu.aptech.hotelmanager.domain.REPO_TYPE;
 import vn.edu.aptech.hotelmanager.domain.RepoFactory;
 import vn.edu.aptech.hotelmanager.domain.dto.ProductDTO;
-import vn.edu.aptech.hotelmanager.domain.model.Inventory;
 import vn.edu.aptech.hotelmanager.domain.model.Product;
 import vn.edu.aptech.hotelmanager.domain.model.Receipt;
 import vn.edu.aptech.hotelmanager.domain.model.ReceiptType;
 import vn.edu.aptech.hotelmanager.domain.repo.IProductRepo;
-import vn.edu.aptech.hotelmanager.domain.repo.IRoomRepo;
 import vn.edu.aptech.hotelmanager.domain.repo.IWareHouseRepo;
-import vn.edu.aptech.hotelmanager.repo.db.DBConnection;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -73,7 +62,7 @@ public class SalesController implements Initializable {
     public static Double totalReceipt;
     // thao tac để import du lieu vào bảng
     public static ObservableList<Product> dataOfTableReceipt;
-    private MyListener myListener;
+    private IProductControllerListener myListenerOfProduct;
     private List<Product> listProductShows = new ArrayList<>();
     private List<Product> getDataInTableShow;
     int maHd = 1;
@@ -89,7 +78,7 @@ public class SalesController implements Initializable {
         dataOfTableReceipt = FXCollections.observableArrayList(
         );
         if (listProductShows.size() > 0) {
-            myListener = new MyListener() {
+            myListenerOfProduct = new IProductControllerListener() {
                 @Override
                 public void onclickProductListener(Product productBill) {
                     setChosenProduct(productBill);
@@ -106,7 +95,7 @@ public class SalesController implements Initializable {
                 FXMLLoader fxmlLoader = new FXMLLoader(HMResourcesLoader.loadURL("fxml/item.fxml"));
                 AnchorPane anchorPane = fxmlLoader.load();
                 ItemController itemController = fxmlLoader.getController();
-                itemController.setData(listProductShows.get(i), myListener);
+                itemController.setData(listProductShows.get(i), myListenerOfProduct);
                 if (column == 3) {
                     column = 0;
                     row++;
@@ -200,18 +189,6 @@ public class SalesController implements Initializable {
     }
 
     public void showReceipt(ActionEvent event) throws Exception {
-        FXMLLoader loader = new FXMLLoader(HMResourcesLoader.loadURL("fxml/receiptProduct.fxml"));
-        loader.setControllerFactory(c -> new ReceiptProductController());
-        Parent root = null;
-        try {
-            root = loader.load();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        stage = new Stage();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
         Random random = new Random();
         lblMaRandom.setText(random.nextInt(99999)+ "");
         Receipt receipt = new Receipt();
@@ -231,19 +208,42 @@ public class SalesController implements Initializable {
             }
         }
         receipt.setStatus(1);
-        wareHouseRepo.insertReceiptCustomer(receipt);
        
         // set data
         for(Product p :dataOfTableReceipt){
-
             getData();
             Double quantityUpdate = null;
             long id = p.getInventory().getId();
             for(Product a: getData()){
                 if(a.getInventory().getId()== id){
-                    quantityUpdate  = a.getInventory().getAvailableQuantity() - p.getQuantity();
-                }            }
-            productRepo.updateProductInSales(quantityUpdate,id);
+                    if(a.getInventory().getAvailableQuantity() < p.getQuantity()){
+                        Alert alert;
+                        alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Error Message");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Only : "+ a.getInventory().getAvailableQuantity() + " " + a.getUnit()+ " " + a.getName());
+                        alert.showAndWait();
+                        return;
+                    }
+                    else {
+                        quantityUpdate  = a.getInventory().getAvailableQuantity() - p.getQuantity();
+                        FXMLLoader loader = new FXMLLoader(HMResourcesLoader.loadURL("fxml/receiptProduct.fxml"));
+                        loader.setControllerFactory(c -> new ReceiptProductController());
+                        Parent root = null;
+                        try {
+                            root = loader.load();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                        stage = new Stage();
+                        Scene scene = new Scene(root);
+                        stage.setScene(scene);
+                        stage.show();
+                        wareHouseRepo.insertReceiptCustomer(receipt);
+                        productRepo.updateProductInSales(quantityUpdate,id);
+                    }
+                }
+            }
         }
     }
 

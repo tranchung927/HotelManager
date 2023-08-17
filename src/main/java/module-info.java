@@ -19,4 +19,6 @@ module vn.edu.aptech.hotelmanager {
     opens vn.edu.aptech.hotelmanager to javafx.fxml;
     exports vn.edu.aptech.hotelmanager.utils;
     opens vn.edu.aptech.hotelmanager.utils to javafx.fxml;
+    exports vn.edu.aptech.hotelmanager.domain.model;
+    opens vn.edu.aptech.hotelmanager.domain.model to javafx.fxml;
 }
