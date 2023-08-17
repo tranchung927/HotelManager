@@ -94,7 +94,7 @@ public class SalesController implements Initializable {
             for (int i = 0; i < listProductShows.size(); i++) {
                 FXMLLoader fxmlLoader = new FXMLLoader(HMResourcesLoader.loadURL("fxml/item.fxml"));
                 AnchorPane anchorPane = fxmlLoader.load();
-                ItemController itemController = fxmlLoader.getController();
+                ItemProductController itemController = fxmlLoader.getController();
                 itemController.setData(listProductShows.get(i), myListenerOfProduct);
                 if (column == 3) {
                     column = 0;

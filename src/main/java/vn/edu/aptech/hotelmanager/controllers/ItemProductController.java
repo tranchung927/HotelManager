@@ -6,7 +6,7 @@ import javafx.scene.input.MouseEvent;
 import vn.edu.aptech.hotelmanager.domain.model.Product;
 
 
-public class ItemController {
+public class ItemProductController {
     @FXML
     private Label nameLabel;
     @FXML

@@ -165,8 +165,8 @@ public class WarehouseController implements Initializable {
         MFXTableColumn<Product> idColumn = new MFXTableColumn<>("Id", true);
         MFXTableColumn<Product> nameColumn = new MFXTableColumn<>("Name", true);
         MFXTableColumn<Product> quantityColumn = new MFXTableColumn<>("Quantity", true);
-        MFXTableColumn<Product> unitColumn = new MFXTableColumn<>("unit", true);
-        MFXTableColumn<Product> inputPrice = new MFXTableColumn<>("inputPrice", true);
+        MFXTableColumn<Product> unitColumn = new MFXTableColumn<>("Unit", true);
+        MFXTableColumn<Product> inputPrice = new MFXTableColumn<>("InputPrice", true);
         MFXTableColumn<Product> categoryColumn = new MFXTableColumn<>("Category", true);
 
         nameColumn.setRowCellFactory(product -> new MFXTableRowCell<>(Product::getName));
