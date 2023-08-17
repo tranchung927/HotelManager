@@ -272,8 +272,7 @@ public class AdminController implements Initializable {
             });
 
             loader.setControllerFactory(c -> roomController);
-            Parent root = loader.
-                    load();
+            Parent root = loader.load();
             Scene scene = new Scene(root);
             MFXThemeManager.addOn(scene, Themes.DEFAULT, Themes.LEGACY);
             stage.setScene(scene);
