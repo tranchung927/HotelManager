@@ -35,7 +35,7 @@
                            <children>
                               <MFXPaginatedTableView fx:id="roomTableView" layoutX="13.0" layoutY="75.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="146.0" prefWidth="947.0" rowsPerPage="10" styleClass="mfx-table-view" stylesheets="@../css/Admin.css" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="74.0" />
                               <Label layoutX="425.0" layoutY="22.0" text="ROOM TABLE" AnchorPane.topAnchor="22.0" />
-                              <Button fx:id="custom1" layoutX="881.0" layoutY="41.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="53.0" text="Add" />
+                              <Button fx:id="custom1" layoutX="881.0" layoutY="41.0" mnemonicParsing="false" onAction="#addRoomBtn" prefHeight="26.0" prefWidth="53.0" text="Add" />
                            </children>
                         </AnchorPane>
                      </children>

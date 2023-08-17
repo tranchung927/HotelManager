@@ -22,30 +22,12 @@ public enum ROOM_STATUS_TYPE {
             }
         }
     }
-    public static ROOM_STATUS_TYPE getStatusStr(String status) {
-        switch (status) {
-            case "Available" -> {
-                return  ROOM_STATUS_TYPE.AVAILABLE;
-            }
-            case "Occupied" -> {
-                return ROOM_STATUS_TYPE.OCCUPIED;
-            }
-            case "Repair" -> {
-                return ROOM_STATUS_TYPE.REPAIR;
-            }
-            case "Dirty" -> {
-                return ROOM_STATUS_TYPE.DIRTY;
-            }
-            default -> {
-                return ROOM_STATUS_TYPE.RESERVE;
-            }
-        }
-    }
 
-    public String getStatus() {
+    @Override
+    public String toString() {
         switch (this) {
             case AVAILABLE -> {
-                return  "Available";
+                return "Available";
             }
             case OCCUPIED -> {
                 return "Occupied";
@@ -61,23 +43,42 @@ public enum ROOM_STATUS_TYPE {
             }
         }
     }
-
-    public static int statusID(String status) {
-        switch (status) {
-            case "Available" -> {
-                return 1;
+    public String toColor() {
+        switch (this) {
+            case AVAILABLE -> {
+                return "#4A9F4F";
             }
-            case "Occupied" -> {
-                return 2;
+            case OCCUPIED -> {
+                return "#ED525D";
             }
-            case "Repair" -> {
-                return 3;
+            case REPAIR -> {
+                return "#627D86";
             }
-            case "Dirty" -> {
-                return 4;
+            case DIRTY -> {
+                return "#D1B28E";
             }
             default -> {
-                return 5;
+                return "#FC572F";
+            }
+        }
+    }
+
+    public String toSecondColor() {
+        switch (this) {
+            case AVAILABLE -> {
+                return "#dbecdc";
+            }
+            case OCCUPIED -> {
+                return "#fbdcdf";
+            }
+            case REPAIR -> {
+                return "#e0e5e7";
+            }
+            case DIRTY -> {
+                return "#f6f0e8";
+            }
+            default -> {
+                return "#feddd5";
             }
         }
     }

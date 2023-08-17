@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.control.Label?>
+<fx:root type="javafx.scene.layout.GridPane" xmlns:fx="http://javafx.com/fxml" stylesheets="@../css/RoomItemView.css">
+    <columnConstraints>
+        <ColumnConstraints percentWidth="20"/>
+        <ColumnConstraints percentWidth="80"/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints percentHeight="100.0" />
+    </rowConstraints>
+    <VBox fx:id="viewLeft" spacing="10" alignment="CENTER">
+        <Label fx:id="categoryLabel" text="VIP"/>
+        <Label fx:id="roomName" text="401"/>
+    </VBox>
+    <VBox fx:id="viewRight" spacing="10" GridPane.columnIndex="1" alignment="CENTER">
+        <Label fx:id="checkInTimeLabel" text="18/02/2023, 16:01"/>
+        <Label fx:id="customerNameLabel" text="Trần Văn Chung"/>
+        <Label fx:id="roomStatusLabel" text="Đã nhận"/>
+    </VBox>
+</fx:root>

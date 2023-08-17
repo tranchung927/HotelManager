@@ -17,6 +17,21 @@ public enum DOCUMENT_TYPE {
         }
     }
 
+    public int toStatus() {
+        switch (this) {
+            case ID_CARD -> {
+                return 1;
+            }
+            case CITIZEN_ID -> {
+                return 2;
+            }
+            case PASSPORT -> {
+                return 3;
+            }
+        }
+        return 1;
+    }
+
     @Override
     public String toString() {
         switch (this) {

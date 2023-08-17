@@ -29,39 +29,28 @@ import java.util.ResourceBundle;
 import static vn.edu.aptech.hotelmanager.HMResourcesLoader.loadURL;
 
 public class MainController implements Initializable {
-
     private final Stage stage;
     private double xOffset;
     private double yOffset;
     private final ToggleGroup toggleGroup;
-
     @FXML
     private HBox windowHeader;
-
     @FXML
     private MFXFontIcon closeIcon;
-
     @FXML
     private MFXFontIcon minimizeIcon;
-
     @FXML
     private MFXFontIcon alwaysOnTopIcon;
-
     @FXML
     private AnchorPane rootPane;
-
     @FXML
     private MFXScrollPane scrollPane;
-
     @FXML
     private VBox navBar;
-
     @FXML
     private StackPane contentPane;
-
     @FXML
     private StackPane logoContainer;
-
     public MainController(Stage stage) {
         this.stage = stage;
         this.toggleGroup = new ToggleGroup();
@@ -101,10 +90,10 @@ public class MainController implements Initializable {
 
     private void initializeLoader() {
         MFXLoader loader = new MFXLoader();
-        loader.addView(MFXLoaderBean.of("ROOMS", loadURL("fxml/Room.fxml"))
+        loader.addView(MFXLoaderBean.of("ROOMS", loadURL("fxml/CheckIn.fxml"))
                 .setBeanToNodeMapper(() -> createToggle("fas-hotel", "Danh sách phòng"))
                 .setDefaultRoot(true)
-                .setControllerFactory(c -> new RoomController(stage))
+                .setControllerFactory(c -> new CheckInController(stage))
                 .get());
         loader.addView(MFXLoaderBean.of("CUSTOMERS", loadURL("fxml/Customer.fxml"))
                 .setBeanToNodeMapper(() -> createToggle("fas-users", "Danh sách khách hàng"))
