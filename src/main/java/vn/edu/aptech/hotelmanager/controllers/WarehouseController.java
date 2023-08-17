@@ -93,18 +93,15 @@ public class WarehouseController implements Initializable {
             productRepo.deleteProduct(selectedAllProductInWareHouse.getId());
             getData();
             selectedAllProductInWareHouse = null;
-            return;
         }
         if(selectedReceiptCustomer != null){
             receipt.deleteRececeipt(selectedReceiptCustomer.getId());
             getData();
             selectedReceiptCustomer = null;
-            return;
         }if(selectedReceiptWareHouse != null){
             receipt.deleteRececeipt(selectedReceiptWareHouse.getId());
             getData();
             selectedReceiptWareHouse = null;
-            return;
         }
     }
     private void getData(){

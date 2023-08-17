@@ -1,34 +1,34 @@
 package vn.edu.aptech.hotelmanager.domain.model;
 
-public enum UNIT {
-        Lon, Bao, Chai, Gói;
+public enum UNIT_TYPE {
+        Can, Bag, Bottle, Package;
 
-        public static UNIT valueOfStatus(String status) {
+        public static UNIT_TYPE valueOfStatus(String status) {
                 switch (status) {
                         case "Lon" -> {
-                                return UNIT.Lon;
+                                return UNIT_TYPE.Can;
                         }
                         case "Bao" -> {
-                                return UNIT.Bao;
+                                return UNIT_TYPE.Bag;
                         }
                         case "Chai" -> {
-                                return UNIT.Chai;
+                                return UNIT_TYPE.Bottle;
                         }
                         default -> {
-                                return UNIT.Gói;
+                                return UNIT_TYPE.Package;
                         }
                 }
         }
 
         public String toStatus() {
                 switch (this) {
-                        case Lon -> {
+                        case Can -> {
                                 return "Lon";
                         }
-                        case Bao -> {
+                        case Bag -> {
                                 return "Bao";
                         }
-                        case Chai -> {
+                        case Bottle -> {
                                 return "Chai";
                         }
                         default -> {
@@ -40,16 +40,16 @@ public enum UNIT {
         @Override
         public String toString() {
                 switch (this) {
-                        case Lon -> {
+                        case Can -> {
                                 return "Lon";
                         }
-                        case Bao -> {
+                        case Bag -> {
                                 return "Bao";
                         }
-                        case Chai -> {
+                        case Bottle -> {
                                 return "Chai";
                         }
-                        case Gói -> {
+                        case Package -> {
                                 return "Gói";
                         }
                 }

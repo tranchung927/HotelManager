@@ -14,7 +14,7 @@ import vn.edu.aptech.hotelmanager.domain.RepoFactory;
 import vn.edu.aptech.hotelmanager.domain.model.*;
 import vn.edu.aptech.hotelmanager.domain.repo.IProductRepo;
 import vn.edu.aptech.hotelmanager.domain.repo.IWareHouseRepo;
-import vn.edu.aptech.hotelmanager.domain.model.UNIT;
+import vn.edu.aptech.hotelmanager.domain.model.UNIT_TYPE;
 
 import java.net.URL;
 import java.text.ParseException;
@@ -34,7 +34,7 @@ public class ProductController implements Initializable {
     private DatePicker txtDateInputProduct;
 
     @FXML
-    private ComboBox<UNIT> txtInitProduct;
+    private ComboBox<UNIT_TYPE> txtInitProduct;
 
     @FXML
     private TextField txtInputPrice;
@@ -53,7 +53,8 @@ public class ProductController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        ObservableList<UNIT>list = FXCollections.observableArrayList(UNIT.Lon, UNIT.Bao, UNIT.Chai, UNIT.Gói);
+        ObservableList<UNIT_TYPE>list = FXCollections.observableArrayList(UNIT_TYPE.Can,
+                UNIT_TYPE.Bag, UNIT_TYPE.Bottle, UNIT_TYPE.Package);
         txtInitProduct.setItems(list);
         if(WarehouseController.isSelectedImportProductInWareHouse){
             Product product = new Product();
@@ -110,7 +111,7 @@ public class ProductController implements Initializable {
         Product product = new Product();
         String unit =  txtInitProduct.getSelectionModel().getSelectedItem().toString();
         product.setName(txtNameProduct.getText());
-        product.setUnit(UNIT.valueOfStatus(unit));
+        product.setUnit(UNIT_TYPE.valueOfStatus(unit));
         PricePolicy pricePolicy1 = new PricePolicy();
         pricePolicy1.setId(maxIdPricePolicy+1);
         product.setPricePolicy(pricePolicy1);
