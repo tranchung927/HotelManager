@@ -18,12 +18,14 @@ public class AccountRepoImpl implements IAccountRepo {
     public List<Account> getListAccount(int page, int pageSize) {
         List<Account> accountList =  new ArrayList<>();
         try {
-            ResultSet resultSet = CrudUtil.execute("SELECT accounts.id, first_name, last_name, email, phone_number, " +
-                    "dob, accounts.code, sex, accounts.status, accounts.created_at, accounts.modified_at, description," +
-                    " username, password, position_id, positions.name AS position_name,addresses.id AS address_id " +
-                    "FROM accounts " +
-                    "INNER JOIN positions ON positions.id = accounts.position_id " +
-                    "INNER JOIN addresses ON addresses.id = accounts.address_id");
+            ResultSet resultSet = CrudUtil.execute("SELECT accounts.id, accounts.first_name," +
+                    " accounts.last_name, accounts.email, accounts.phone_number, accounts.dob," +
+                    " accounts.code, accounts.sex, accounts.status, accounts.created_at, accounts.modified_at," +
+                    " accounts.description, accounts.username, accounts.password," +
+                    " accounts.position_id, accounts.address_id," +
+                    " positions.name AS position_name, positions.code AS position_code" +
+                    " FROM accounts" +
+                    " INNER JOIN positions ON positions.id = accounts.position_id");
             while (resultSet.next()) {
                 accountList.add(new AccountEntityToAccount().convert(resultSet));
             }

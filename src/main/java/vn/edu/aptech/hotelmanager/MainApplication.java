@@ -10,11 +10,27 @@ import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import lombok.Getter;
+import lombok.Setter;
 import vn.edu.aptech.hotelmanager.controllers.LoginController;
+import vn.edu.aptech.hotelmanager.domain.model.Account;
 
 import java.io.IOException;
 
 public class MainApplication extends Application {
+
+    @Getter
+    private static MainApplication applicationInstance;
+
+    @Getter
+    @Setter
+    private Account account;
+
+    @Override
+    public void init() {
+        MainApplication.applicationInstance = this;
+    }
+
     @Override
     public void start(Stage stage) throws IOException {
         CSSFX.start();
@@ -29,7 +45,6 @@ public class MainApplication extends Application {
         stage.setTitle("Hotel FX");
         stage.show();
     }
-
     public static void main(String[] args) {
         launch(args);
     }

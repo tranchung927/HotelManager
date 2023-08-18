@@ -21,6 +21,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import vn.edu.aptech.hotelmanager.MainApplication;
+import vn.edu.aptech.hotelmanager.domain.model.ACCOUNT_ROLE_TYPE;
 
 import java.net.URL;
 import java.util.List;
@@ -91,26 +93,30 @@ public class MainController implements Initializable {
     private void initializeLoader() {
         MFXLoader loader = new MFXLoader();
         loader.addView(MFXLoaderBean.of("ROOMS", loadURL("fxml/CheckIn.fxml"))
-                .setBeanToNodeMapper(() -> createToggle("fas-hotel", "Danh sách phòng"))
+                .setBeanToNodeMapper(() -> createToggle("fas-hotel", "Rooms"))
                 .setDefaultRoot(true)
                 .setControllerFactory(c -> new CheckInController(stage))
                 .get());
         loader.addView(MFXLoaderBean.of("CUSTOMERS", loadURL("fxml/Customer.fxml"))
-                .setBeanToNodeMapper(() -> createToggle("fas-users", "Danh sách khách hàng"))
+                .setBeanToNodeMapper(() -> createToggle("fas-users", "Customers"))
                 .setControllerFactory(c -> new CustomerController(stage))
                 .get());
         loader.addView(MFXLoaderBean.of("SALES", loadURL("fxml/Sales.fxml"))
-                .setBeanToNodeMapper(() -> createToggle("fas-cart-plus", "Quản lý bán hàng"))
+                .setBeanToNodeMapper(() -> createToggle("fas-cart-plus", "Sale"))
                 .get());
         loader.addView(MFXLoaderBean.of("WAREHOUSES", loadURL("fxml/Warehouse.fxml"))
-                .setBeanToNodeMapper(() -> createToggle("fas-store", "Quản lý kho"))
+                .setBeanToNodeMapper(() -> createToggle("fas-store", "Warehouse"))
                 .get());
-        loader.addView(MFXLoaderBean.of("REPORTS", loadURL("fxml/Report.fxml")
-        ).setBeanToNodeMapper(() -> createToggle("fas-chart-pie", "Báo cáo"))
-                .get());
-        loader.addView(MFXLoaderBean.of("ADMIN", loadURL("fxml/Admin.fxml"))
-                .setBeanToNodeMapper(() -> createToggle("fas-user-tie", "Admin"))
-                .get());
+        if (MainApplication
+                .getApplicationInstance()
+                .getAccount()
+                .getPosition()
+                .getRole() == ACCOUNT_ROLE_TYPE.MANAGER) {
+            loader.addView(MFXLoaderBean.of("ADMIN", loadURL("fxml/Admin.fxml"))
+                    .setBeanToNodeMapper(() -> createToggle("fas-user-tie", "Admin"))
+                    .get());
+        }
+
         loader.setOnLoadedAction(beans -> {
             List<ToggleButton> nodes = beans.stream()
                     .map(bean -> {

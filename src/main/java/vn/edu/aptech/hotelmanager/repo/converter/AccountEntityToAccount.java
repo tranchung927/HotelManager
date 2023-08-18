@@ -28,6 +28,7 @@ public class AccountEntityToAccount implements IEntityConverter<Account>{
             Position position = new Position();
             position.setId(source.getLong("position_id"));
             position.setName(source.getString("position_name"));
+            position.setRole(ACCOUNT_ROLE_TYPE.valueOfName(source.getString("position_code")));
             account.setPosition(position);
             account.setAddressId(source.getLong("address_id"));
         } catch (Exception e) {

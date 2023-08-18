@@ -20,6 +20,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import vn.edu.aptech.hotelmanager.HMResourcesLoader;
+import vn.edu.aptech.hotelmanager.MainApplication;
 import vn.edu.aptech.hotelmanager.common.BaseController;
 import vn.edu.aptech.hotelmanager.domain.REPO_TYPE;
 import vn.edu.aptech.hotelmanager.domain.RepoFactory;
@@ -88,6 +89,7 @@ public class LoginController extends BaseController implements Initializable {
             IAccountRepo repo = RepoFactory.getInstance().getRepo(REPO_TYPE.ACCOUNT);
             Account account = repo.login(userName, password);
             if (account != null) {
+                MainApplication.getApplicationInstance().setAccount(account);
                 this.showInfoDialog("Success", "Login Successfully", e -> {
                     hiddenDialog();
                     openMain();
