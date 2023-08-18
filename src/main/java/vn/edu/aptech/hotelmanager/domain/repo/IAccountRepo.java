@@ -9,8 +9,8 @@ import java.util.List;
 
 public interface IAccountRepo extends IRepo {
     List<Account> getListAccount(int page, int pageSize);
-    String getLastAccountId() throws Exception;
     AccountDTO createOrUpdate(AccountDTO accountDTO) throws Exception;
     List<Position> getListPosition();
     Boolean deleteAccount(long id) throws Exception;
+    Account login(String username, String password);
 }

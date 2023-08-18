@@ -1,6 +1,5 @@
 package vn.edu.aptech.hotelmanager.controllers;
 
-import fr.brouillard.oss.cssfx.CSSFX;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXPasswordField;
 import io.github.palexdev.materialfx.controls.MFXTextField;
@@ -15,24 +14,22 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import vn.edu.aptech.hotelmanager.HMResourcesLoader;
-import vn.edu.aptech.hotelmanager.repo.db.DBConnection;
-import vn.edu.aptech.hotelmanager.utils.CrudUtil;
+import vn.edu.aptech.hotelmanager.common.BaseController;
+import vn.edu.aptech.hotelmanager.domain.REPO_TYPE;
+import vn.edu.aptech.hotelmanager.domain.RepoFactory;
+import vn.edu.aptech.hotelmanager.domain.model.Account;
+import vn.edu.aptech.hotelmanager.domain.repo.IAccountRepo;
 
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class LoginController implements Initializable {
+public class LoginController extends BaseController implements Initializable {
 
     private final Stage stage;
     private double x = 0;
@@ -40,33 +37,26 @@ public class LoginController implements Initializable {
 
     @FXML
     private MFXFontIcon alwaysOnTopIcon;
-
     @FXML
     private MFXFontIcon closeIcon;
-
     @FXML
     private MFXButton custom;
-
     @FXML
     private MFXFontIcon minimizeIcon;
-
     @FXML
-    private MFXPasswordField password;
-
+    private MFXPasswordField passwordTextField;
+    @FXML
+    private MFXTextField usernameTextField;
     @FXML
     private AnchorPane rootPane;
-
-    @FXML
-    private MFXTextField username;
-
 
     public LoginController(Stage stage) {
         this.stage = stage;
     }
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        this.ownerNode = rootPane;
         closeIcon.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> Platform.exit());
         minimizeIcon.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> ((Stage) rootPane.getScene().getWindow()).setIconified(true));
         alwaysOnTopIcon.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
@@ -83,59 +73,45 @@ public class LoginController implements Initializable {
             stage.setX(event.getScreenX() + x);
             stage.setY(event.getScreenY() + y);
         });
-
-
     }
 
+    @FXML
+    private void login(ActionEvent event) {
+        String userName = usernameTextField.getText();
+        String password = passwordTextField.getText();
 
-    public void login(ActionEvent event) {
-
-        String user = username.getText();
-        String pass = password.getText();
-        String sql = "SELECT username,password FROM employee WHERE username = ? and password =?";
-
-        try {
-            ResultSet result = CrudUtil.execute(sql, user, pass);
-
-            Alert alert;
-            if (user.isEmpty() || pass.isEmpty()) {
-                alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error Message");
-                alert.setHeaderText(null);
-                alert.setContentText("Please fill all blank fields");
-                alert.showAndWait();
-
-            } else {
-                if (result.next()) {
-                    alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Information Message");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Login Successfully");
-                    alert.showAndWait();
-
-                    CSSFX.start();
-                    FXMLLoader loader = new FXMLLoader(HMResourcesLoader.loadURL("fxml/Main.fxml"));
-                    loader.setControllerFactory(c -> new MainController(stage));
-                    Parent root = loader.load();
-                    Scene scene = new Scene(root);
-                    MFXThemeManager.addOn(scene, Themes.DEFAULT, Themes.LEGACY);
-//                scene.setFill(Color.TRANSPARENT);
-//                stage.initStyle(StageStyle.TRANSPARENT);
-                    stage.setScene(scene);
-                    stage.setTitle("Hotel FX");
-                    stage.show();
-                } else {
-                    alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error Message");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Wrong username or password");
-                    alert.showAndWait();
-                }
-            }
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        if (userName == null || userName.isEmpty() || password == null || password.isEmpty()) {
+            this.showErrorDialog("Error", "Please fill all blank fields");
+            return;
         }
-
+        try {
+            IAccountRepo repo = RepoFactory.getInstance().getRepo(REPO_TYPE.ACCOUNT);
+            Account account = repo.login(userName, password);
+            if (account != null) {
+                this.showInfoDialog("Success", "Login Successfully", e -> {
+                    hiddenDialog();
+                    openMain();
+                });
+                return;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        this.showErrorDialog("Error", "Wrong username or password");
+    }
+    private void openMain() {
+        try {
+            FXMLLoader loader = new FXMLLoader(HMResourcesLoader.loadURL("fxml/Main.fxml"));
+            loader.setControllerFactory(c -> new MainController(stage));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            MFXThemeManager.addOn(scene, Themes.DEFAULT, Themes.LEGACY);
+            scene.setFill(Color.TRANSPARENT);
+            stage.setScene(scene);
+            stage.setTitle("Hotel FX");
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -2,19 +2,14 @@ package vn.edu.aptech.hotelmanager.domain.model;
 
 public enum ACCOUNT_ROLE_TYPE {
     MANAGER, STAFF;
-
     public static ACCOUNT_ROLE_TYPE valueOfName(String name) {
         if (name == null) {
             return ACCOUNT_ROLE_TYPE.STAFF;
         }
-        switch (name) {
-            case "manager" -> {
-                return ACCOUNT_ROLE_TYPE.MANAGER;
-            }
-            default -> {
-                return ACCOUNT_ROLE_TYPE.STAFF;
-            }
+        if (name.equals("manager")) {
+            return ACCOUNT_ROLE_TYPE.MANAGER;
         }
+        return ACCOUNT_ROLE_TYPE.STAFF;
     }
 
     public String toName() {
@@ -23,7 +18,7 @@ public enum ACCOUNT_ROLE_TYPE {
                 return "manager";
             }
             case STAFF -> {
-                return "staff";
+                return "receptionist";
             }
         }
         return null;
@@ -33,10 +28,10 @@ public enum ACCOUNT_ROLE_TYPE {
     public String toString() {
         switch (this) {
             case MANAGER -> {
-                return "Quản lý";
+                return "Manager";
             }
             case STAFF -> {
-                return "Nhân viên";
+                return "Receptionist";
             }
         }
         return null;

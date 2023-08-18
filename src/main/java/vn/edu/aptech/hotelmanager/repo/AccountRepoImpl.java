@@ -3,12 +3,10 @@ package vn.edu.aptech.hotelmanager.repo;
 import vn.edu.aptech.hotelmanager.domain.dto.AccountDTO;
 import vn.edu.aptech.hotelmanager.domain.model.Account;
 import vn.edu.aptech.hotelmanager.domain.model.Address;
-import vn.edu.aptech.hotelmanager.domain.model.GENDER_TYPE;
 import vn.edu.aptech.hotelmanager.domain.model.Position;
 import vn.edu.aptech.hotelmanager.domain.repo.IAccountRepo;
 import vn.edu.aptech.hotelmanager.repo.converter.AccountEntityToAccount;
 import vn.edu.aptech.hotelmanager.repo.converter.PositionEntityToPosition;
-import vn.edu.aptech.hotelmanager.repo.db.DBConnection;
 import vn.edu.aptech.hotelmanager.utils.CrudUtil;
 
 import java.sql.ResultSet;
@@ -21,7 +19,7 @@ public class AccountRepoImpl implements IAccountRepo {
         List<Account> accountList =  new ArrayList<>();
         try {
             ResultSet resultSet = CrudUtil.execute("SELECT accounts.id, first_name, last_name, email, phone_number, " +
-                    "dob, accounts.code, sex, accounts.status, accounts.created_at, accounts.modified_at, description, role," +
+                    "dob, accounts.code, sex, accounts.status, accounts.created_at, accounts.modified_at, description," +
                     " username, password, position_id, positions.name AS position_name,addresses.id AS address_id " +
                     "FROM accounts " +
                     "INNER JOIN positions ON positions.id = accounts.position_id " +
@@ -53,11 +51,11 @@ public class AccountRepoImpl implements IAccountRepo {
         if (accountRst.next()) {
             sql = "UPDATE accounts SET first_name = ?, last_name = ?," +
                     " email = ?, phone_number = ?, dob = ?, sex = ?," +
-                    " role = ?, username = ?, password = ?, position_id = ?, address_id = ?" +
+                    " username = ?, password = ?, position_id = ?, address_id = ?" +
                     " WHERE accounts.id = ?";
         } else {
             sql = "INSERT INTO accounts(first_name,last_name,email,phone_number,dob,sex,role,username,password,position_id,address_id)" +
-                    " VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+                    " VALUES (?,?,?,?,?,?,?,?,?,?)";
             ResultSet rst = CrudUtil.execute("SELECT * FROM accounts ORDER BY id DESC LIMIT 1");
             accountDTO.getAccount().setId(rst.getLong("id"));
         }
@@ -67,21 +65,11 @@ public class AccountRepoImpl implements IAccountRepo {
                 accountDTO.getAccount().getPhoneNumber(),
                 java.sql.Date.valueOf(accountDTO.getAccount().getDOBFormat()),
                 accountDTO.getAccount().getGender().toStatus(),
-                accountDTO.getAccount().getRole().toName(),
                 accountDTO.getAccount().getUsername(),
                 accountDTO.getAccount().getPassword(),
                 accountDTO.getPosition().getId(), address.getId(),
                 accountDTO.getAccount().getId());
         return accountDTO;
-    }
-    @Override
-    public String getLastAccountId() throws Exception {
-        ResultSet rst = CrudUtil.execute("SELECT * FROM accounts ORDER BY id DESC LIMIT 1");
-        if (!rst.next()) {
-            return null;
-        } else {
-            return  rst.getString(1);
-        }
     }
 
     @Override
@@ -103,5 +91,26 @@ public class AccountRepoImpl implements IAccountRepo {
         String url = "DELETE FROM accounts WHERE id = ?";
         CrudUtil.execute(url, id);
         return true;
+    }
+
+    @Override
+    public Account login(String username, String password) {
+        try {
+            ResultSet resultSet = CrudUtil.execute("SELECT accounts.id, accounts.first_name," +
+                    " accounts.last_name, accounts.email, accounts.phone_number, accounts.dob," +
+                    " accounts.code, accounts.sex, accounts.status, accounts.created_at, accounts.modified_at," +
+                    " accounts.description, accounts.username, accounts.password," +
+                    " accounts.position_id, accounts.address_id," +
+                    " positions.name AS position_name, positions.code AS position_code" +
+                    " FROM accounts" +
+                    " INNER JOIN positions ON positions.id = accounts.position_id" +
+                    " WHERE accounts.username = ? AND accounts.password = ?", username, password);
+            if (resultSet.next()) {
+                return new AccountEntityToAccount().convert(resultSet);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

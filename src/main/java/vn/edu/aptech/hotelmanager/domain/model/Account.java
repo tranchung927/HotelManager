@@ -19,7 +19,6 @@ public class Account  {
     private Date createdAt;
     private Date modifiedAt;
     private String description;
-    private ACCOUNT_ROLE_TYPE role;
     private String username;
     private String password;
     private long positionId;
