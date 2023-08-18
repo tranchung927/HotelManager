@@ -34,7 +34,7 @@ public class RoomRepoImpl implements IRoomRepo {
             sql = "UPDATE rooms SET name = ? , status = ? , number_of_beds = ? , price = ? , category_id = ? WHERE is =?";
         }else {
             sql = "INSERT INTO rooms(name,status,number_of_beds,price,category_id) VALUES (?,?,?,?,?)";
-            ResultSet set = CrudUtil.execute("SELECT * FROM rooms ODER BY id DESC LIMIT 1");
+            ResultSet set = CrudUtil.execute("SELECT * FROM rooms ORDER BY id DESC LIMIT 1");
             room.setId(set.getLong("id"));
 
         }

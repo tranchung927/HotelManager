@@ -234,11 +234,11 @@ public class AdminController implements Initializable {
                 phoneColumn, dobColumn, sexColumn,
                 positionColumn, userNColumn, passColumn
         );
-        accountTableView.getFilters().addAll(
-                new StringFilter<>("Name", Account::getFullName),
-                new StringFilter<>("Email", Account::getEmail),
-                new StringFilter<>("Phone", Account::getPhoneNumber)
-        );
+//        accountTableView.getFilters().addAll(
+//                new StringFilter<>("Name", Account::getFullName),
+//                new StringFilter<>("Email", Account::getEmail),
+//                new StringFilter<>("Phone", Account::getPhoneNumber)
+//        );
     }
 
     private void getAccountData() {

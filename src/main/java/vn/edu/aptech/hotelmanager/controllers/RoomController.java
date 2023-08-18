@@ -19,6 +19,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -45,6 +46,10 @@ public class RoomController extends BaseController implements Initializable {
     private MFXGenericDialog dialogContent;
     private MFXStageDialog dialog;
     private final Stage stage;
+
+
+    @FXML
+    private AnchorPane ownerPane;
 
 
     @FXML
@@ -81,6 +86,7 @@ public class RoomController extends BaseController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        this.ownerNode = ownerPane;
         updateUI();
 
     }
@@ -99,7 +105,7 @@ public class RoomController extends BaseController implements Initializable {
         roomStatusTypeList.add(ROOM_STATUS_TYPE.OCCUPIED);
         ObservableList<ROOM_STATUS_TYPE> roomStatusTypes = FXCollections.observableList(roomStatusTypeList);
         statusComboBox.setItems(roomStatusTypes);
-        statusComboBox.selectItem(room.getStatus());
+//        statusComboBox.selectItem(room.getStatus());
         statusComboBox.getSelectionModel().selectedItemProperty().addListener((option, oldValue, newValue) -> {
             if (oldValue != newValue) {
                 room.setStatus(newValue);

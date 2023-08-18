@@ -163,7 +163,7 @@ public class AccountController extends BaseController implements Initializable {
         genderList.add(GENDER_TYPE.OTHER);
         ObservableList<GENDER_TYPE> observableGenderList = FXCollections.observableList(genderList);
         sexComboBox.setItems(observableGenderList);
-        sexComboBox.selectItem(account.getGender());
+//        sexComboBox.selectItem(account.getGender());
         sexComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
             if (oldValue != newValue) {
                 account.setGender(newValue);
