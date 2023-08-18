@@ -360,7 +360,7 @@ public class AdminController implements Initializable {
     private void getRoomData() {
 
         IRoomRepo repo = RepoFactory.getInstance().getRepo(REPO_TYPE.ROOM);
-        rooms.addAll(repo.getListRoom(1, 30).stream().map(RoomDTO::getRoom).toList());
+        rooms.addAll(repo.getListRoom(null).stream().map(RoomDTO::getRoom).toList());
         roomTableView.setItems(rooms);
     }
 

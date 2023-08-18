@@ -33,12 +33,22 @@ public class CheckInController extends BaseController implements Initializable {
     private GridView<RoomStatusSummary> statusGridView;
     @FXML
     private GridView<RoomDTO> roomGridView;
-
+    private final IRoomRepo roomRepo = RepoFactory.getInstance().getRepo(REPO_TYPE.ROOM);
     public CheckInController(Stage stage) {
         this.stage = stage;
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        statusGridView.horizontalCellSpacingProperty().set(10);
+        statusGridView.cellWidthProperty().set(150);
+        statusGridView.cellHeightProperty().set(50);
+        statusGridView.setCellFactory(gridView -> new RoomSummaryGridCell(summary -> {
+            resetRoomWitStatus(summary.getStatus());
+        }));
+
+        resetRoomSummary();
+
         roomGridView.cellWidthProperty().bind(roomGridView.widthProperty().multiply(0.25));
         roomGridView.cellHeightProperty().set(100);
         roomGridView.horizontalCellSpacingProperty().set(20);
@@ -46,10 +56,21 @@ public class CheckInController extends BaseController implements Initializable {
         roomGridView.setCellFactory(gridView -> new CheckInGridCell(roomDTO -> {
             System.out.println(roomDTO);
         }));
+        resetRoomWitStatus(null);
+    }
 
-        IRoomRepo repo = RepoFactory.getInstance().getRepo(REPO_TYPE.ROOM);
-        List<RoomDTO> roomDTOList = repo.getListRoom(1, 100);
+    private void resetRoomWitStatus(ROOM_STATUS_TYPE status) {
+        List<RoomDTO> roomDTOList = roomRepo.getListRoom(status);
         ObservableList<RoomDTO> roomDTOS = FXCollections.observableArrayList(roomDTOList);
         roomGridView.setItems(roomDTOS);
+    }
+
+    private void resetRoomSummary() {
+        List<RoomStatusSummary> summaryList = roomRepo.getSummaryForStatus();
+        RoomStatusSummary all = new RoomStatusSummary();
+        all.setCount(summaryList.stream().map(RoomStatusSummary::getCount).reduce(0, Integer::sum));
+        summaryList.add(0, all);
+        ObservableList<RoomStatusSummary> summaries = FXCollections.observableArrayList(summaryList);
+        statusGridView.setItems(summaries);
     }
 }

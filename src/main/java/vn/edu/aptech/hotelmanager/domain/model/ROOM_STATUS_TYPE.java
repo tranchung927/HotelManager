@@ -23,6 +23,26 @@ public enum ROOM_STATUS_TYPE {
         }
     }
 
+    public int toStatus() {
+        switch (this) {
+            case AVAILABLE -> {
+                return 1;
+            }
+            case OCCUPIED -> {
+                return 2;
+            }
+            case REPAIR -> {
+                return 3;
+            }
+            case DIRTY -> {
+                return 4;
+            }
+            default -> {
+                return 5;
+            }
+        }
+    }
+
     @Override
     public String toString() {
         switch (this) {

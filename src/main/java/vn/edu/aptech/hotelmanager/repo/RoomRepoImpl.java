@@ -12,13 +12,36 @@ import java.util.List;
 
 public class RoomRepoImpl implements IRoomRepo {
     @Override
-    public List<RoomDTO> getListRoom(int page, int pageSize) {
+    public List<RoomStatusSummary> getSummaryForStatus() {
+        List<RoomStatusSummary> list = new ArrayList<>();
+        for (int i = 1; i < 5; i++) {
+            try {
+                String query = "SELECT COUNT(id) AS count FROM rooms WHERE status = ?";
+                ResultSet resultSet = CrudUtil.execute(query, i);
+                while (resultSet.next()) {
+                    RoomStatusSummary summary = new RoomStatusSummary();
+                    summary.setStatus(ROOM_STATUS_TYPE.valueOfStatus(i));
+                    summary.setCount(resultSet.getInt("count"));
+                    list.add(summary);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return list;
+    }
+
+    @Override
+    public List<RoomDTO> getListRoom(ROOM_STATUS_TYPE statusType) {
         List<RoomDTO> roomDTOList = new ArrayList<>();
         String url = "SELECT rooms.id, rooms.name, rooms.status, rooms.number_of_beds, rooms.price, rooms.category_id" +
                 ", categories.name AS category_name" +
                 ", categories.code AS category_code" +
                 " FROM rooms" +
                 " INNER JOIN categories ON rooms.category_id = categories.id";
+        if (statusType != null) {
+            url += " WHERE rooms.status = " + statusType.toStatus();
+        }
         try {
             ResultSet roomResultSet = CrudUtil.execute(url);
             while (roomResultSet.next()){

@@ -58,6 +58,7 @@
 	-fx-font-family: 'Visby Round CF Heavy';
 	-fx-font-size: 24;
 	-fx-text-fill: white;
+	-fx-alignment: CENTER;
 }
 
 .rootPane .sidebar .header .mfx-font-icon {

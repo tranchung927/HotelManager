@@ -4,7 +4,7 @@ import org.controlsfx.control.GridCell;
 import vn.edu.aptech.hotelmanager.domain.dto.RoomDTO;
 
 public class CheckInGridCell extends GridCell<RoomDTO> {
-    RoomItemView itemView;
+    private final RoomItemView itemView;
     public CheckInGridCell(CheckInGridCellListener listener) {
         itemView = new RoomItemView();
         itemView.prefWidthProperty().bind(this.widthProperty());

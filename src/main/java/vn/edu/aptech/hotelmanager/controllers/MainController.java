@@ -13,6 +13,7 @@ import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
@@ -32,9 +33,12 @@ import static vn.edu.aptech.hotelmanager.HMResourcesLoader.loadURL;
 
 public class MainController implements Initializable {
     private final Stage stage;
+
     private double xOffset;
     private double yOffset;
     private final ToggleGroup toggleGroup;
+    @FXML
+    private Label headerName;
     @FXML
     private HBox windowHeader;
     @FXML
@@ -80,6 +84,8 @@ public class MainController implements Initializable {
         initializeLoader();
 //
         ScrollUtils.addSmoothScrolling(scrollPane);
+        String fullName = MainApplication.getApplicationInstance().getAccount().getFullName();
+        headerName.setText(fullName);
 //        // The only way to get a fucking smooth image in this shitty framework
 //        Image image = new Image(HMResourcesLoader.load("logo_alt.png"), 64, 64, true, true);
 //        ImageView logo = new ImageView(image);
