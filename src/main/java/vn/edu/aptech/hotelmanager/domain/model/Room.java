@@ -10,5 +10,6 @@ public class Room {
     private int numberOfBeds;
     private double price;
     private long categoryId;
-}
 
+
+}

@@ -46,7 +46,9 @@ public class AccountRepoImpl implements IAccountRepo {
             String sql = "INSERT INTO addresses(country_id,city_id,district_id,full_address) VALUES (?,?,?,?)";
             CrudUtil.execute(sql, address.getCountry().getId(), address.getCity().getId(), address.getDistrict().getId(), address.getFullAddress());
             ResultSet rst = CrudUtil.execute("SELECT * FROM addresses ORDER BY id DESC LIMIT 1");
-            address.setId(rst.getLong("id"));
+            if (rst.next()) {
+                address.setId(rst.getLong("id"));
+            }
         }
         ResultSet accountRst = CrudUtil.execute("SELECT * FROM accounts WHERE id=?", accountDTO.getAccount().getId());
         String sql;
@@ -59,7 +61,9 @@ public class AccountRepoImpl implements IAccountRepo {
             sql = "INSERT INTO accounts(first_name,last_name,email,phone_number,dob,sex,role,username,password,position_id,address_id)" +
                     " VALUES (?,?,?,?,?,?,?,?,?,?)";
             ResultSet rst = CrudUtil.execute("SELECT * FROM accounts ORDER BY id DESC LIMIT 1");
-            accountDTO.getAccount().setId(rst.getLong("id"));
+            if (rst.next()) {
+                accountDTO.getAccount().setId(rst.getLong("id"));
+            }
         }
         CrudUtil.execute(sql, accountDTO.getAccount().getFirstName(),
                 accountDTO.getAccount().getLastName(),
@@ -114,5 +118,19 @@ public class AccountRepoImpl implements IAccountRepo {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public long getLastAccountId() {
+        try {
+            ResultSet rst = CrudUtil.execute("SELECT * FROM addresses ORDER BY id DESC LIMIT 1");
+            if (rst.next()) {
+                return rst.getLong("id");
+            }
+            return -1;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
     }
 }

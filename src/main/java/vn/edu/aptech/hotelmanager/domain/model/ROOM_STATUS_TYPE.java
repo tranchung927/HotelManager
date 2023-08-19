@@ -43,6 +43,26 @@ public enum ROOM_STATUS_TYPE {
         }
     }
 
+    public static ROOM_STATUS_TYPE getStatusStr(String selectedItem) {
+        switch (selectedItem) {
+            case "Available" -> {
+                return ROOM_STATUS_TYPE.AVAILABLE;
+            }
+            case "Occupied" -> {
+                return ROOM_STATUS_TYPE.OCCUPIED;
+            }
+            case "Repair" -> {
+                return ROOM_STATUS_TYPE.REPAIR;
+            }
+            case "Dirty" -> {
+                return ROOM_STATUS_TYPE.DIRTY;
+            }
+            default -> {
+                return ROOM_STATUS_TYPE.RESERVE;
+            }
+        }
+    }
+
     @Override
     public String toString() {
         switch (this) {
@@ -63,6 +83,7 @@ public enum ROOM_STATUS_TYPE {
             }
         }
     }
+
     public String toColor() {
         switch (this) {
             case AVAILABLE -> {

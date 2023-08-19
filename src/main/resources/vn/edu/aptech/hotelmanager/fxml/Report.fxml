@@ -8,27 +8,34 @@
 <?import javafx.scene.layout.StackPane?>
 
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1000.0" styleClass="rootPane" stylesheets="@../css/Report.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vn.edu.aptech.hotelmanager.controllers.ReportController">
-   <children>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0">
-         <children>
-            <AnchorPane layoutX="25.0" layoutY="27.0" prefHeight="418.0" prefWidth="859.0" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="30.0">
-               <children>
-                  <AreaChart fx:id="chartIncome" layoutX="159.0" layoutY="9.0" prefHeight="418.0" prefWidth="938.0" title="DATA INCOME" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                    <xAxis>
-                      <CategoryAxis side="BOTTOM" />
-                    </xAxis>
-                    <yAxis>
-                      <NumberAxis side="LEFT" />
-                    </yAxis>
-                  </AreaChart>
-               </children>
-            </AnchorPane>
-            <Label layoutX="76.0" layoutY="486.0" text="Book today :" />
-            <Label fx:id="bookToday" layoutX="188.0" layoutY="487.0" text="???" />
-            <Label layoutX="76.0" layoutY="520.0" text="Income today:" />
-            <Label fx:id="incomeToday" layoutX="186.0" layoutY="521.0" text="???" />
-         </children>
-      </AnchorPane>
-   </children>
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0"
+           prefWidth="1000.0" styleClass="rootPane" stylesheets="@../css/Report.css"
+           xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="vn.edu.aptech.hotelmanager.controllers.ReportController">
+    <children>
+        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+            <children>
+                <AnchorPane layoutX="25.0" layoutY="27.0" prefHeight="418.0" prefWidth="859.0"
+                            AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0"
+                            AnchorPane.topAnchor="30.0">
+                    <children>
+                        <AreaChart fx:id="chartIncome" layoutX="159.0" layoutY="9.0" prefHeight="418.0"
+                                   prefWidth="938.0" title="DATA INCOME" AnchorPane.bottomAnchor="0.0"
+                                   AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <xAxis>
+                                <CategoryAxis side="BOTTOM"/>
+                            </xAxis>
+                            <yAxis>
+                                <NumberAxis side="LEFT"/>
+                            </yAxis>
+                        </AreaChart>
+                    </children>
+                </AnchorPane>
+                <Label layoutX="76.0" layoutY="486.0" text="Book today :"/>
+                <Label fx:id="bookToday" layoutX="188.0" layoutY="487.0" text="???"/>
+                <Label layoutX="76.0" layoutY="520.0" text="Income today:"/>
+                <Label fx:id="incomeToday" layoutX="186.0" layoutY="521.0" text="???"/>
+            </children>
+        </AnchorPane>
+    </children>
 </StackPane>

@@ -13,4 +13,6 @@ public interface IAccountRepo extends IRepo {
     List<Position> getListPosition();
     Boolean deleteAccount(long id) throws Exception;
     Account login(String username, String password);
+
+    long getLastAccountId();
 }

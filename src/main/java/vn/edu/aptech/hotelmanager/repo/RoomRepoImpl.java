@@ -2,13 +2,13 @@ package vn.edu.aptech.hotelmanager.repo;
 
 import vn.edu.aptech.hotelmanager.domain.dto.RoomDTO;
 import vn.edu.aptech.hotelmanager.domain.model.*;
+import vn.edu.aptech.hotelmanager.domain.model.Room;
+
 import vn.edu.aptech.hotelmanager.domain.repo.IRoomRepo;
 import vn.edu.aptech.hotelmanager.repo.converter.RoomEntityToRoom;
 import vn.edu.aptech.hotelmanager.utils.CrudUtil;
 import vn.edu.aptech.hotelmanager.utils.DateUtils;
-
 import java.sql.ResultSet;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -93,23 +93,21 @@ public class RoomRepoImpl implements IRoomRepo {
         }
         return roomDTOList;
     }
+    @Override
+    public Room creatOrUpdate(Room room) throws Exception {
+        ResultSet resultSet = CrudUtil.execute("SELECT * FROM rooms WHERE id = ?",room.getId());
+        String sql;
+        if (resultSet.next()){
+            sql = "UPDATE rooms SET name = ? , status = ? , number_of_beds = ? , price = ? , category_id = ? WHERE is =?";
+        }else {
+            sql = "INSERT INTO rooms(name,status,number_of_beds,price,category_id) VALUES (?,?,?,?,?)";
+            ResultSet set = CrudUtil.execute("SELECT * FROM rooms ORDER BY id DESC LIMIT 1");
+            room.setId(set.getLong("id"));
 
-//    @Override
-//    public RoomDTO createOrUpdate(RoomDTO roomDTO) throws Exception {
-//        ResultSet resultSet = CrudUtil.execute("SELECT * FROM rooms WHERE id = ?",room.getId());
-//        String sql;
-//        if (resultSet.next()){
-//            sql = "UPDATE rooms SET name = ? , status = ? , number_of_beds = ? , price = ? , category_id = ? WHERE is =?";
-//        }else {
-//            sql = "INSERT INTO rooms(name,status,number_of_beds,price,category_id) VALUES (?,?,?,?,?)";
-//            ResultSet set = CrudUtil.execute("SELECT * FROM rooms ODER BY id DESC LIMIT 1");
-//            room.setId(set.getLong("id"));
-//
-//        }
-//        CrudUtil.execute(sql,room.getName(),room.getStatus(),room.getNumberOfBeds(),room.getPrice(),room.getId());
-//            return room;
-//        return null;
-//    }
+        }
+        CrudUtil.execute(sql,room.getName(),room.getStatus(),room.getNumberOfBeds(),room.getPrice(),room.getId());
+            return room;
+    }
 
     @Override
     public void checkIn(RoomDTO roomDTO) throws Exception {

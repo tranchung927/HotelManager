@@ -17,6 +17,36 @@ public enum GENDER_TYPE {
         }
     }
 
+    public static GENDER_TYPE getGenderType(String selectedItem) {
+        switch (selectedItem) {
+            case "Male" -> {
+                return GENDER_TYPE.MALE;
+            }
+            case "Female" -> {
+                return GENDER_TYPE.FEMALE;
+            }
+            default -> {
+                return GENDER_TYPE.OTHER;
+            }
+
+        }
+    }
+
+    public static int getGenderID(String selectedItem) {
+        switch (selectedItem) {
+            case "Male" -> {
+                return 1;
+            }
+            case "Female" -> {
+                return 2;
+            }
+            default -> {
+                return 3;
+            }
+
+        }
+    }
+
     public int toStatus() {
         switch (this) {
             case MALE -> {

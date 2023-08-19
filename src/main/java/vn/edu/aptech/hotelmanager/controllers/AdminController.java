@@ -76,7 +76,7 @@ public class AdminController implements Initializable {
         try {
             Stage stage = new Stage();
             FXMLLoader loader = new FXMLLoader(HMResourcesLoader.loadURL("fxml/Account.fxml"));
-            AccountController accountController = new AccountController(stage, new Account());
+            AccountController accountController = new AccountController(stage, null);
             accountController.setListener(new IAccountControllerListener() {
                 @Override
                 public void addNewAccount(Account account) {
@@ -249,11 +249,11 @@ public class AdminController implements Initializable {
     }
 
 
-    public void addRoomBtn() {
+    public void addRoomBtn(ActionEvent event) {
         try {
             Stage stage = new Stage();
             FXMLLoader loader = new FXMLLoader(HMResourcesLoader.loadURL("fxml/Room.fxml"));
-            RoomController roomController = new RoomController(stage,null);
+            RoomController roomController = new RoomController(stage, null);
             roomController.setListener(new IRoomController() {
 
                 @Override
@@ -273,8 +273,7 @@ public class AdminController implements Initializable {
             });
 
             loader.setControllerFactory(c -> roomController);
-            Parent root = loader.
-                    load();
+            Parent root = loader.load();
             Scene scene = new Scene(root);
             MFXThemeManager.addOn(scene, Themes.DEFAULT, Themes.LEGACY);
             stage.setScene(scene);
@@ -285,7 +284,7 @@ public class AdminController implements Initializable {
         }
     }
 
-    private void setUpRoomTableView(){
+    private void setUpRoomTableView() {
         rooms = FXCollections.observableArrayList();
         rooms.addListener(new ListChangeListener<Room>() {
             @Override
@@ -294,12 +293,12 @@ public class AdminController implements Initializable {
             }
         });
 
-        MFXTableColumn<Room> idRoomColumn = new MFXTableColumn<>("Id",false,Comparator.comparing(Room::getId));
-        MFXTableColumn<Room> nameRoomColumn = new MFXTableColumn<>("Name",false,Comparator.comparing(Room::getName));
-        MFXTableColumn<Room> statusColumn = new MFXTableColumn<>("Status",false,Comparator.comparing(Room::getStatus));
-        MFXTableColumn<Room> nobColumn = new MFXTableColumn<>("Number of bed",false,Comparator.comparing(Room::getNumberOfBeds));
-        MFXTableColumn<Room> priceColumn = new MFXTableColumn<>("Price",false,Comparator.comparing(Room::getPrice));
-        MFXTableColumn<Room> categoryColumn = new MFXTableColumn<>("Categoty",false,Comparator.comparing(Room::getCategoryId));
+        MFXTableColumn<Room> idRoomColumn = new MFXTableColumn<>("Id", false, Comparator.comparing(Room::getId));
+        MFXTableColumn<Room> nameRoomColumn = new MFXTableColumn<>("Name", false, Comparator.comparing(Room::getName));
+        MFXTableColumn<Room> statusColumn = new MFXTableColumn<>("Status", false, Comparator.comparing(Room::getStatus));
+        MFXTableColumn<Room> nobColumn = new MFXTableColumn<>("Number of bed", false, Comparator.comparing(Room::getNumberOfBeds));
+        MFXTableColumn<Room> priceColumn = new MFXTableColumn<>("Price", false, Comparator.comparing(Room::getPrice));
+        MFXTableColumn<Room> categoryColumn = new MFXTableColumn<>("Categoty", false, Comparator.comparing(Room::getCategoryId));
         idRoomColumn.setRowCellFactory(room -> new MFXTableRowCell<>(Room::getId) {{
             setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && (room != null)) {
@@ -353,10 +352,11 @@ public class AdminController implements Initializable {
 
 //        roomTableView.getFilters().addAll(
 //                new StringFilter<>("Name", Room::getName),
-//                new StringFilter<>("Status", Room::getStatus)
-//
+//                new StringFilter<>("Status", Room::getStatus),
+//                new StringFilter<>("Price", Room::getPrice)
 //        );
     }
+
     private void getRoomData() {
 
         IRoomRepo repo = RepoFactory.getInstance().getRepo(REPO_TYPE.ROOM);
@@ -365,15 +365,12 @@ public class AdminController implements Initializable {
     }
 
 
-
-
     private void selectedRoom(Room room) {
         try {
             Stage stage = new Stage();
             FXMLLoader loader = new FXMLLoader(HMResourcesLoader.loadURL("fxml/Room.fxml"));
-            RoomController roomController = new RoomController(stage,room);
+            RoomController roomController = new RoomController(stage, room);
             roomController.setListener(new IRoomController() {
-
                 @Override
                 public void addNewRoom(Room room) {
 
@@ -393,10 +390,9 @@ public class AdminController implements Initializable {
                 @Override
                 public void deleteRoom(Room room) {
                     rooms.remove(room);
-
                 }
-            });
 
+            });
             loader.setControllerFactory(c -> roomController);
             Parent root = loader.load();
             Scene scene = new Scene(root);
@@ -410,5 +406,3 @@ public class AdminController implements Initializable {
 
     }
 }
-
-
