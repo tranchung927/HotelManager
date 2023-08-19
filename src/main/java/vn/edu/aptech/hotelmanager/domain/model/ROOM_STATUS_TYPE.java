@@ -23,6 +23,27 @@ public enum ROOM_STATUS_TYPE {
         }
     }
 
+    public static ROOM_STATUS_TYPE getStatusStr(String selectedItem) {
+        switch (selectedItem) {
+            case "Available" -> {
+                return ROOM_STATUS_TYPE.AVAILABLE;
+            }
+            case "Occupied" -> {
+                return ROOM_STATUS_TYPE.OCCUPIED;
+            }
+            case "Repair" -> {
+                return ROOM_STATUS_TYPE.REPAIR;
+            }
+            case "Dirty" -> {
+                return ROOM_STATUS_TYPE.DIRTY;
+            }
+            default -> {
+                return ROOM_STATUS_TYPE.RESERVE;
+            }
+        }
+    }
+
+
     public String getName() {
         switch (this) {
             case AVAILABLE -> {
@@ -39,6 +60,26 @@ public enum ROOM_STATUS_TYPE {
             }
             default -> {
                 return "Reserve";
+            }
+        }
+    }
+
+    public int toStatus() {
+        switch (this) {
+            case AVAILABLE -> {
+                return 1;
+            }
+            case OCCUPIED -> {
+                return 2;
+            }
+            case REPAIR -> {
+                return 3;
+            }
+            case DIRTY -> {
+                return 4;
+            }
+            default -> {
+                return 5;
             }
         }
     }

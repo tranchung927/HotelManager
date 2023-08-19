@@ -10,6 +10,8 @@ public interface IRoomRepo extends IRepo {
 
     Room creatOrUpdate(Room room) throws Exception;
 
+    Room insertRoom(Room room);
+
     String getLastRoomId();
 
     Boolean deleteRoom(Long id) throws Exception;

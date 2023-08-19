@@ -1,5 +1,6 @@
 package vn.edu.aptech.hotelmanager.repo;
 
+import javafx.scene.control.Alert;
 import vn.edu.aptech.hotelmanager.domain.model.Room;
 import vn.edu.aptech.hotelmanager.domain.repo.IRoomRepo;
 import vn.edu.aptech.hotelmanager.repo.converter.RoomEntityToRoom;
@@ -40,6 +41,39 @@ public class RoomRepoImpl implements IRoomRepo {
         }
         CrudUtil.execute(sql,room.getName(),room.getStatus(),room.getNumberOfBeds(),room.getPrice(),room.getId());
             return room;
+    }
+
+    @Override
+    public Room insertRoom(Room room) {
+        String url = "INSERT INTO rooms (name,`status`,number_of_beds,price,category_id)VALUES" +
+                " ('"+room.getName()+"'" +
+                ",'"+room.getStatus()+"'" +
+                ",'"+room.getNumberOfBeds()+"'" +
+                ",'"+room.getPrice()+"'" +
+                ",'"+room.getCategoryId()+"')";
+        Alert alert;
+        try {
+            boolean a = CrudUtil.execute(url);
+            if(a){
+
+                alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Add Successfully");
+                alert.showAndWait();
+            }else {
+                alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Please fill all blank fields");
+                alert.showAndWait();
+
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return room;
     }
 
 

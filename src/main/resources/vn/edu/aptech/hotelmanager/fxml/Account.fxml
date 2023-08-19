@@ -3,81 +3,48 @@
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
 <?import io.github.palexdev.materialfx.controls.MFXComboBox?>
 <?import io.github.palexdev.materialfx.controls.MFXDatePicker?>
-<?import io.github.palexdev.materialfx.controls.MFXFilterComboBox?>
 <?import io.github.palexdev.materialfx.controls.MFXPasswordField?>
 <?import io.github.palexdev.materialfx.controls.MFXTextField?>
+<?import io.github.palexdev.mfxresources.fonts.MFXFontIcon?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 
-<StackPane fx:id="ownerPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-           prefHeight="650.0" prefWidth="900.0" styleClass="rootPane" stylesheets="@../css/Common.css"
-           xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1"
-           fx:controller="vn.edu.aptech.hotelmanager.controllers.AccountController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="900.0" styleClass="rootPane" stylesheets="@../css/Common.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vn.edu.aptech.hotelmanager.controllers.AccountController">
     <children>
         <AnchorPane fx:id="rootPane" prefHeight="200.0" prefWidth="200.0" stylesheets="@../css/Account.css">
             <children>
-                <Label layoutX="50.0" layoutY="45.0" prefHeight="20.0" text="First Name :" AnchorPane.leftAnchor="50.0"
-                       AnchorPane.topAnchor="45.0"/>
-                <MFXTextField fx:id="firstNameTextField" floatMode="ABOVE" layoutX="50.0" layoutY="75.0"
-                              maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="40.0" prefWidth="200.0"
-                              AnchorPane.rightAnchor="650.0" AnchorPane.topAnchor="75.0"/>
-                <Label layoutX="326.0" layoutY="45.0" prefHeight="20.0" text="Last Name :" AnchorPane.leftAnchor="326.0"
-                       AnchorPane.topAnchor="45.0"/>
-                <MFXTextField fx:id="lastNameTextField" floatMode="ABOVE" layoutX="322.0" layoutY="75.0"
-                              maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="40.0" prefWidth="200.0"
-                              AnchorPane.rightAnchor="375.0"/>
-                <Label layoutX="599.0" layoutY="37.0" prefHeight="20.0" text="Email :" AnchorPane.leftAnchor="599.0"
-                       AnchorPane.topAnchor="45.0"/>
-                <MFXTextField fx:id="emailTextField" floatMode="ABOVE" layoutX="600.0" layoutY="75.0"
-                              maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="40.0" prefWidth="200.0"
-                              promptText="abc@abc.com" AnchorPane.topAnchor="75.0"/>
-                <Label layoutX="50.0" layoutY="185.0" prefHeight="20.0" text="Phone Number :"
-                       AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="165.0"/>
-                <MFXTextField fx:id="phoneTextField" floatMode="ABOVE" layoutX="50.0" layoutY="199.0"
-                              maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="40.0" prefWidth="200.0"
-                              promptText="0123456789" AnchorPane.rightAnchor="650.0" AnchorPane.topAnchor="200.0"/>
-                <Label layoutX="331.0" layoutY="165.0" prefHeight="20.0" text="Date of birth :"
-                       AnchorPane.topAnchor="165.0"/>
-                <MFXDatePicker fx:id="dobDatePicker" layoutX="325.0" layoutY="201.0" maxHeight="-Infinity"
-                               maxWidth="-Infinity" prefHeight="30.0" prefWidth="200.0" AnchorPane.rightAnchor="375.0"/>
-                <Label layoutX="604.0" layoutY="185.0" prefHeight="20.0" text="Sex :" AnchorPane.topAnchor="165.0"/>
-                <MFXComboBox fx:id="sexComboBox" floatMode="ABOVE" layoutX="600.0" layoutY="199.0" maxHeight="-Infinity"
-                             maxWidth="-Infinity" prefHeight="40.0" prefWidth="200.0" promptText="Choose"/>
-                <Label layoutX="50.0" layoutY="300.0" prefHeight="20.0" text="Position :" AnchorPane.leftAnchor="50.0"
-                       AnchorPane.topAnchor="300.0"/>
-                <MFXComboBox fx:id="positionComboBox" floatMode="ABOVE" layoutX="50.0" layoutY="385.0"
-                             maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="40.0" prefWidth="200.0"
-                             promptText="Choose" AnchorPane.topAnchor="335.0"/>
-                <Label layoutX="325.0" layoutY="300.0" prefHeight="20.0" text="User Name :"
-                       AnchorPane.topAnchor="300.0"/>
-                <MFXTextField fx:id="usernameTextField" floatMode="ABOVE" layoutX="315.0" layoutY="385.0"
-                              maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="40.0" prefWidth="200.0"
-                              AnchorPane.rightAnchor="375.0" AnchorPane.topAnchor="335.0"/>
-                <Label layoutX="602.0" layoutY="355.0" prefHeight="20.0" text="Password :"
-                       AnchorPane.topAnchor="300.0"/>
-                <MFXPasswordField fx:id="passwordTextField" floatMode="ABOVE" layoutX="600.0" layoutY="385.0"
-                                  maxHeight="-Infinity" prefHeight="40.0" prefWidth="200.0"
-                                  AnchorPane.topAnchor="335.0"/>
-                <Label layoutX="50.0" layoutY="440.0" prefHeight="20.0" text="Country :" AnchorPane.topAnchor="435.0"/>
-                <MFXFilterComboBox fx:id="countryComboBox" floatMode="ABOVE" layoutX="50.0" layoutY="470.0"
-                                   maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="40.0" prefWidth="200.0"
-                                   promptText="Choose"/>
-                <Label layoutX="330.0" layoutY="435.0" prefHeight="20.0" text="City :" AnchorPane.topAnchor="435.0"/>
-                <MFXFilterComboBox fx:id="cityComboBox" floatMode="ABOVE" layoutX="330.0" layoutY="470.0"
-                                   maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="40.0" prefWidth="200.0"
-                                   promptText="Choose" AnchorPane.rightAnchor="375.0"/>
-                <Label layoutX="602.0" layoutY="435.0" prefHeight="20.0" text="District :"
-                       AnchorPane.topAnchor="435.0"/>
-                <MFXFilterComboBox fx:id="districtComboBox" floatMode="ABOVE" layoutX="600.0" layoutY="470.0"
-                                   maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="40.0" prefWidth="200.0"
-                                   promptText="Choose"/>
-                <MFXButton fx:id="saveBtn" buttonType="RAISED" layoutX="721.0" layoutY="576.0" onAction="#onClickedSave"
-                           onMouseClicked="#onClickedSave" prefHeight="40.0" prefWidth="60.0" styleClass="mfx-button"
-                           stylesheets="@../css/Account.css" text="Save" visible="true"/>
-                <MFXButton fx:id="deleteBtn" buttonType="RAISED" layoutX="798.0" layoutY="576.0"
-                           onAction="#onClickedDelete" prefHeight="40.0" prefWidth="60.0" styleClass="mfx-button"
-                           stylesheets="@../css/Account.css" text="Delete" visible="true"/>
+
+                <MFXFontIcon fx:id="alwaysOnTopIcon" description="fas-circle" layoutX="828.0" layoutY="20.0" size="15.0" styleClass="always-on-top-icon" />
+                <MFXFontIcon fx:id="minimizeIcon" description="fas-circle" layoutX="852.0" layoutY="20.0" size="15.0" styleClass="minimize-icon" />
+                <MFXFontIcon fx:id="closeIcon" description="fas-circle" layoutX="874.0" layoutY="20.0" size="15.0" styleClass="close-icon" />
+                <Label layoutX="50.0" layoutY="45.0" prefHeight="20.0" text="First Name :" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="45.0" />
+                <MFXTextField fx:id="firstNameTextField" floatMode="ABOVE" layoutX="50.0" layoutY="75.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="40.0" prefWidth="200.0" AnchorPane.rightAnchor="650.0" AnchorPane.topAnchor="75.0" />
+                <Label layoutX="326.0" layoutY="45.0" prefHeight="20.0" text="Last Name :" AnchorPane.leftAnchor="326.0" AnchorPane.topAnchor="45.0" />
+                <MFXTextField fx:id="lastNameTextField" floatMode="ABOVE" layoutX="322.0" layoutY="75.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="40.0" prefWidth="200.0" AnchorPane.rightAnchor="375.0" />
+                <Label layoutX="599.0" layoutY="37.0" prefHeight="20.0" text="Email :" AnchorPane.leftAnchor="599.0" AnchorPane.topAnchor="45.0" />
+                <MFXTextField fx:id="emailTextField" floatMode="ABOVE" layoutX="600.0" layoutY="75.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="40.0" prefWidth="200.0" promptText="abc@abc.com" AnchorPane.topAnchor="75.0" />
+                <Label layoutX="50.0" layoutY="185.0" prefHeight="20.0" text="Phone Number :" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="165.0" />
+                <MFXTextField fx:id="phoneTextField" floatMode="ABOVE" layoutX="50.0" layoutY="199.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="40.0" prefWidth="200.0" promptText="0123456789" AnchorPane.rightAnchor="650.0" AnchorPane.topAnchor="200.0" />
+                <Label layoutX="331.0" layoutY="165.0" prefHeight="20.0" text="Date of birth :" AnchorPane.topAnchor="165.0" />
+                <MFXDatePicker fx:id="dobDatePicker" layoutX="325.0" layoutY="201.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="30.0" prefWidth="200.0" AnchorPane.rightAnchor="375.0" />
+                <Label layoutX="604.0" layoutY="185.0" prefHeight="20.0" text="Sex :" AnchorPane.topAnchor="165.0" />
+                <MFXComboBox fx:id="sexComboBox" floatMode="ABOVE" layoutX="600.0" layoutY="199.0" maxHeight="-Infinity" maxWidth="-Infinity" onAction="#addValueSex" prefHeight="40.0" prefWidth="200.0" promptText="Choose" />
+                <Label layoutX="50.0" layoutY="300.0" prefHeight="20.0" text="Position :" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="300.0" />
+                <MFXComboBox fx:id="positionComboBox" floatMode="ABOVE" layoutX="50.0" layoutY="385.0" maxHeight="-Infinity" maxWidth="-Infinity" onAction="#addValuePositions" prefHeight="40.0" prefWidth="200.0" promptText="Choose" AnchorPane.topAnchor="335.0" />
+                <Label layoutX="325.0" layoutY="300.0" prefHeight="20.0" text="User Name :" AnchorPane.topAnchor="300.0" />
+                <MFXTextField fx:id="usernameTextField" floatMode="ABOVE" layoutX="315.0" layoutY="385.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="40.0" prefWidth="200.0" AnchorPane.rightAnchor="375.0" AnchorPane.topAnchor="335.0" />
+                <Label layoutX="602.0" layoutY="355.0" prefHeight="20.0" text="Password :" AnchorPane.topAnchor="300.0" />
+                <MFXPasswordField fx:id="passwordTextField" floatMode="ABOVE" layoutX="600.0" layoutY="385.0" maxHeight="-Infinity" prefHeight="40.0" prefWidth="200.0" AnchorPane.topAnchor="335.0" />
+                <Label layoutX="50.0" layoutY="440.0" prefHeight="20.0" text="Country :" AnchorPane.topAnchor="435.0" />
+                <MFXComboBox fx:id="countryComboBox" floatMode="ABOVE" layoutX="50.0" layoutY="470.0" maxHeight="-Infinity" maxWidth="-Infinity" onAction="#addValueCCD" prefHeight="40.0" prefWidth="200.0" promptText="Choose" />
+                <Label layoutX="330.0" layoutY="435.0" prefHeight="20.0" text="City :" AnchorPane.topAnchor="435.0" />
+                <MFXComboBox fx:id="cityComboBox" floatMode="ABOVE" layoutX="330.0" layoutY="470.0" maxHeight="-Infinity" maxWidth="-Infinity" onAction="#addValueCCD" prefHeight="40.0" prefWidth="200.0" promptText="Choose" AnchorPane.rightAnchor="375.0" />
+                <Label layoutX="602.0" layoutY="435.0" prefHeight="20.0" text="District :" AnchorPane.topAnchor="435.0" />
+                <MFXComboBox fx:id="districtComboBox" floatMode="ABOVE" layoutX="600.0" layoutY="470.0" maxHeight="-Infinity" maxWidth="-Infinity" onAction="#addValueCCD" prefHeight="40.0" prefWidth="200.0" promptText="Choose" />
+                <MFXButton fx:id="saveBtn" buttonType="RAISED" layoutX="646.0" layoutY="576.0" onAction="#saveBtn" prefHeight="40.0" prefWidth="60.0" styleClass="mfx-button" stylesheets="@../css/Account.css" text="Save" visible="true" />
+                <MFXButton fx:id="deleteBtn" buttonType="RAISED" layoutX="798.0" layoutY="576.0" onAction="#deleteBtn" prefHeight="40.0" prefWidth="60.0" styleClass="mfx-button" stylesheets="@../css/Account.css" text="Delete" visible="true" />
+            <MFXButton fx:id="updateAccount" buttonType="RAISED" layoutX="719.0" layoutY="576.0" onAction="#updateAccount" prefHeight="40.0" prefWidth="60.0" styleClass="mfx-button" stylesheets="@../css/Account.css" text="Update" visible="true" />
             </children>
         </AnchorPane>
     </children>
