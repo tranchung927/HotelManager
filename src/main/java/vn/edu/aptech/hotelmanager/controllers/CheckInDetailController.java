@@ -31,6 +31,8 @@ import java.util.regex.Pattern;
 public class CheckInDetailController implements Initializable {
     private static final PseudoClass INVALID_PSEUDO_CLASS = PseudoClass.getPseudoClass("invalid");
     @FXML
+    private MFXTextField roomPriceTextField;
+    @FXML
     private MFXFilterComboBox<Country> countryComboBox;
     @FXML
     private MFXTextField firstNameTextField;
@@ -85,6 +87,7 @@ public class CheckInDetailController implements Initializable {
     }
 
     private void setupUI() {
+        roomPriceTextField.setText(String.valueOf(roomDTO.getRoom().getPrice()));
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
         checkInDateTextField.setText(dateFormat.format(roomDTO.getCheckIn().getCheckInAt()));
         StringConverter<GENDER_TYPE> genderConverter = FunctionalStringConverter.to(GENDER_TYPE::toString);

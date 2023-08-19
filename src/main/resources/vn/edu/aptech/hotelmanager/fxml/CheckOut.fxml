@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
+<?import javafx.geometry.Insets?>
+<GridPane xmlns="http://javafx.com/javafx"
+          xmlns:fx="http://javafx.com/fxml"
+          fx:controller="vn.edu.aptech.hotelmanager.controllers.CheckOutController"
+          alignment="CENTER" hgap="20.0" vgap="20.0" styleClass="grid-pane" stylesheets="@../css/TextFields.css">
+    <columnConstraints>
+        <ColumnConstraints halignment="CENTER"/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints minHeight="10.0" prefHeight="64.0"/>
+    </rowConstraints>
+    <padding>
+        <Insets bottom="20.0" left="30.0" right="30.0" top="20.0"/>
+    </padding>
+    <MFXTextField prefWidth="300" editable="false" fx:id="firstNameTextField"  floatingText="First Name"/>
+    <MFXTextField prefWidth="300" editable="false" fx:id="lastNameTextField" floatingText="Last Name" GridPane.columnIndex="1"/>
+    <MFXTextField prefWidth="300" editable="false" fx:id="phoneTextField" floatingText="Phone" GridPane.rowIndex="1"/>
+    <MFXTextField prefWidth="300" editable="false" fx:id="genderTextField" floatingText="Gender"  GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+    <MFXTextField prefWidth="300" editable="false" fx:id="countryTextField" floatingText="Country" GridPane.rowIndex="2"/>
+    <MFXTextField prefWidth="300" editable="false" fx:id="docValueTextField" floatingText="Document Value" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+    <MFXTextField prefWidth="300" editable="false" fx:id="checkInDateTextField" floatingText="Check in date" GridPane.rowIndex="3"/>
+    <MFXTextField prefWidth="300" editable="false" fx:id="checkOutDateTextField" floatingText="Check out date" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+    <MFXTextField prefWidth="300" editable="false" fx:id="roomPriceTextField" floatingText="Room price" GridPane.rowIndex="4"/>
+    <MFXTextField prefWidth="300" editable="false" fx:id="totalPriceTextField"  floatingText="Total price" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+</GridPane>

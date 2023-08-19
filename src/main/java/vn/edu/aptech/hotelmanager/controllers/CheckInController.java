@@ -84,7 +84,39 @@ public class CheckInController extends BaseController implements Initializable {
     }
 
     private void didSelectRoom(RoomDTO roomDTO) {
-        roomOption(roomDTO);
+        if (roomDTO.getRoom().getStatus() == ROOM_STATUS_TYPE.OCCUPIED) {
+            Parent root = null;
+            CheckOutController checkOutController = new CheckOutController(roomDTO);
+            try {
+                FXMLLoader loader = new FXMLLoader(HMResourcesLoader.loadURL("fxml/CheckOut.fxml"));
+                loader.setControllerFactory(c -> checkOutController);
+                root = loader.load();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            if (root == null) {
+                return;
+            }
+            showContentDialog(root, "Room " + roomDTO.getRoom().getName(),
+                    Map.entry(new MFXButton("Check out"), event -> {
+                        checkOut(roomDTO);
+                    })
+            );
+        } else {
+            roomOption(roomDTO);
+        }
+    }
+
+    private void checkOut(RoomDTO roomDTO) {
+        try {
+            roomRepo.checkOut(roomDTO);
+            hiddenContentDialog();
+            resetRoomSummary();
+            resetRoomWitStatus(selectedStatus);
+        } catch (Exception e) {
+            e.printStackTrace();
+            showErrorDialog("Error", "An error occurred, please try again!");
+        }
     }
 
     private void checkInDetail(RoomDTO roomDTO) {
