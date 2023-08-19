@@ -149,7 +149,7 @@ public class RoomController extends BaseController implements Initializable {
             try {
                 RoomDTO roomDTO = new RoomDTO();
                 roomDTO.setRoom(room);
-                room1 = roomRepo.createOrUpdate(roomDTO).getRoom();
+//                room1 = roomRepo.createOrUpdate(roomDTO).getRoom();
                 if (room.getId() > 0) {
                     listener.updateRoom(room1);
                 } else {

@@ -9,4 +9,6 @@ public class RoomDTO {
     private Room room;
     private Category category;
     private CheckIn checkIn;
+    private Address address;
+    private Document document;
 }

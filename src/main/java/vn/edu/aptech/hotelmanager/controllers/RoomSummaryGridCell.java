@@ -13,10 +13,8 @@ public class RoomSummaryGridCell extends GridCell<RoomStatusSummary> {
         itemView.setAlignment(Pos.CENTER);
         this.setGraphic(this.itemView);
         this.setOnMouseClicked(mouseEvent -> {
-            if (mouseEvent.getClickCount() >= 2) {
-                if (this.getItem() != null) {
-                    listener.onClicked(this.getItem());
-                }
+            if (this.getItem() != null) {
+                listener.onClicked(this.getItem());
             }
         });
     }

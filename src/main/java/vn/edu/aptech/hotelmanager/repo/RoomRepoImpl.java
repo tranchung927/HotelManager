@@ -5,8 +5,10 @@ import vn.edu.aptech.hotelmanager.domain.model.*;
 import vn.edu.aptech.hotelmanager.domain.repo.IRoomRepo;
 import vn.edu.aptech.hotelmanager.repo.converter.RoomEntityToRoom;
 import vn.edu.aptech.hotelmanager.utils.CrudUtil;
+import vn.edu.aptech.hotelmanager.utils.DateUtils;
 
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -92,8 +94,8 @@ public class RoomRepoImpl implements IRoomRepo {
         return roomDTOList;
     }
 
-    @Override
-    public RoomDTO createOrUpdate(RoomDTO roomDTO) throws Exception {
+//    @Override
+//    public RoomDTO createOrUpdate(RoomDTO roomDTO) throws Exception {
 //        ResultSet resultSet = CrudUtil.execute("SELECT * FROM rooms WHERE id = ?",room.getId());
 //        String sql;
 //        if (resultSet.next()){
@@ -106,12 +108,69 @@ public class RoomRepoImpl implements IRoomRepo {
 //        }
 //        CrudUtil.execute(sql,room.getName(),room.getStatus(),room.getNumberOfBeds(),room.getPrice(),room.getId());
 //            return room;
-        return null;
+//        return null;
+//    }
+
+    @Override
+    public void checkIn(RoomDTO roomDTO) throws Exception {
+        Address address = roomDTO.getAddress();
+        String insertAddressSQL = "INSERT INTO addresses(country_id) VALUES (?)";
+        CrudUtil.execute(insertAddressSQL, address.getCountry().getId());
+        ResultSet newAddressRst = CrudUtil.execute("SELECT * FROM addresses ORDER BY id DESC LIMIT 1");
+        if (newAddressRst.next()) {
+            roomDTO.getCustomer().setAddressId(newAddressRst.getLong("id"));
+        }
+        Document document = roomDTO.getDocument();
+        String insertDocumentSQL = "INSERT INTO documents(type,value) VALUES (?,?)";
+        CrudUtil.execute(insertDocumentSQL, document.getType().toStatus(), document.getValue());
+        ResultSet newDocumentRst = CrudUtil.execute("SELECT * FROM documents ORDER BY id DESC LIMIT 1");
+        if (newDocumentRst.next()) {
+            roomDTO.getCustomer().setDocumentId(newDocumentRst.getLong("id"));
+        }
+//        ResultSet customerRst = CrudUtil.execute("SELECT * FROM customers WHERE id=?", roomDTO.getCustomer().getId());
+//        if (customerRst.next()) {
+//
+//        } else {
+//
+//        }
+        String createCustomerSQL = "INSERT INTO customers(first_name,last_name,phone_number,sex,document_id,address_id)" +
+                " VALUES (?,?,?,?,?,?)";
+        CrudUtil.execute(createCustomerSQL, roomDTO.getCustomer().getFirstName(),
+                roomDTO.getCustomer().getLastName(),
+                roomDTO.getCustomer().getPhoneNumber(),
+                roomDTO.getCustomer().getGender().toStatus(),
+                roomDTO.getCustomer().getDocumentId(),
+                roomDTO.getCustomer().getAddressId());
+        ResultSet newCustomerRst = CrudUtil.execute("SELECT * FROM customers ORDER BY id DESC LIMIT 1");
+        if (newCustomerRst.next()) {
+            roomDTO.getCustomer().setId(newCustomerRst.getLong("id"));
+        }
+        String createCheckInSQL = "INSERT INTO check_in(customer_id,room_id,check_in_at,status)" +
+                " VALUES (?,?,?,?)";
+        CrudUtil.execute(createCheckInSQL, roomDTO.getCustomer().getId(),
+                roomDTO.getRoom().getId(),
+                java.sql.Date.valueOf(DateUtils.convertToLocalDate(roomDTO.getCheckIn().getCheckInAt())),
+                1);
+        String updateRoomStatusQuery = "UPDATE rooms SET rooms.status = ? WHERE rooms.id = ?";
+        CrudUtil.execute(updateRoomStatusQuery, ROOM_STATUS_TYPE.OCCUPIED.toStatus(), roomDTO.getRoom().getId());
     }
+
     @Override
     public Boolean deleteRoom(Long id) throws Exception {
         String url = "DELETE FROM rooms WHERE id = ?";
         CrudUtil.execute(url, id);
         return true;
+    }
+
+    @Override
+    public Boolean updateStatus(Long id, ROOM_STATUS_TYPE status) {
+        String query = "UPDATE rooms SET rooms.status = ? WHERE rooms.id = ?";
+        try {
+            CrudUtil.execute(query, status.toStatus(), id);
+            return true;
+        }catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

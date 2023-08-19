@@ -11,10 +11,8 @@ public class CheckInGridCell extends GridCell<RoomDTO> {
         itemView.prefHeightProperty().bind(this.heightProperty());
         this.setGraphic(this.itemView);
         this.setOnMouseClicked(mouseEvent -> {
-            if (mouseEvent.getClickCount() >= 2) {
-                if (this.getItem() != null) {
-                    listener.onClicked(this.getItem());
-                }
+            if (this.getItem() != null) {
+                listener.onClicked(this.getItem());
             }
         });
     }

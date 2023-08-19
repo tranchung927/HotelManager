@@ -36,6 +36,7 @@ import vn.edu.aptech.hotelmanager.domain.model.GENDER_TYPE;
 import vn.edu.aptech.hotelmanager.domain.repo.ICustomerRepo;
 
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.function.Function;
 
@@ -92,7 +93,13 @@ public class CustomerController extends BaseController implements Initializable 
 
         // DOB Column
         MFXTableColumn<CustomerDTO> dobColumn = new MFXTableColumn<>("Birthday", false);
-        Function<CustomerDTO, String> mapDOB = u -> u.getCustomer().getDob().toString();
+        Function<CustomerDTO, String> mapDOB = u -> {
+            if (u.getCustomer().getDob() != null) {
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                return format.format(u.getCustomer().getDob());
+            }
+           return "";
+        };
         dobColumn.setRowCellFactory(dto -> new MFXTableRowCell<>(mapDOB));
 
         // Gender Column

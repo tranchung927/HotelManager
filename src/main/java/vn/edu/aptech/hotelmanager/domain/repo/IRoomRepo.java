@@ -11,6 +11,7 @@ import java.util.List;
 public interface IRoomRepo extends IRepo {
     List<RoomStatusSummary> getSummaryForStatus();
     List<RoomDTO> getListRoom(ROOM_STATUS_TYPE statusType);
-    RoomDTO createOrUpdate(RoomDTO roomDTO) throws Exception;
+    void checkIn(RoomDTO roomDTO) throws Exception;
     Boolean deleteRoom(Long id) throws Exception;
+    Boolean updateStatus(Long id, ROOM_STATUS_TYPE status);
 }

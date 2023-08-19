@@ -2,11 +2,30 @@
 
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            stylesheets="@../css/Common.css"
-            xmlns="http://javafx.com/javafx/20.0.0"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="vn.edu.aptech.hotelmanager.controllers.CheckInDetailController">
-
-</AnchorPane>
+<?import io.github.palexdev.materialfx.controls.MFXFilterComboBox?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
+<?import io.github.palexdev.materialfx.controls.MFXComboBox?>
+<?import io.github.palexdev.materialfx.controls.MFXDatePicker?>
+<?import javafx.geometry.Insets?>
+<GridPane xmlns="http://javafx.com/javafx"
+          xmlns:fx="http://javafx.com/fxml"
+          fx:controller="vn.edu.aptech.hotelmanager.controllers.CheckInDetailController"
+          alignment="CENTER" hgap="20.0" vgap="20.0" styleClass="grid-pane" stylesheets="@../css/TextFields.css">
+    <columnConstraints>
+        <ColumnConstraints halignment="CENTER"/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints minHeight="10.0" prefHeight="64.0"/>
+    </rowConstraints>
+    <padding>
+        <Insets bottom="20.0" left="30.0" right="30.0" top="20.0"/>
+    </padding>
+    <MFXTextField prefWidth="300" id="validatedField" fx:id="firstNameTextField" promptText="Enter first name" floatingText="First Name"/>
+    <MFXTextField prefWidth="300" id="validatedField" fx:id="lastNameTextField" promptText="Enter last name" floatingText="Last Name" GridPane.columnIndex="1"/>
+    <MFXTextField prefWidth="300" id="validatedField" fx:id="phoneTextField" promptText="Enter phone number" floatingText="Phone" GridPane.rowIndex="1"/>
+    <MFXTextField prefWidth="300" disable="true" fx:id="checkInDateTextField" promptText="yyyy-MM-dd" floatingText="Check in date" GridPane.rowIndex="2"/>
+    <MFXComboBox prefWidth="300" prefHeight="44.0" fx:id="genderComboBox" promptText="Select gender" floatingText="Gender" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+    <MFXTextField prefWidth="300" id="validatedField" fx:id="docValueTextField" promptText="Enter document value" floatingText="Document Value" GridPane.rowIndex="3"/>
+    <MFXComboBox prefWidth="300" prefHeight="44.0" fx:id="docTypeComboBox" promptText="Select document type" floatingText="Document Type" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+    <MFXFilterComboBox prefWidth="300" id="validatedField" prefHeight="44.0" fx:id="countryComboBox" promptText="Select country" floatingText="Country" GridPane.rowIndex="4"/>
+</GridPane>
