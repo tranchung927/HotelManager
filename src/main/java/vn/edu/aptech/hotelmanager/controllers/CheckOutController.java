@@ -51,8 +51,11 @@ public class CheckOutController implements Initializable {
         IRoomRepo roomRepo = RepoFactory.getInstance().getRepo(REPO_TYPE.ROOM);
         RoomDTO res = roomRepo.getById(roomDTO.getRoom().getId());
         if (res != null) {
-            roomDTO = res;
+            roomDTO.setAddress(res.getAddress());
+            roomDTO.setDocument(res.getDocument());
+
         }
+        roomDTO.getCheckIn().setCheckOutAt(new Date());
     }
 
     private void updateUI() {

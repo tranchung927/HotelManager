@@ -44,6 +44,9 @@ public class CheckIn {
                 "%d hours, %d minutes, %d seconds%n",
                 elapsedHours, elapsedMinutes, elapsedSeconds);
 
+        if (elapsedHours <= 0) {
+            return 1;
+        }
         return elapsedHours;
     }
 }
