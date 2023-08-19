@@ -57,6 +57,8 @@ public class MainController implements Initializable {
     private StackPane contentPane;
     @FXML
     private StackPane logoContainer;
+
+    private IMainListener listener;
     public MainController(Stage stage) {
         this.stage = stage;
         this.toggleGroup = new ToggleGroup();
@@ -98,10 +100,12 @@ public class MainController implements Initializable {
 
     private void initializeLoader() {
         MFXLoader loader = new MFXLoader();
+        CheckInController checkInController = new CheckInController(stage);
+        listener = checkInController;
         loader.addView(MFXLoaderBean.of("ROOMS", loadURL("fxml/CheckIn.fxml"))
                 .setBeanToNodeMapper(() -> createToggle("fas-hotel", "Rooms"))
                 .setDefaultRoot(true)
-                .setControllerFactory(c -> new CheckInController(stage))
+                .setControllerFactory(c -> checkInController)
                 .get());
         loader.addView(MFXLoaderBean.of("CUSTOMERS", loadURL("fxml/Customer.fxml"))
                 .setBeanToNodeMapper(() -> createToggle("fas-users", "Customers"))
@@ -150,6 +154,13 @@ public class MainController implements Initializable {
         toggleNode.setMaxWidth(Double.MAX_VALUE);
         toggleNode.setToggleGroup(toggleGroup);
         if (rotate != 0) wrapper.getIcon().setRotate(rotate);
+        if (text.equals("Rooms")) {
+            toggleNode.selectedProperty().addListener(((observable, oldValue, newValue) -> {
+                if (newValue) {
+                    listener.needReload();
+                }
+            }));
+        }
         return toggleNode;
     }
 

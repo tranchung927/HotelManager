@@ -32,7 +32,7 @@ import vn.edu.aptech.hotelmanager.domain.repo.IRoomRepo;
 import java.net.URL;
 import java.util.*;
 
-public class CheckInController extends BaseController implements Initializable {
+public class CheckInController extends BaseController implements Initializable, IMainListener {
 
     @FXML
     private AnchorPane rootAnchorPane;
@@ -58,13 +58,19 @@ public class CheckInController extends BaseController implements Initializable {
             resetRoomWitStatus(summary.getStatus());
         }));
 
-        resetRoomSummary();
+//        resetRoomSummary();
 
         roomGridView.cellWidthProperty().bind(roomGridView.widthProperty().multiply(0.25));
         roomGridView.cellHeightProperty().set(100);
         roomGridView.horizontalCellSpacingProperty().set(20);
         roomGridView.verticalCellSpacingProperty().set(20);
         roomGridView.setCellFactory(gridView -> new CheckInGridCell(this::didSelectRoom));
+//        resetRoomWitStatus(selectedStatus);
+    }
+
+    @Override
+    public void needReload() {
+        resetRoomSummary();
         resetRoomWitStatus(selectedStatus);
     }
 
